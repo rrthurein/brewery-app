@@ -1,0 +1,22 @@
+[{
+  "id": 1,
+  "task": "Clean Kegs",
+  "complete": true
+},{
+  "id": 2,
+  "task": "CIP tanks",
+  "complete": true
+},{
+  "id": 3,
+  "task": "Check Gravity",
+  "complete": true
+},{
+  "id": 4,
+  "task": "Check the Cold Box",
+  "complete": true
+},{
+  "id": 5,
+  "task": "Check the fementor tank",
+  "complete": true
+}
+]
