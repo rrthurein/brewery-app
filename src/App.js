@@ -1,128 +1,138 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
-import data from "./data.json";
-
-const startSop = [
-  {
-    "id": 1,
-    "toDo": "Clean Kegs",
-  },{
-    "id": 2,
-    "toDo": "CIP tanks",
-
-  },{
-    "id": 3,
-    "toDo": "Check Gravity",
-
-  },{
-    "id": 4,
-    "toDo": "Check the Cold Box",
-
-  },{
-    "id": 5,
-    "toDo": "Check the fementor tank",
-  },
-
-];
-
 
 function App() {
-  const [sop, setSop] = useState(startSop)
-  const [toDo, setToDo] = useState('') //state is the information that the page is rendering
-  const [completedSops, setCompletedSops] = useState([])
+const [addingBeer, setAddingBeer] = useState(false);
+// const [currentBeerInfo, setCurrentBeerInfo] = useState('');
+const [beerRecipe, setBeerRecipe] = useState([]);
 
-  const handleChange = (e) => {
-    setToDo(e.target.value)
-  }
+const [beerName, setBeerName] = useState('');
+const [beerStyle, setBeerStyle] = useState('');
+const [abv, setABV] = useState('');
+const [brewingTime, setBrewingTime] = useState('');
 
-  const handleAdd = () => {
 
-    const id = Math.max(...sop.map((t) => t.id)) + 1
-    //this creates a new ID for the object that the add button creates. map: return the element you do want
-    //whenever handleAdd add one make sure to give it an id that is a valid id that non of the other item have
-    const newSop = sop.concat({toDo, id})
-     setSop(newSop);
 
-  }
-
-  const addCompletedSop = (item) => {
-    const newCompletedSop = completedSops.concat(item)
-      // completedSops.push(item)
-      setCompletedSops(newCompletedSop)
-      console.log("added", completedSops)
-  }
-
-  const remove = (id) => {
-    const newSopFilter = sop.filter((item)=>{   //filter element
-      if(item.id === id){
-        return false
-      }
-      return true
-    })
-    setSop(newSopFilter)
+const addBeer = () => {
+    setAddingBeer(!addingBeer) //set is always updating a value
   }
 
 
-  //remove the item from array
+
+const handleNameChange = (e) => {
+  setBeerName(e.target.value)
+}
+const handleABVChange = (e) => {
+  setABV(e.target.value)
+}
+const handleBeerStyleChange = (e) => {
+  setBeerStyle(e.target.value)
+}
+const handleBrewingTimeChange = (e) => {
+  setBrewingTime(e.target.value)
+}
+
+const handleClick = () => {
+
+  const beerRecipeObj = {
+    beerName: beerName,
+    abv: abv,
+    beerStyle: beerStyle,
+    brewingTime: brewingTime
+  }
+  const newBeerRecipe = beerRecipe.concat([beerRecipeObj])
+  setBeerRecipe(newBeerRecipe)
+  console.log("rendering", beerRecipe)
+  setAddingBeer(!addingBeer)
+}
 
 
-//whenever you need to pass an argument to a fucntion that you are calling from event handler you need to put it in a an
-//the map loops through each item and then
-  const sops = sop.map((item) => {
+
+const beerRecipeInfo = beerRecipe.map((item) => {
     return (
-       <li key={item.id}>
-         <input type="checkbox" onChange={()=>{
-           remove(item.id)
-           addCompletedSop(item);
-         }}/>
-         {item.toDo}
+      <div id="beerInfo-container">
+       <li>
+         <span>{item.beerName}</span>
+         <span>{item.beerStyle}</span>
+         <span>{item.abv}</span>
+         <span>{item.brewingTime}</span>
        </li>
+       </div>
      )
-   });
-
-   const completedSopList = completedSops.map((item) =>{
-       return (
-         <li>
-         {item.id}
-         {item.toDo}
-         </li>
-       )
-     })
-     //creating html here and rendering down
-
-console.log("rendering", completedSopList);
-
+   })
 
 
   return (
+    <div>
 
-    <div className="conatiner-sop">
-      <header className="App-header">
-        <h1>SOP list for the Brewery</h1>
-          <div>
-          <input id="sop" type="text" value={toDo} onChange={handleChange} />
-          <button type="button" onClick={handleAdd}>Add</button>
-          </div>
-          <ul>
-          {
-            sops
-          }
+        <div className="beer-inventory-setup">
+          <nav>
+            <a href="beerRecipe">Beer Recipe</a>
+          </nav>
+        </div>
 
-          </ul>
 
-      </header>
-    <div className="container-completedSOP">
-    <h1>Completed SOP list for the Brewery</h1>
-      <div id="completedSOP">
-      {
-        completedSopList
-      }
-      </div>
-    </div>
 
-    </div>
-  );
+          <header>
+            <h1>Beer Recipe Setup</h1>
+            <div>
+            {
+              addingBeer ?
+              <div>
+
+              <label>Beer Name:</label>
+              <input type="text" name="beerName" placeholder="Beer Name" onChange={handleNameChange} required/>
+              <label>Beer Style:</label>
+              <select name="beerStyle" onChange={handleBeerStyleChange}>
+              <option value="IPA">IPA</option>
+              <option value="Pilsner">Pilsner</option>
+              <option value="Belgian Blonde">Belgian Blonde</option>
+              </select>
+              <label>ABV:</label>
+              <input type="number" required name="ABV" placeholder="ABV" onChange={handleABVChange}/>
+              <label>Brewing Time</label>
+              <input type="text" required name="brewingTime" placeholder="Brewing Time" onChange={handleBrewingTimeChange}/>
+
+              <button type="button" onClick={handleClick}>Add Beer!</button>
+
+              </div>
+              :
+              beerRecipe.length >= 1
+                ?
+                <div>
+                <h1>Beer Recipe</h1>
+                <button type="button" onClick={addBeer}>Add Beer</button>
+                   {
+                     beerRecipeInfo
+                   }
+                </div>
+               :
+
+              <div className="add-beer">
+              <h2>What beers do you sell?</h2>
+              <button type="button" onClick={addBeer}>Add</button>
+              </div>
+
+
+              //i need a conditional logic in to determine which section to render base on the different state variable.
+            }
+
+
+            </div>
+
+
+
+
+          </header>
+
+
+        </div>
+
+
+
+
+  )
 }
 
 export default App;
