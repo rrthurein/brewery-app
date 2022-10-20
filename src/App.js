@@ -1,24 +1,36 @@
 // import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
+// import RecipeInfoSetUp from "./components/RecipeInfoSetUp";
+import BeerList from "./components/BeerList";
+import CurrentBeerForm from "./components/CurrentBeerForm";
+import RecipeDetail from "./components/RecipeDetail";
 
 function App() {
-const [addingBeer, setAddingBeer] = useState(false);
-// const [currentBeerInfo, setCurrentBeerInfo] = useState('');
-const [beerRecipe, setBeerRecipe] = useState([]);
-
-const [beerName, setBeerName] = useState('');
-const [beerStyle, setBeerStyle] = useState('');
-const [abv, setABV] = useState('');
-const [brewingTime, setBrewingTime] = useState('');
+  const [addingBeer, setAddingBeer] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  // const [currentBeer, setCurrentBeer] = useState('');
+  const [beerRecipes, setBeerRecipes] = useState([]);
 
 
+  const [beerName, setBeerName] = useState('');
+  const [beerStyle, setBeerStyle] = useState('');
+  const [abv, setABV] = useState('');
+  const [brewingTime, setBrewingTime] = useState('');
+  const [grain, setGrain] = useState('');
+  const [yeast, setYeast] = useState('');
+  const [hops, setHops] = useState('')
 
 const addBeer = () => {
     setAddingBeer(!addingBeer) //set is always updating a value
+      console.log("state", addingBeer)
   }
 
-
+const selectRecipe = (beer) => {
+  // setAddingBeer(!addingBeer)
+  setSelectedRecipe([beer])
+  console.log("selectedRecipe", beer, selectedRecipe)
+}
 
 const handleNameChange = (e) => {
   setBeerName(e.target.value)
@@ -32,6 +44,15 @@ const handleBeerStyleChange = (e) => {
 const handleBrewingTimeChange = (e) => {
   setBrewingTime(e.target.value)
 }
+const handleGrainChange = (e) => {
+  setGrain(e.target.value)
+}
+const handleYeastChange = (e) => {
+  setYeast(e.target.value)
+}
+const handleHopsChange = (e) => {
+  setHops(e.target.value)
+}
 
 const handleClick = () => {
 
@@ -39,75 +60,65 @@ const handleClick = () => {
     beerName: beerName,
     abv: abv,
     beerStyle: beerStyle,
-    brewingTime: brewingTime
+    brewingTime: brewingTime,
+    grain: grain,
+    yeast: yeast,
+    hops: hops,
   }
-  const newBeerRecipe = beerRecipe.concat([beerRecipeObj])
-  setBeerRecipe(newBeerRecipe)
-  console.log("rendering", beerRecipe)
+  const newBeerRecipes = beerRecipes.concat([beerRecipeObj])
+  setBeerRecipes(newBeerRecipes)
+  console.log("clicking beer", newBeerRecipes)
   setAddingBeer(!addingBeer)
 }
 
+  const showClickRecipe = beerRecipes.length >= 1
 
+  const showRecipeDetail = selectedRecipe >= 1
 
-const beerRecipeInfo = beerRecipe.map((item) => {
-    return (
-      <div id="beerInfo-container">
-       <li>
-         <span>{item.beerName}</span>
-         <span>{item.beerStyle}</span>
-         <span>{item.abv}</span>
-         <span>{item.brewingTime}</span>
-       </li>
-       </div>
-     )
-   })
-
+  console.log("Recipe Detail", selectedRecipe >= 1)
 
   return (
     <div>
 
         <div className="beer-inventory-setup">
           <nav>
-            <a href="beerRecipe">Beer Recipe</a>
+            <a href="beerRecipes">Beer Recipe Setup</a>
           </nav>
         </div>
 
 
-
           <header>
-            <h1>Beer Recipe Setup</h1>
+            <button type="button" onClick={addBeer}>Beer Form</button>
             <div>
             {
-              addingBeer ?
+
+              showRecipeDetail ?
               <div>
 
-              <label>Beer Name:</label>
-              <input type="text" name="beerName" placeholder="Beer Name" onChange={handleNameChange} required/>
-              <label>Beer Style:</label>
-              <select name="beerStyle" onChange={handleBeerStyleChange}>
-              <option value="IPA">IPA</option>
-              <option value="Pilsner">Pilsner</option>
-              <option value="Belgian Blonde">Belgian Blonde</option>
-              </select>
-              <label>ABV:</label>
-              <input type="number" required name="ABV" placeholder="ABV" onChange={handleABVChange}/>
-              <label>Brewing Time</label>
-              <input type="text" required name="brewingTime" placeholder="Brewing Time" onChange={handleBrewingTimeChange}/>
+                   <RecipeDetail selectedRecipe={selectedRecipe} />
 
-              <button type="button" onClick={handleClick}>Add Beer!</button>
+
+              <button type="button" onClick={addBeer}>Back</button>
 
               </div>
               :
-              beerRecipe.length >= 1
-                ?
-                <div>
-                <h1>Beer Recipe</h1>
-                <button type="button" onClick={addBeer}>Add Beer</button>
-                   {
-                     beerRecipeInfo
-                   }
-                </div>
-               :
+              showClickRecipe ?
+                <BeerList recipe={beerRecipes} selectRecipe={selectRecipe}/>
+                //encapsulation : makes complicated logic simpler to think about
+                  :
+
+              addingBeer ?
+                    <CurrentBeerForm
+
+                    handleNameChange = {handleNameChange}
+                    handleABVChange = {handleABVChange}
+                    handleBeerStyleChange = {handleBeerStyleChange}
+                    handleBrewingTimeChange = {handleBrewingTimeChange}
+                    handleGrainChange = {handleGrainChange}
+                    handleYeastChange = {handleYeastChange}
+                    handleHopsChange = {handleHopsChange}
+                    handleClick = {handleClick}
+                    /> :
 
               <div className="add-beer">
               <h2>What beers do you sell?</h2>
@@ -115,7 +126,6 @@ const beerRecipeInfo = beerRecipe.map((item) => {
               </div>
 
 
-              //i need a conditional logic in to determine which section to render base on the different state variable.
             }
 
 
