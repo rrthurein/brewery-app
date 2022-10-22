@@ -73,9 +73,9 @@ const handleClick = () => {
 
   const showClickRecipe = beerRecipes.length >= 1
 
-  const showRecipeDetail = selectedRecipe >= 1
+  const showRecipeDetail = selectedRecipe === selectedRecipe
 
-  console.log("Recipe Detail", selectedRecipe >= 1)
+  console.log("recipeDetail", selectedRecipe)
 
   return (
     <div>
