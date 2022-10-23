@@ -26,9 +26,14 @@ const addBeer = () => {
       console.log("state", addingBeer)
   }
 
+const nullSelectedRecipe = () => {
+  setSelectedRecipe(null);
+  console.log("selectedRecipeBacktoNull", selectedRecipe)
+}
+
 const selectRecipe = (beer) => {
   // setAddingBeer(!addingBeer)
-  setSelectedRecipe([beer])
+  setSelectedRecipe(beer)
   console.log("selectedRecipe", beer, selectedRecipe)
 }
 
@@ -70,19 +75,13 @@ const handleClick = () => {
   console.log("clicking beer", newBeerRecipes)
   setAddingBeer(!addingBeer)
 }
-  const remove = () => {
-    const newSelectedRecipe = selectedRecipe.filter{
-      if(selectedRecipe.yeast === beerRecipes.yeast) {
-      return false
-    }
-    return true
-  }
-    setSelectedRecipe(newSelectedRecipe)
-  }
+
 
   const showClickRecipe = beerRecipes.length >= 1
 
-  const showRecipeDetail = selectedRecipe.length >= 1
+  const showRecipeDetail = selectedRecipe
+
+  console.log("selectedRecipe", showRecipeDetail)
 
 
   console.log("showRecipe and showClick", showRecipeDetail, showClickRecipe)
@@ -93,7 +92,7 @@ const handleClick = () => {
         return(
           <div>
              <RecipeDetail selectedRecipe={selectedRecipe} />
-        <button type="button" onClick={addBeer}>Back</button>
+        <button type="button" onClick={nullSelectedRecipe}>Back</button>
         </div>
       );
       } else if (showClickRecipe) {
