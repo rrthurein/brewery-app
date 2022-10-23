@@ -94,27 +94,29 @@ const handleClick = () => {
              <RecipeDetail selectedRecipe={selectedRecipe} />
         <button type="button" onClick={nullSelectedRecipe}>Back</button>
         </div>
-      );
+      );}
+      else if (addingBeer) {
+          return(
+            <CurrentBeerForm
+            handleNameChange = {handleNameChange}
+            handleABVChange = {handleABVChange}
+            handleBeerStyleChange = {handleBeerStyleChange}
+            handleBrewingTimeChange = {handleBrewingTimeChange}
+            handleGrainChange = {handleGrainChange}
+            handleYeastChange = {handleYeastChange}
+            handleHopsChange = {handleHopsChange}
+            handleClick = {handleClick}
+            />
+          );
       } else if (showClickRecipe) {
         return(
-          <BeerList recipe={beerRecipes} selectRecipe={selectRecipe}/>
+          <BeerList addBeer={addBeer} recipe={beerRecipes} selectRecipe={selectRecipe}/>
+
           //encapsulation : makes complicated logic simpler to think about)
       );
-      } else if (addingBeer) {
-        return(
-          <CurrentBeerForm
-          handleNameChange = {handleNameChange}
-          handleABVChange = {handleABVChange}
-          handleBeerStyleChange = {handleBeerStyleChange}
-          handleBrewingTimeChange = {handleBrewingTimeChange}
-          handleGrainChange = {handleGrainChange}
-          handleYeastChange = {handleYeastChange}
-          handleHopsChange = {handleHopsChange}
-          handleClick = {handleClick}
-          />
-        );
+    }
 
-      } else {
+       else {
         return (
           <div className="add-beer">
           <h2>What beers do you sell?</h2>
@@ -134,7 +136,6 @@ const handleClick = () => {
           </nav>
         </div>
           <header>
-            <button type="button" onClick={addBeer}>Beer Form</button>
           {renderView()}
           </header>
 
