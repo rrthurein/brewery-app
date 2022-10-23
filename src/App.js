@@ -70,12 +70,61 @@ const handleClick = () => {
   console.log("clicking beer", newBeerRecipes)
   setAddingBeer(!addingBeer)
 }
+  const remove = () => {
+    const newSelectedRecipe = selectedRecipe.filter{
+      if(selectedRecipe.yeast === beerRecipes.yeast) {
+      return false
+    }
+    return true
+  }
+    setSelectedRecipe(newSelectedRecipe)
+  }
 
   const showClickRecipe = beerRecipes.length >= 1
 
-  const showRecipeDetail = selectedRecipe === selectedRecipe
+  const showRecipeDetail = selectedRecipe.length >= 1
 
-  console.log("recipeDetail", selectedRecipe)
+
+  console.log("showRecipe and showClick", showRecipeDetail, showClickRecipe)
+
+  const renderView = () => {
+
+      if (showRecipeDetail) {
+        return(
+          <div>
+             <RecipeDetail selectedRecipe={selectedRecipe} />
+        <button type="button" onClick={addBeer}>Back</button>
+        </div>
+      );
+      } else if (showClickRecipe) {
+        return(
+          <BeerList recipe={beerRecipes} selectRecipe={selectRecipe}/>
+          //encapsulation : makes complicated logic simpler to think about)
+      );
+      } else if (addingBeer) {
+        return(
+          <CurrentBeerForm
+          handleNameChange = {handleNameChange}
+          handleABVChange = {handleABVChange}
+          handleBeerStyleChange = {handleBeerStyleChange}
+          handleBrewingTimeChange = {handleBrewingTimeChange}
+          handleGrainChange = {handleGrainChange}
+          handleYeastChange = {handleYeastChange}
+          handleHopsChange = {handleHopsChange}
+          handleClick = {handleClick}
+          />
+        );
+
+      } else {
+        return (
+          <div className="add-beer">
+          <h2>What beers do you sell?</h2>
+          <button type="button" onClick={addBeer}>Add</button>
+          </div>
+        );
+      }
+    }
+
 
   return (
     <div>
@@ -85,57 +134,10 @@ const handleClick = () => {
             <a href="beerRecipes">Beer Recipe Setup</a>
           </nav>
         </div>
-
-
           <header>
             <button type="button" onClick={addBeer}>Beer Form</button>
-            <div>
-            {
-
-              showRecipeDetail ?
-              <div>
-
-                   <RecipeDetail selectedRecipe={selectedRecipe} />
-
-
-              <button type="button" onClick={addBeer}>Back</button>
-
-              </div>
-              :
-              showClickRecipe ?
-                <BeerList recipe={beerRecipes} selectRecipe={selectRecipe}/>
-                //encapsulation : makes complicated logic simpler to think about
-                  :
-
-              addingBeer ?
-                    <CurrentBeerForm
-
-                    handleNameChange = {handleNameChange}
-                    handleABVChange = {handleABVChange}
-                    handleBeerStyleChange = {handleBeerStyleChange}
-                    handleBrewingTimeChange = {handleBrewingTimeChange}
-                    handleGrainChange = {handleGrainChange}
-                    handleYeastChange = {handleYeastChange}
-                    handleHopsChange = {handleHopsChange}
-                    handleClick = {handleClick}
-                    /> :
-
-              <div className="add-beer">
-              <h2>What beers do you sell?</h2>
-              <button type="button" onClick={addBeer}>Add</button>
-              </div>
-
-
-            }
-
-
-            </div>
-
-
-
-
+          {renderView()}
           </header>
-
 
         </div>
 
