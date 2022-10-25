@@ -120,7 +120,7 @@ const handleClick = () => {
         return (
           <div className="add-beer">
           <h2>What beers do you sell?</h2>
-          <button type="button" onClick={addBeer}>Add</button>
+          <button id="firstButtonAddBeer" type="button" onClick={addBeer}>Add</button>
           </div>
         );
       }
@@ -128,9 +128,9 @@ const handleClick = () => {
 
 
   return (
-    <div>
+    <div className="Beer-Inventory-Setup">
 
-        <div className="beer-inventory-setup">
+        <div>
           <nav>
             <a href="beerRecipes">Beer Recipe Setup</a>
           </nav>

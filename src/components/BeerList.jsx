@@ -4,6 +4,7 @@ import React from 'react'
 const BeerList = (props) => {
  const recipe = props.recipe
  const selectRecipe = props.selectRecipe
+ const addBeer = props.addBeer
 
   return (
     <div>
@@ -24,7 +25,7 @@ const BeerList = (props) => {
     })
 
         }
-
+        <button type="button" onClick={addBeer}>Add Beer</button>
     </div>
 
       </div>

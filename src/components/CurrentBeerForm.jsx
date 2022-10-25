@@ -13,7 +13,7 @@ const CurrentBeerForm = (props) => {
 
   return (
 
-    <>
+    <div className="BeerRecipeSetUp-Box">
     <h1>Beer Recipe Setup</h1>
       <label>Beer Name:</label>
       <input type="text" name="beerName" placeholder="Beer Name" onChange={handleNameChange} required/>
@@ -33,8 +33,8 @@ const CurrentBeerForm = (props) => {
       <input type="text" name="yeast" placeholder="Yeast" required onChange={handleYeastChange}/>
       <label>Hops</label>
       <input type="text" name="hops" placeholder="Hops" required onChange={handleHopsChange}/>
-      <button type="button" onClick={handleClick}>Add Beer!</button>
-      </>
+      <button id="ButtonAddBeer" type="button" onClick={handleClick}>Add Beer!</button>
+      </div>
   )
 }
 
