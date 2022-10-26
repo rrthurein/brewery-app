@@ -7,15 +7,14 @@ const BeerList = (props) => {
  const addBeer = props.addBeer
 
   return (
-    <div>
+    <div className="BeerList">
     <h1>List of Beer</h1>
 
-    <div>
+    <div className="BeerListBorder">
     { recipe.map((beer) => {
       return(
-        <div key={beer.hops} style={{ border: "none" }}>
-              <button type="button" onClick={() => {selectRecipe(beer)}} style={ { border: "2px solid #4CAF50"} ,
-               { width: "250px"}}>
+        <div  key={beer.hops}>
+              <button id="selectButton" type="button" onClick={() => {selectRecipe(beer)}} >
                {
                 beer.beerName
              }</button>

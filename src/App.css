@@ -1,50 +1,27 @@
-.App {
-  text-align: center;
-}
+.nav-bar {
+  margin: 2vh;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-#firstButtonAddBeer {
-  padding: 5px 80px;
-  border-radius: 3px;
-}
-
-#ButtonAddBeer{
-  padding: 5px 80px;
-  border-radius: 3px;
-}
-
 .add-beer {
+  text-align: center;
   margin: auto;
   margin-top: 20%;
   height: 60%;
   width: 60%;
   padding: 10px;
+}
+
+#firstButtonAddBeer {
+  color: white;
+  margin: auto;
+  height: 5vh;
+  width: 20vh;
   text-align: center;
+  padding: 8px;
+  border-radius: 8px;
+  border: 0;
+  cursor: pointer;
+  background-color: #D1512D;
 }
 
 .Beer-Inventory-Setup {
@@ -55,23 +32,133 @@
 
 }
 
-.BeerRecipeSetUp-Box {
-  background-color: #FFF9B0;
-  min-height: 20vh;
-  margin: auto;
-  margin-top: 5%;
-  height: 60%;
-  width: 60%;
-  padding: 10px;
-  text-align: center;
+.BeerRecipeForm {
+  max-width: 50%;
+  margin: 2.2% auto;
+  text-align: left;
+  float: left;
+  width: 33.33%;
+  padding: 5px;
 }
 
+.BeerRecipeForm input, .BeerRecipeForm select {
+  width: 100%;
+  padding: 10px 10px;
+  margin: 10px 0px;
+  border: 1px solid;
+  box-sizing: border-box;
+  margin-bottom: 14px;
+  display: block;
+  border-radius: 8px;
+}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.BeerRecipeForm button {
+  color: white;
+  margin: auto;
+  margin-top: 5%;
+  height: 5%;
+  width: 50%;
+  text-align: center;
+  padding: 8px;
+  border-radius: 8px;
+  border: 0;
+  cursor: pointer;
+  background-color: #D1512D;
+}
+
+.BeerFormPhoto {
+  max-width: 50vw;
+  height: 100vh;
+}
+
+.BeerForm-row {
+  display: flex;
+}
+
+.BeerList {
+  max-width: 50vh;
+  margin:  auto;
+  text-align: center;
+  padding: 5px;
+}
+
+.BeerList h1 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.BeerList button {
+  color: white;
+  margin: auto;
+  margin-top: 5%;
+  height: 5%;
+  width: 25%;
+  text-align: center;
+  padding: 8px;
+  border-radius: 8px;
+  border: 0;
+  cursor: pointer;
+  background-color: #D1512D;
+}
+
+#selectButton {
+  color: white;
+  margin: auto;
+  margin-top: 5%;
+  height: 5%;
+  width: 50%;
+  text-align: center;
+  padding: 8px;
+  border-radius: 8px;
+  border: 0;
+  cursor: pointer;
+  background-color: #E0144C;
+}
+
+.BeerListBorder {
+  border: 2px solid #9A1663;
+  border-radius: 8px;
+  padding-top: 5vh;
+  padding-bottom: 10vh;
+}
+
+.beerInfo-div {
+  border: 2px solid #9A1663;
+  width: 60vh;
+  height: 80vh;
+  margin: auto;
+  padding: 2vh;
+  border-radius: 8px;
+}
+
+.keyName {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  padding-top: 0.5rem;
+}
+
+.valueName {
+  padding: 1rem;
+  border-radius: 8px;
+
+}
+
+.hr {
+  border-radius: 5px;
+}
+.beerInfo-div-button{
+  display: inline;
+  height: 100%;
+  width: 100%;
+}
+.beerInfo-div-button button {
+  color: white;
+  margin-left: 52%;
+  margin-top: 0.8vh;
+  height: 5%;
+  width: 15%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 0;
+  cursor: pointer;
+  background-color: #D1512D;
 }

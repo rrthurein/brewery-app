@@ -1,0 +1,125 @@
+Brewery Project Idea
+
+- This app will help schedule and prepare the brewing process as a whole from the start of the brew day to pouring the beer into
+the glasses and at its core should help brewer plan out what kind of beer they could be brewing accordingly to beer events and
+beer celebrations through out the year. What these entails are
+  1. preparing to buy the grain and of course factoring the shipping dates of these raw materials
+  for the brew day.
+  2. Estimating the time of the fermentation which includes D-Rest, clarity of the beer, flavor settlement and many more.
+  3. When to dump yeast and hops accordingly to the brewery practices and recommended amount by the app.
+  4. At whatever the temperature is the beer will be fermented and recommended temp by the yeast company.
+  5. Carbonation level, and carbonation time (every system and temperature is different so there will be different time).
+  6. Checking pH level throughout the process from the start of the mash, end of the boil and at the end product.
+  7. Recipe Chart Page including Water Chemistry chart and many more.
+  8. Lagering time for the beer, if its a lager.
+  9. Recording time during the brew day, from the process time of the start of milling, mash in, lauter, boiling, and the rest.
+  10. ABV calculator.
+
+On the home page
+
+We will have a section that has a button "Plan Your Brew Day" and after clicking the button there will be a page
+that has a list of recipes the brewer has added.
+In this page, there also will be suggestions of what the brewery should be brewing this will be predicted
+according to the data of sales and inventory so that the brewery doesn't run out of beer for example a flagship beer that
+is 60% of the brewery's beer sales. This suggestions will say something like "You have 10 barrels left of Pilsner, so we need
+to brew this week to make sure we don't run out of Pilsner. Brew day time to Pour: 6 and a half week. 10 barrels according to
+sales data last us 2 and a half month." We will have this for all of the style of beer that we don't want to run out and
+consistently have in stock. We will also have alerts on which beer will run out either they are flagship beer or not.
+Of course, every beer brew process and time is different because every brewery practices are different.
+
+Either a list of tank or a tank that could be ready for the brew day.
+
+From here brewer can select whichever style of beer to brew and after they select the beer there will be a checklist that is
+unique to the beer style since the process will be different with each style.
+This will have a checkbox of lists that brewer needs to prepare for the brew day like getting an estimate time
+of how long to get grains and yeast to the brewery before the brew day and to check when the next tank will be ready.
+In the checklist there will be a prepping brew day section which can be modify by the head brewer. There will be a default
+setting on the checklist but since every brewery's practices are different it will probably be changed.
+
+This checkbox list can differ from one brewery to another. For example, the Brewery I am currently working for
+prep tanks for the new batch about a week before the brew day. We plan out which tank will be set up
+for the transfer to serving tanks so that we have space to add the new batch on the brew day. For us the steps to make sure
+the beer is ready to transferred are:
+
+ A) Flavor Stability
+ The amount of time the flavor stability depends on the beer but brewers can usually have an estimate time of how long
+ that is if they know their recipe, if not you can always start with a estimate of what yeast company's and general
+ knowledge of common brewer has on the yeast that is used on the beer.
+ then
+ B) if need Dry Hops addition
+ This step usually is for Hoppy beer. For this step brewers usually think of the hop rate addition per barrel or gallon
+ and how long the dry hop process is.
+ C) Cold Crash
+ This step should be B if there is no Dry hop addition but if there is it should be C. Beer should be cold crash immediately
+ when everything is ready so that the yeast and hops can settle and can be dump which leads to step D.
+ D) Dump Yeast/ Hops
+ This process takes about 2-3 days depending on what kind of equipments the brewery has. This is a very important step because
+ we don't want yeast or hops in the serving tank or the keg because it will mess with the flavor and have less shelve life.
+
+ But for some brewery, they might dump yeast after the fermentation is done and let it sit till the flavor is settled and then
+ Dump hops if there are hops addition. So the order would be different and even the practices would be different. Some Brewery
+ don't have serving tanks, they just keg off from the fermentor. But to get an idea of why we need the checkbox list to be
+ adjustable like the time of task to prep is important.
+
+So the first step of getting ready for the brew day is to prep a tank, and have the ingredients ready.
+We usually can tell which tank is ready to transfer by looking at how long it has been in the tank and the way the beer taste
+which is a task and a job of a brewer.
+transfer the beer from the fermentation keg to a serving tank to make space
+for the new beer. After the transfer we usually need a day to carbonate the beer and let clarifying agent make beer clear. Some
+place don't use this, some use it in different step of the brewing process but ultimately depends on the brewer. But in our
+case we usually let it sit for a day after carbonating the beer for 6 hours and the addition the agent.
+
+which tank they want to put in; this usually entails
+kegging the tank, cleaning the tank which takes maybe a whole day depending on the system and the size of the brewery.
+
+(although the App could
+possibly have a guess of which tank it will be, usually the lowest volume of the tank and also kegging
+After selecting, the app will show how long it will take from the brew day to the day the beer can be poured, at least
+an estimate amount of time.
+After choosing the style of beer, there will be a checkbox of what the brewer needs for the brew day and
+on the estimate of how long the brew day will take.
+After clicking the style of beer, there will be a list of things that needs for the brew day to start and the estimate
+of time of when the brew day will finish, after checking the box of all the things that needs to brew the brew day can
+be planned.
+there will be a planner where the app will help plan on how much the brewer needs to brew
+according to the inventory. In this planner it will let us choose which day they will brew, and how long the estimate of the
+process would be according to their system. After selecting the amount of beer that the brewer wants to brew,
+it will have a prediction of how long the beer will last (this will be calculated according from the past sales + time)
+but this can be adjusted to the brewer's opinion. The data will be collected and be reevaluated so that in the future there is a
+better predicament of how fast or slow the beer will sell out and last. With this data we will know when
+to brew the next batch before the beer runs out. Usually this is done by checking inventory and keeping track with
+how much beer is left in tank/kegs but the app will help predict when you should be brewing again with the past data. But
+the app will ask to check inventory to add additional data on how much beer is sold each day or week and compare
+with the sales data to see how much beer is wasted.
+
+This will help us prepare what is needed for the brew day because after those steps the recipe will show and there will be all the
+information that the brewer needs for their brew day including raw materials, water profile, water pH, yeasts and how much
+water we need, how much we many barrels/gallons are they brewing.
+
+//The other thing is the beer life time; this can also be adjusted to the brewer experience and comfortability with how long
+beer will lasts and depending on which beer. It all depends on how long the brewer feels comfortable with the quality of
+the beer.
+
+There will also be a To-Do List on this page. This To-Do List will consist of The Must To Do of the day, The Need
+To Do of the day, and The Least To Do of the day so there are three tier. The first two Must and Need To Dos are things
+that needs to be done of the day, and the Least To Do is something that needs to be done of the week. Each task in the
+To Do list should have details of how to proceed the task, how long it should take, and also additional notes so incase
+there is something that is needed to share with the team, it could be shared with the team.
+
+Incentive to using this app by the brewery to brewer is beer.
+
+
+
+when it should be ready to serve, and what to do throughout the process of the entire brew day, setting up temperature,
+checking SG and OG,
+
+. The app will help guess an expected growth of sales and
+perhaps this will give brewer a better idea of planning with the app. The app will have suggestion on what to brew according
+to the sales and inventory of the beer.
+
+
+ Essentially Planning the brew day ahead with as simple as a click.
+For example to prepare a festbier one would normally need to brew it 2-3 months ahead if you put in lagering
+time and other factors on how the beer is traditionally brewed or even the modified standard of the brewery
+(options available) from the start to the end. This consists of the preparation of brew day from the estimated duration
+of time to how many grain bags we need to milled. The App will have other features like To Do Lists, and Notes.

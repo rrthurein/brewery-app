@@ -1,0 +1,46 @@
+
+a beer inventory state that is an array and when it has something in it that's when you render the third page.
+
+- current beer info(state) or an add beer form data; info for the second page where it's added
+
+adding beer state so that it can be click (true/false) the intial state is false
+
+this is what I'm trying to do
+this is what I tried and why
+this is the unexpected thing that's happening
+
+
+command option J to open console
+
+somehow setting a name into an object instead of a word
+
+
+//i need a conditional logic in to determine which section to render base on the different state variable.
+
+Function
+
+First Use Entry Screen
+    - Text Logo
+    - Explain what the app is
+Beer list page
+    - Add Beer Button
+    - greeting/prompt when no beer
+    - beer list shows when beers exist
+    - beer items are clickable to go to beer detail page
+Adding Beer page
+    - title
+    - Form
+    - done button
+    - divide the inputs into multiple pages with progress bar
+Recipe Detail
+    - Edit Recipe
+    - Delete Recipe
+    - Done Button to go to Home Page
+Home page
+    - Schedule button (Plan your Brew Day) clickable to go to Pick Your Brew Day Page
+    - To-Do Lists
+    - Inventory List
+Pick Your Brew Day Page
+    - Shows Inventory (Having warning signs for possible low inventory beer and recommendation of what to brew)
+    - Show Fermentation Tank availability
+    -

@@ -4,17 +4,38 @@ import React from 'react'
 const RecipeDetail = (props) => {
 
  return(
-          <div id="beerInfo-container">
-          <li>
-            <span>{props.selectedRecipe.beerName} </span>
-            <span>{props.selectedRecipe.beerStyle} </span>
-            <span>{props.selectedRecipe.abv} </span>
-            <span>{props.selectedRecipe.brewingTime} </span>
-            <span>{props.selectedRecipe.grain} </span>
-            <span>{props.selectedRecipe.yeast} </span>
-            <span>{props.selectedRecipe.hops}</span>
-          </li>
-           </div>
+
+     <div className="beerInfo-div">
+       <div className="keyName">Beer Name</div>
+       <hr className="hr"></hr>
+       <div className="valueName">{props.selectedRecipe.beerName} </div>
+
+       <div className="keyName">Beer Style</div>
+       <hr className="hr"></hr>
+       <div className="valueName">{props.selectedRecipe.beerStyle} </div>
+
+       <div className="keyName">Beer ABV</div>
+       <hr className="hr"></hr>
+       <div className="valueName">{props.selectedRecipe.abv} </div>
+
+       <div className="keyName">Brewing</div>
+       <hr className="hr"></hr>
+       <div className="valueName">{props.selectedRecipe.brewingTime} </div>
+
+       <div className="keyName">Grain</div>
+       <hr className="hr"></hr>
+       <div className="valueName">{props.selectedRecipe.grain} </div>
+
+       <div className="keyName">Yeast</div>
+       <hr className="hr"></hr>
+       <div className="valueName">{props.selectedRecipe.yeast} </div>
+
+       <div className="keyName">Hops</div>
+       <hr className="hr"></hr>
+       <div className="valueName">{props.selectedRecipe.hops}</div>
+      </div>
+
+
  )
 }
 
