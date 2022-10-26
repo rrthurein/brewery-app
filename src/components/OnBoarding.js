@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import BeerList from "./BeerList";
 import CurrentBeerForm from "./CurrentBeerForm";
 import RecipeDetail from "./RecipeDetail";
+import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
 function OnBoarding() {
   const [addingBeer, setAddingBeer] = useState(false);
@@ -77,6 +78,8 @@ const handleClick = () => {
 
   const showRecipeDetail = selectedRecipe
 
+  const navigate = useNavigate() //Navigating Programmatically
+
   console.log("selectedRecipe", showRecipeDetail)
 
 
@@ -96,7 +99,7 @@ const handleClick = () => {
 
              <RecipeDetail selectedRecipe={selectedRecipe} />
              <div className="beerInfo-div-button">
-               <button type="button" >Brew</button>
+               <button type="button" onClick={() => navigate("brew")}>Brew</button>
                <button type="button" onClick={nullSelectedRecipe}>Back</button>
              </div>
         </div>
