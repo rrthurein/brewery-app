@@ -91,11 +91,7 @@ const handleClick = () => {
         return(
 
           <div>
-          <div className="nav-bar">
-            <nav>
-              <a href="/">Beer Recipe Setup</a>
-            </nav>
-          </div>
+      
 
              <RecipeDetail selectedRecipe={selectedRecipe} />
              <div className="beerInfo-div-button">
