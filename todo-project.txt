@@ -17,7 +17,7 @@ somehow setting a name into an object instead of a word
 
 //i need a conditional logic in to determine which section to render base on the different state variable.
 
-Function
+Functions
 
 First Use Entry Screen
     - Text Logo
@@ -43,4 +43,14 @@ Home page
 Pick Your Brew Day Page
     - Shows Inventory (Having warning signs for possible low inventory beer and recommendation of what to brew)
     - Show Fermentation Tank availability
+    - Show Beer Recipe List
+    -
+Inventory Page
+    - If Inventory is empty, prompt add information.
+    - Have a Add Button to start the data input
+    - Have input of Inventory data from what Beers are in stock, how much it is left, what time it was transferred and check in
+      of inventory timeline.
+    - If Inventory has data, Show a list of Beer Inventory and their data.
+    - Shows the amount of Beer left in the cold box
+    - 
     -

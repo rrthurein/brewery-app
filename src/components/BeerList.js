@@ -19,11 +19,9 @@ const BeerList = (props) => {
                 beer.beerName
              }</button>
              </div>
-      )
-
-    })
-
-        }
+            )
+                          })
+    }
         <button type="button" onClick={addBeer}>Add Beer</button>
     </div>
 
@@ -33,7 +31,3 @@ const BeerList = (props) => {
 }
 
 export default BeerList
-
-// recipe.map(
-//   (beer) => {
-//     return

@@ -90,9 +90,7 @@ const handleClick = () => {
       if (showRecipeDetail) {
         return(
 
-          <div>
-      
-
+          <div className="RecipeDetail">
              <RecipeDetail selectedRecipe={selectedRecipe} />
              <div className="beerInfo-div-button">
                <button type="button" onClick={() => navigate("brew")}>Brew</button>
