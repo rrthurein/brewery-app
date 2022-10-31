@@ -10,10 +10,12 @@ const Home = () => {
 
     </div>
 
-    <div>
+    <section>
     <h1>Inventory</h1>
 
-    </div>
+    </section>
+
+
 
     </div>
   )

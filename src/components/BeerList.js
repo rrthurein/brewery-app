@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import BeerListContext from "../BeerListContext";
 
 
 const BeerList = (props) => {
- const recipe = props.recipe
+
+const { beerList, setBeerList } = useContext(BeerListContext);
+
  const selectRecipe = props.selectRecipe
  const addBeer = props.addBeer
+ console.log("beer list", beerList);
 
   return (
     <div className="BeerList">
     <h1>List of Beer</h1>
 
     <div className="BeerListBorder">
-    { recipe.map((beer) => {
+    { beerList.map((beer) => {
       return(
         <div  key={beer.hops}>
               <button id="selectButton" type="button" onClick={() => {selectRecipe(beer)}} >

@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import BeerList from "./BeerList";
 import CurrentBeerForm from "./CurrentBeerForm";
 import RecipeDetail from "./RecipeDetail";
+import BeerListContext from "../BeerListContext";
+import App from "../App";
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
+
+
 
 function OnBoarding() {
   const [addingBeer, setAddingBeer] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   // const [currentBeer, setCurrentBeer] = useState('');
-  const [beerRecipes, setBeerRecipes] = useState([]);
-
+  // const [beerRecipes, setBeerRecipes] = useState([]);
 
   const [beerName, setBeerName] = useState('');
   const [beerStyle, setBeerStyle] = useState('');
@@ -56,6 +59,8 @@ const handleHopsChange = (e) => {
   setHops(e.target.value)
 }
 
+const { beerList, setBeerList } = useContext(BeerListContext); //
+
 const handleClick = () => {
 
   const beerRecipeObj = {
@@ -67,23 +72,21 @@ const handleClick = () => {
     yeast: yeast,
     hops: hops,
   }
-  const newBeerRecipes = beerRecipes.concat([beerRecipeObj])
-  setBeerRecipes(newBeerRecipes)
-  // console.log("clicking beer", newBeerRecipes)
+  const newBeerRecipes = beerList.concat([beerRecipeObj])
+  setBeerList(newBeerRecipes)
   setAddingBeer(!addingBeer)
 }
+    console.log("handleClick", handleClick)
+    console.log("beerList", beerList)
 
 
-  const showClickRecipe = beerRecipes.length >= 1
+  const showClickRecipe = beerList.length >= 1 //check back
 
   const showRecipeDetail = selectedRecipe
 
   const navigate = useNavigate() //Navigating Programmatically
 
-  console.log("selectedRecipe", showRecipeDetail)
 
-
-  console.log("showRecipe and showClick", showRecipeDetail, showClickRecipe)
 
   const renderView = () => {
 
@@ -116,8 +119,8 @@ const handleClick = () => {
           );
       } else if (showClickRecipe) {
         return(
-          <BeerList addBeer={addBeer} recipe={beerRecipes} selectRecipe={selectRecipe}/>
-
+          <BeerList addBeer={addBeer} selectRecipe={selectRecipe}/>
+            // recipe={beerRecipes}
           //encapsulation : makes complicated logic simpler to think about)
       );
     }

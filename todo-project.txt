@@ -14,6 +14,9 @@ command option J to open console
 
 somehow setting a name into an object instead of a word
 
+To-Do
+
+Use Dynmaic Route and URL Param for Beer List and Recipe Detail.
 
 //i need a conditional logic in to determine which section to render base on the different state variable.
 
