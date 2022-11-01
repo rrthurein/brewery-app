@@ -13,9 +13,9 @@ const Navbar = () => {
   return (
     <nav>
       <NavLink style={navLinkStyles} to="/home">Home</NavLink>
-      <NavLink style={navLinkStyles} to="/brew">Brew</NavLink>
       <NavLink style={navLinkStyles} to="/beer-list">Beer List</NavLink>
     </nav>
+
   )
 }
 

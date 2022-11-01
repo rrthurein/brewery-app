@@ -8,12 +8,36 @@ import { Routes, Route } from "react-router-dom";
 import WithNav from "./components/WithNav";
 import WithoutNav from "./components/WithoutNav";
 import BeerListContext from "./BeerListContext";
+import RecipeDetail from "./components/RecipeDetail";
 
+const testBeerList = [
+    {
+      beerName: "Back Paddock",
+      abv: 5.5,
+      beerStyle: "Pilsner",
+      brewingTime: "Six Weeks",
+      grain: "Mecca",
+      yeast: "802",
+      hops: "Mouteka",
+      id: 1,
+    },
+    {
+      beerName: "Between Two Ferns",
+      abv: 5.5,
+      beerStyle: "Kolsch",
+      brewingTime: "Six Weeks",
+      grain: "2 row",
+      yeast: "340",
+      hops: "Mouteka",
+      id: 2,
+    },
+];
 
 function App() {
 
   const [beerList, setBeerList] = useState([]);
   const value = { beerList, setBeerList };
+
 
 
   return (
@@ -24,9 +48,10 @@ function App() {
             <Route path="/" element={<OnBoarding />} />
         </Route>
         <Route  element={<WithNav />}>
-          <Route path="brew" element={<Brew />} />
           <Route path="home" element={<Home />} />
           <Route path="beer-list" element={<BeerList />} />
+          <Route path="recipe-detail" element={<RecipeDetail />} />
+          <Route path="beer-list/brew" element={<Brew />} />
         </Route>
      </Routes>
 
