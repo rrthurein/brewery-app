@@ -67,8 +67,7 @@ function OnBoarding() {
       hops: hops,
     }
     const newBeerRecipes = beerList.concat([beerRecipeObj])
-    const addID = beerList.forEach((beer, index) => beer.id = index + 1);
-    //adds an ID everytime a new object is created in the array
+    beerList.forEach((beer, index) => beer.id = index + 1); //adds an ID everytime a new object is created in the array
     console.log(beerList);
     setBeerList(newBeerRecipes)
 
