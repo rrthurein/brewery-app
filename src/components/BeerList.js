@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
 import BeerListContext from "../BeerListContext";
+import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
 import RecipeDetail from "./RecipeDetail";
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
 
 const BeerList = () => {
-
+    const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
   const { beerList, setBeerList } = useContext(BeerListContext);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const navigate = useNavigate();
@@ -49,8 +50,9 @@ const BeerList = () => {
                   )
                                 })
           }
-              <button type="button" onClick={() => {  navigate("/") }}>Add Beer</button>
+              <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/");  }}>Add Beer</button>
           </div>
+
             </section>
             );
           }

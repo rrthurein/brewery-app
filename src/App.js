@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import WithNav from "./components/WithNav";
 import WithoutNav from "./components/WithoutNav";
 import BeerListContext from "./BeerListContext";
+import AddingBeerBooleanContext from "./AddingBeerBooleanContext";
 import RecipeDetail from "./components/RecipeDetail";
 
 const testBeerList = [
@@ -19,7 +20,6 @@ const testBeerList = [
       grain: "Mecca",
       yeast: "802",
       hops: "Mouteka",
-      id: 1,
     },
     {
       beerName: "Between Two Ferns",
@@ -29,7 +29,6 @@ const testBeerList = [
       grain: "2 row",
       yeast: "340",
       hops: "Mouteka",
-      id: 2,
     },
 ];
 
@@ -38,25 +37,26 @@ function App() {
   const [beerList, setBeerList] = useState([]);
   const value = { beerList, setBeerList };
 
+  const [addingBeer, setAddingBeer] = useState(false);
+  const toggleSetting = { addingBeer, setAddingBeer }
 
 
   return (
-
-  <BeerListContext.Provider value={value}>
-    <Routes>
-        <Route element={<WithoutNav />}>
-            <Route path="/" element={<OnBoarding />} />
-        </Route>
-        <Route  element={<WithNav />}>
-          <Route path="home" element={<Home />} />
-          <Route path="beer-list" element={<BeerList />} />
-          <Route path="recipe-detail" element={<RecipeDetail />} />
-          <Route path="beer-list/brew" element={<Brew />} />
-        </Route>
-     </Routes>
-
-     </BeerListContext.Provider>
-
+  <AddingBeerBooleanContext.Provider value={toggleSetting}>
+    <BeerListContext.Provider value={value}>
+      <Routes>
+          <Route element={<WithoutNav />}>
+              <Route path="/" element={<OnBoarding />} />
+          </Route>
+          <Route  element={<WithNav />}>
+            <Route path="home" element={<Home />} />
+            <Route path="beer-list" element={<BeerList />} />
+            <Route path="beer-list/brew" element={<Brew />} />
+            <Route path="recipe-detail" element={<RecipeDetail />} />
+          </Route>
+       </Routes>
+       </BeerListContext.Provider>
+  </AddingBeerBooleanContext.Provider>
 
   )
 }

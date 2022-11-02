@@ -2,13 +2,14 @@ import React, { useState, useContext } from 'react';
 import BeerList from "./BeerList";
 import CurrentBeerForm from "./CurrentBeerForm";
 import BeerListContext from "../BeerListContext";
+import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
 import App from "../App";
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
 
 
 function OnBoarding() {
-  const [addingBeer, setAddingBeer] = useState(false);
+  const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
 
   // const [currentBeer, setCurrentBeer] = useState('');
   // const [beerRecipes, setBeerRecipes] = useState([]);
@@ -28,7 +29,6 @@ function OnBoarding() {
       setAddingBeer(!addingBeer) //set is always updating a value
         console.log("state", addingBeer)
     }
-
 
 
   const handleNameChange = (e) => {
@@ -53,7 +53,8 @@ function OnBoarding() {
     setHops(e.target.value)
   }
 
-  const { beerList, setBeerList } = useContext(BeerListContext); //
+  const { beerList, setBeerList } = useContext(BeerListContext);
+
 
   const handleClick = () => {
 
@@ -67,17 +68,15 @@ function OnBoarding() {
       hops: hops,
     }
     const newBeerRecipes = beerList.concat([beerRecipeObj])
-    beerList.forEach((beer, index) => beer.id = index + 1); //adds an ID everytime a new object is created in the array
+    beerList.forEach((beer, index) => beer.id = index + 1);
+    //adds an ID everytime a new object is created in the array
     console.log(beerList);
     setBeerList(newBeerRecipes)
-
-
-
-    // setAddingBeer(!addingBeer)
+    setAddingBeer(!addingBeer)
+    console.log("state", addingBeer)
     navigate("beer-list")
   }
-
-
+  console.log("state", addingBeer)
 
 
   const renderView = () => {
@@ -103,7 +102,7 @@ function OnBoarding() {
        else {
         return (
           <div className="add-beer">
-          <h2>What beers do you sell?</h2>
+          <h2>Add Beer Recipe!</h2>
           <button id="firstButtonAddBeer" type="button" onClick={addBeer}>Add</button>
           </div>
         );
