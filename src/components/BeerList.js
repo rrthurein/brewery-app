@@ -10,9 +10,6 @@ const BeerList = () => {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const navigate = useNavigate();
 
-   // const addBeer = props.addBeer
-   console.log("beer list", beerList);
-
 
    const selectRecipe = (beer) => {
        setSelectedRecipe(beer)

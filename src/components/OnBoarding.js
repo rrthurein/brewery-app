@@ -21,6 +21,7 @@ function OnBoarding() {
   const [yeast, setYeast] = useState('');
   const [hops, setHops] = useState('')
 
+
   const navigate = useNavigate() //Navigating Programmatically
 
   const addBeer = () => {
@@ -66,10 +67,18 @@ function OnBoarding() {
       hops: hops,
     }
     const newBeerRecipes = beerList.concat([beerRecipeObj])
+    const addID = beerList.forEach((beer, index) => beer.id = index + 1);
+    //adds an ID everytime a new object is created in the array
+    console.log(beerList);
     setBeerList(newBeerRecipes)
+
+
+
     // setAddingBeer(!addingBeer)
     navigate("beer-list")
   }
+
+
 
 
   const renderView = () => {
