@@ -26,6 +26,7 @@
 
 
     console.log("function check", calculateBrewingSchedule)
+    console.log("selectedRecipe", selectedRecipe)
 
     // const calendar = google.calendar({version : "v3"});
     const CLIENT_ID = "890654996682-urq2der67lj97k6nj0dcrk9kkj6ts3oi.apps.googleusercontent.com"
@@ -33,29 +34,14 @@
     const DISCOVERY_DOCS = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
     const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
 
-    const schedulingParameters = {
-        lager: {
-          primaryFermentation: 12,
-          dRest: 2,
-          lagering: 14,
-          carbonation: 1
-        },
-        ale: {
-          primaryFermentation: 9,
-          dRest: 2,
-          coldCrash: 1,
-          carbonation: 1,
-        },
-        kettleSour: {
-          souringWort: 2,
-          primaryFermentation: 7,
-          dRest: 2,
-          coldCrash: 1,
-          carbonation: 1,
-        }
+
+    const settingBeerType = () => {
+      if(selectedRecipe.beerStyle == "Pilsner"){
+        return setBeerType("lager")
+      } else if(selectedRecipe.beerStyle == "IPA" || "Belgian Blonde"){
+        return setBeerType("ale")
       }
-
-
+    }
 
 
 
@@ -111,12 +97,7 @@
           <DateTimePicker
             onChange={(e) => {
               setTime(e)
-              if(selectedRecipe.beerStyle === "Pilsner"){
-                return setBeerType(schedulingParameters.lager)
-              } else if(selectedRecipe.beerStyle === "IPA" && "Belgian Blonde"){
-                return setBeerType(schedulingParameters.ale)
-              }
-
+              settingBeerType(selectedRecipe.beerStyle)
             }}
             value={time}
             disableClock={true}
@@ -125,7 +106,6 @@
           />
         <button onClick={() => {
               calculateBrewingSchedule(time, beerType)
-                console.log("beerType", beerType)
             }}
             >Schedule Beer</button>
       </> : <PopUp />
