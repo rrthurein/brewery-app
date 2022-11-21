@@ -1,5 +1,3 @@
-import { gapi } from "gapi-script";
-
 const schedulingParameters = {
     lager: {
       primaryFermentation: 12,
@@ -26,19 +24,20 @@ const schedulingParameters = {
 var date = new Date();
 console.log(date)
 
-const calculateBrewingSchedule = (brewDate, beerType) => {
-  if(beerType == "lager") {
-   let primaryFermentationCurrentDate = brewDate.setDate(brewDate.getDate() + schedulingParameters.lager.primaryFermentation )
-   let endDatePrimaryFermentation = new Date(primaryFermentationCurrentDate)
-   let dRestDate = endDatePrimaryFermentation.setDate(endDatePrimaryFermentation.getDate() + schedulingParameters.lager.dRest)
-   let endDRestDate = new Date(dRestDate)
-   let lageringDate = endDRestDate.setDate(endDRestDate.getDate() + schedulingParameters.lager.lagering)
-   let endDateLagering = new Date(lageringDate)
-   let carbonationDate = endDateLagering.setDate(endDateLagering.getDate() + schedulingParameters.lager.carbonation)
-   let endDate = new Date(carbonationDate)
-   console.log("lagerDoneDate", endDate )
-   return endDate;
- } else if (beerType == "ale") {
+export function calculateBrewingSchedule(brewDate, beerType) {
+    if(beerType == "lager") {
+     let primaryFermentationCurrentDate = brewDate.setDate(brewDate.getDate() + schedulingParameters.lager.primaryFermentation )
+     let endStartDateTime = new Date(primaryFermentationCurrentDate)
+     let dRestDate = endStartDateTime.setDate(endStartDateTime.getDate() + schedulingParameters.lager.dRest)
+     let endDRestDate = new Date(dRestDate)
+     let lageringDate = endDRestDate.setDate(endDRestDate.getDate() + schedulingParameters.lager.lagering)
+     let endDateLagering = new Date(lageringDate)
+     let carbonationDate = endDateLagering.setDate(endDateLagering.getDate() + schedulingParameters.lager.carbonation)
+     let endDate = new Date(carbonationDate)
+     console.log("lagerDoneDate", endDate )
+     return endDate;
+        }
+      else if (beerType == "ale") {
    let primaryFermentationCurrentDate = brewDate.setDate(brewDate.getDate() + schedulingParameters.ale.primaryFermentation )
    let endPrimaryFermentation = new Date(primaryFermentationCurrentDate)
    let dRestDate = endPrimaryFermentation.setDate(endPrimaryFermentation.getDate() + schedulingParameters.ale.dRest)
@@ -49,10 +48,11 @@ const calculateBrewingSchedule = (brewDate, beerType) => {
    let endDate = new Date(carbonationDate)
    console.log("aleDoneDate", endDate )
    return endDate;
- } else if (beerType == "kettleSour"){
-   let souringWortDate = brewDate.setDate(brewDate.getDate() + schedulingParameters.kettleSour.primaryFermentation )
-   let endSouringWortDate = new Date(souringWortDate)
-   let primaryFermentationCurrentDate = endSouringWortDate.setDate(endSouringWortDate.getDate() + schedulingParameters.kettleSour.primaryFermentation )
+        }
+      else if (beerType == "kettleSour"){
+   let startTimeSouringWortDate = brewDate.setDate(brewDate.getDate() + schedulingParameters.kettleSour.primaryFermentation )
+   let endTimeSouringWort = new Date(startTimeSouringWortDate)
+   let primaryFermentationCurrentDate = endTimeSouringWort.setDate(endTimeSouringWort.getDate() + schedulingParameters.kettleSour.primaryFermentation )
    let endPrimaryFermentation = new Date(primaryFermentationCurrentDate)
    let dRestDate = endPrimaryFermentation.setDate(endPrimaryFermentation.getDate() + schedulingParameters.kettleSour.dRest)
    let endDRestDate = new Date(dRestDate)
@@ -60,14 +60,7 @@ const calculateBrewingSchedule = (brewDate, beerType) => {
    let endColdCrashDate = new Date(coldCrashDate)
    let carbonationDate = endColdCrashDate.setDate(endColdCrashDate.getDate() + schedulingParameters.kettleSour.carbonation)
    let endDate = new Date(carbonationDate)
-   console.log("kettleSourDoneDate", endDate )
+   console.log("today's date", brewDate, "kettleSourDoneDate", endDate, "souringWortDate", endTimeSouringWort)
    return endDate;
- }
-}
-
-calculateBrewingSchedule(date, "kettleSour")
-//
-// const calendarID = process.env.REACT_APP_CALENDAR_ID;
-// const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-// const accessToken = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
-//
+      }
+};

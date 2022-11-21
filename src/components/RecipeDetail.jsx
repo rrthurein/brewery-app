@@ -1,7 +1,12 @@
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
 const RecipeDetail = (props) => {
+  const navigate = useNavigate();
+
+  const handleClickBrewDay = () => {
+    navigate("/calendar")
+  }
 
  return(
 
@@ -33,6 +38,8 @@ const RecipeDetail = (props) => {
        <div className="keyName">Hops</div>
        <hr className="hr"></hr>
        <div className="valueName">{props.selectedRecipe.hops}</div>
+
+       <button style={{width: 100, height: 50}} onClick={handleClickBrewDay}>Add Schedule</button>
       </div>
 
 

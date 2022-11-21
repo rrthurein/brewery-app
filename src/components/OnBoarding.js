@@ -5,14 +5,13 @@ import BeerListContext from "../BeerListContext";
 import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
 import App from "../App";
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
+import "../util";
 
 
 
 function OnBoarding() {
   const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
 
-  // const [currentBeer, setCurrentBeer] = useState('');
-  // const [beerRecipes, setBeerRecipes] = useState([]);
 
   const [beerName, setBeerName] = useState('');
   const [beerStyle, setBeerStyle] = useState('');

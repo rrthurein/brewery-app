@@ -224,3 +224,7 @@
     width: 15%;
   }
 }
+
+.react-datetime-picker__button {
+  width: 30px;
+}

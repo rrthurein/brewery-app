@@ -1,14 +1,16 @@
 import React, { useState, useContext } from 'react';
 import BeerListContext from "../BeerListContext";
 import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
+import SelectedRecipeContext from "../SelectedRecipeContext";
 import RecipeDetail from "./RecipeDetail";
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
 
+
 const BeerList = () => {
-    const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
+  const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
   const { beerList, setBeerList } = useContext(BeerListContext);
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
   const navigate = useNavigate();
 
 
@@ -23,7 +25,7 @@ const BeerList = () => {
    }
 
     const showRecipeDetail = selectedRecipe
-    const showClickRecipe = beerList.length >= 1 //check back
+    //const showClickRecipe = beerList.length >= 1 check back
 
     if(showRecipeDetail) {
       return(
@@ -41,18 +43,19 @@ const BeerList = () => {
                 <div className="BeerListBorder">
                 { beerList.map((beer) => {
             return(
-              <div  key={beer.hops}>
-                    <button id="selectButton" type="button" onClick={() => {selectRecipe(beer)}} >
-                     {
-                      beer.beerName
-                   }</button>
-                   </div>
+                    <div  key={beer.hops}>
+                          <button id="selectButton" type="button" onClick={() => {selectRecipe(beer)}} >
+                           {
+                            beer.beerName
+                         }</button>
+                         </div>
                   )
-                                })
-          }
+                                          })
+                  }
               <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/");  }}>Add Beer</button>
-          </div>
 
+
+          </div>
             </section>
             );
           }

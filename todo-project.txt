@@ -3,11 +3,33 @@ a beer inventory state that is an array and when it has something in it that's w
 
 - current beer info(state) or an add beer form data; info for the second page where it's added
 
-adding beer state so that it can be click (true/false) the intial state is false
+adding beer state so that it can be click (true/false) the initial state is false
 
 this is what I'm trying to do
 this is what I tried and why
 this is the unexpected thing that's happening
+
+
+
+ when they click schedule, run get schedule and then within get schedule add it to the calendar loop through a list of dates
+ within the calculate function call
+ onClick import the util function export it from util and import it on plan your brewing excute that function on click
+ calculate the schedule get back the list of start time and end time of each of the phases and outside of the function
+ and inside the onclick function and loop through all of the result inside onCilck function the result of the calculate function
+ can be a list of object that represent each meeting. First object in the array that it returns, and second object in the array
+ is the second phase, and use through the array. my add event function main argument will still be the event, this time passing
+ in the arguments from the array of  the results from the calculate functions.
+
+
+how do i loop through an object of different time block and set it to google calendars
+I will have a loop of three different types of styles of beer. I will click on one type of style and it will insert
+multiple events that has different start times and end times. When I click on a type of beer, it will select that object.
+How do i select the object through a loop?
+
+
+
+Beer List -> Beer Recipe -> Schedule -> Set Date -> Show Pop Up that it's completed and/or open google calendar.
+
 
 
 command option J to open console
@@ -15,11 +37,45 @@ command option J to open console
 somehow setting a name into an object instead of a word
 
 local storage
+make a data structure that has a
+make a json structure and each entry will
+the key of the entry will be the beer type and the value will be the object
+schedule will go to the brew day, the Fermentation period, the
+
+date picker widget find on react that will let them select the date
+schedule object that store our scheduling data
+Lager
+phase 1: Primary Fermentation (9-13days)
+phase 2: Diacetyl Rest
+phase 3: Lagering
+phase 4: Carbonation
+
+Ale
+phase 1: Primary Fermentation (7 days)
+phase 2: Diacetyl Rest
+phase 3: Cold
+
+Kettle Sour
+phase 1: Souring the wort (1-2days)
+phase 2: Primary Fermentation (7days)
+phase 3: Diacetyl Rest
+phase 4: Cold
+
+How to take this parameter about the schedule and turn it into a google calendar.
+Date, Time, Duration and the name of the meeting.
+Start Brewing retrieve the beer type of the beer from the beer type retrieve the scheduling plan for that given beer type and
+then take the date selected from that date calculate a sets of date that the brewer step should occur.
+prints the date time of each step.
+
+make a utility file
+i want to add the utility file data to the
+
+
+
 
 To-Do
 
 Use Dynmaic Route and URL Param for Beer List and Recipe Detail.
-
 
 
 //i need a conditional logic in to determine which section to render base on the different state variable.

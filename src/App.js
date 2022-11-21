@@ -9,7 +9,9 @@ import WithNav from "./components/WithNav";
 import WithoutNav from "./components/WithoutNav";
 import BeerListContext from "./BeerListContext";
 import AddingBeerBooleanContext from "./AddingBeerBooleanContext";
+import SelectedRecipeContext from "./SelectedRecipeContext";
 import RecipeDetail from "./components/RecipeDetail";
+import Calendar from "./components/Calendar";
 
 const testBeerList = [
     {
@@ -40,25 +42,32 @@ function App() {
   const [addingBeer, setAddingBeer] = useState(false);
   const toggleSetting = { addingBeer, setAddingBeer }
 
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const selected = { selectedRecipe, setSelectedRecipe }
+
+
 
   return (
-  <AddingBeerBooleanContext.Provider value={toggleSetting}>
-    <BeerListContext.Provider value={value}>
-      <Routes>
-          <Route element={<WithoutNav />}>
-              <Route path="/" element={<OnBoarding />} />
-          </Route>
-          <Route  element={<WithNav />}>
-            <Route path="home" element={<Home />} />
-            <Route path="beer-list" element={<BeerList />} />
-            <Route path="beer-list/brew" element={<Brew />} />
-            <Route path="recipe-detail" element={<RecipeDetail />} />
-          </Route>
-       </Routes>
-       </BeerListContext.Provider>
-  </AddingBeerBooleanContext.Provider>
 
-  )
+        <AddingBeerBooleanContext.Provider value={toggleSetting}>
+          <SelectedRecipeContext.Provider value={selected}>
+            <BeerListContext.Provider value={value}>
+              <Routes>
+                  <Route element={<WithoutNav />}>
+                      <Route path="/" element={<OnBoarding />} />
+                  </Route>
+                  <Route  element={<WithNav />}>
+                    <Route path="home" element={<Home />} />
+                    <Route path="beer-list" element={<BeerList />} />
+                    <Route path="beer-list/brew" element={<Brew />} />
+                    <Route path="recipe-detail" element={<RecipeDetail />} />
+                    <Route path="calendar" element={<Calendar />} />
+                  </Route>
+               </Routes>
+               </BeerListContext.Provider>
+              </SelectedRecipeContext.Provider>
+        </AddingBeerBooleanContext.Provider>
+   )
 }
 
 export default App;
