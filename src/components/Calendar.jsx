@@ -8,7 +8,7 @@
   import jwt_decode from "jwt-decode";
   import DateTimePicker from 'react-datetime-picker';
   import PopUp from "./PopUp";
-  import { calculateBrewingSchedule } from "../util.js";
+  import { calculateBrewingSchedule, setDateCalendar } from "../util.js";
 
 
 
@@ -16,23 +16,33 @@
     const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
     const { beerList, setBeerList } = useContext(BeerListContext)
     const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
-    const [time, setTime] = useState(new Date());
-    const [beerType, setBeerType] = useState(null);
+    const [startTime, setStartTime] = useState(new Date());
+    const [beerType, setBeerType] = useState("lager");
     const [popUp, setPopUp] = useState(false);
 
-    const calendarID = process.env.REACT_APP_CALENDAR_ID;
-    const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-    const accessToken = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
+    const testBeerList = [
+        {
+          beerName: "Back Paddock",
+          abv: 5.5,
+          beerStyle: "Pilsner",
+          brewingTime: "Six Weeks",
+          grain: "Mecca",
+          yeast: "802",
+          hops: "Mouteka",
+        },
+        {
+          beerName: "Between Two Ferns",
+          abv: 5.5,
+          beerStyle: "Kolsch",
+          brewingTime: "Six Weeks",
+          grain: "2 row",
+          yeast: "340",
+          hops: "Mouteka",
+        },
+    ];
 
-
-    console.log("function check", calculateBrewingSchedule)
-    console.log("selectedRecipe", selectedRecipe)
-
-    // const calendar = google.calendar({version : "v3"});
-    const CLIENT_ID = "890654996682-urq2der67lj97k6nj0dcrk9kkj6ts3oi.apps.googleusercontent.com"
-    // const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
-    const DISCOVERY_DOCS = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
-    const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
+      console.log("function check", calculateBrewingSchedule)
+      console.log("selectedRecipe", selectedRecipe)
 
 
     const settingBeerType = () => {
@@ -40,54 +50,10 @@
         return setBeerType("lager")
       } else if(selectedRecipe.beerStyle == "IPA" || "Belgian Blonde"){
         return setBeerType("ale")
+
       }
     }
 
-
-
-    const setDateCalendar = () => {
-      var event = {
-        summary: "It's also working",
-        location: "",
-        start: {
-          dateTime: time,
-          timeZone: "America/Los_Angeles",
-        },
-        end: {
-          dateTime: time,
-          timeZone: "America/Los_Angeles",
-        }
-      }
-      console.log("event", event)
-
-      function initiate() {
-        gapi.client
-        .request({
-          path: `https://www.googleapis.com/calendar/v3/calendars/${calendarID}/events`,
-          method: "POST",
-          body: event,
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ya29.a0AeTM1icf_GevVQzxVyC4_Fbqe94ySAKM04p_izGemTu88TfUiQfAbQeFq8rM6K5gV7DnrocPh5XxFP_9RaA7Dl5YpW4Zn-3HMTS6jUUFIDohu-jnPNQxMWA9X6HVW06lwlWsUoguwAEduAQAu5QR1HEBCgaJaCgYKAcMSARASFQHWtWOmVH1ehHUmd0N4VMohMo8VIg0163`,
-          },
-        })
-        .then(
-          (response) => {
-            console.log("sucess", response)
-            return [true, response];
-
-          },
-          function (err) {
-            console.log(err);
-            return [false, err];
-          }
-        );
-
-        // setPopUp(!popUp);
-        console.log("time", time)
-      }
-        gapi.load("client", initiate);
-    }
     return (
 
       <div>
@@ -96,16 +62,17 @@
         <>
           <DateTimePicker
             onChange={(e) => {
-              setTime(e)
+              setStartTime(e)
               settingBeerType(selectedRecipe.beerStyle)
             }}
-            value={time}
+            value={startTime}
             disableClock={true}
             format={"y-MM-dd h:mm:ss a"}
             className="dateTimePicker"
           />
         <button onClick={() => {
-              calculateBrewingSchedule(time, beerType)
+              // calculateBrewingSchedule(startTime, beerType)
+              setDateCalendar()
             }}
             >Schedule Beer</button>
       </> : <PopUp />

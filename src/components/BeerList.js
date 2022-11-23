@@ -41,21 +41,21 @@ const BeerList = () => {
           <section className="BeerList">
               <h1>List of Beer</h1>
                 <div className="BeerListBorder">
-                { beerList.map((beer) => {
-            return(
-                    <div  key={beer.hops}>
-                          <button id="selectButton" type="button" onClick={() => {selectRecipe(beer)}} >
-                           {
-                            beer.beerName
-                         }</button>
-                         </div>
-                  )
-                                          })
-                  }
-              <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/");  }}>Add Beer</button>
+                    { beerList.map((beer) => {
+                        return(
+                        <div  key={beer.hops}>
+                              <button id="selectButton" type="button" onClick={() => {selectRecipe(beer)}} >
+                               {
+                                beer.beerName
+                             }</button>
+                             </div>
+                      )
+                                              })
+                                            }
+                      <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/");  }}>Add Beer</button>
 
 
-          </div>
+                  </div>
             </section>
             );
           }
