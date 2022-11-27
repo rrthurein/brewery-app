@@ -27,9 +27,9 @@ multiple events that has different start times and end times. When I click on a 
 How do i select the object through a loop?
 
 
-
 Beer List -> Beer Recipe -> Schedule -> Set Date -> Show Pop Up that it's completed and/or open google calendar.
 
+Now that I managed to set the Date 
 
 
 command option J to open console
