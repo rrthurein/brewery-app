@@ -8,7 +8,7 @@
   import jwt_decode from "jwt-decode";
   import DateTimePicker from 'react-datetime-picker';
   import PopUp from "./PopUp";
-  import { calculateBrewingSchedule, setDateCalendar } from "../util.js";
+  import { calculateBrewingSchedule  } from "../util.js";
 
 
 
@@ -42,7 +42,6 @@
     ];
 
 
-
       console.log("function check", calculateBrewingSchedule)
       console.log("selectedRecipe", selectedRecipe)
 
@@ -73,8 +72,8 @@
             className="dateTimePicker"
           />
         <button onClick={() => {
-              // calculateBrewingSchedule(startTime, beerType)
-              setDateCalendar()
+              calculateBrewingSchedule(startTime, beerType)
+              setPopUp(!popUp)
             }}
             >Schedule Beer</button>
       </> : <PopUp />

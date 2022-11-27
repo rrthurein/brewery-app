@@ -9,11 +9,16 @@ const PopUp = () => {
     navigate("/home")
   }
 
+  const openCalendar = () =>{
+    console.log("openCalendar")
+  }
+
   return (
     <div className="popup">
       <div>
         <h1>You have sucessfully added your Brew Schedule!</h1>
           <button className="close-btn" onClick={closeButton}>Close</button>
+          <button className="go-to-calendar-btn" onClick={openCalendar}> Open Calendar</button>
       </div>
     </div>
   )
