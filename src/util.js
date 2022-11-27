@@ -21,14 +21,14 @@ import jwt_decode from "jwt-decode";
         primaryFermentation: 12,
         dRest: 2,
         lagering: 14,
-        carbonation: 1
+        carbonation: 2
       },
       ale: {
         name: "Ale",
         primaryFermentation: 9,
         dRest: 2,
         coldCrash: 1,
-        carbonation: 1,
+        carbonation: 2
       },
       kettleSour: {
         name: "Kettle Sour",
@@ -36,141 +36,138 @@ import jwt_decode from "jwt-decode";
         primaryFermentation: 7,
         dRest: 2,
         coldCrash: 2,
-        carbonation: 1,
+        carbonation: 2
       }
     }
 
 
-    let date = new Date();
-    const newDate = date;
-    console.log(date)
+  export function calculateBrewingSchedule(brewDate, beerType) {
+      if(beerType == "lager") {
+            let primaryFermentationCurrentDate = new Date(brewDate) //creating new object - setting aside more spaces in the memory
+            primaryFermentationCurrentDate.setDate(primaryFermentationCurrentDate.getDate() + schedulingParameters.lager.primaryFermentation)
+            let endPrimaryFermentationTime = new Date(primaryFermentationCurrentDate)
+            let dRestDate = endPrimaryFermentationTime.setDate(endPrimaryFermentationTime.getDate() + schedulingParameters.lager.dRest)
+            let endDRestDate = new Date(dRestDate)
+            let lageringDate = endDRestDate.setDate(endDRestDate.getDate() + schedulingParameters.lager.lagering)
+            let endDateLagering = new Date(lageringDate)
+            endDateLagering.setDate(endDateLagering.getDate() + schedulingParameters.lager.carbonation)
+            let lagerDoneDate = new Date(endDateLagering)
 
+            const lagerEventTimes = [
+              {
+                summary: "Primary Fermentation",
+                description: "description",
+                start: {
+                  dateTime: brewDate,
+                  timeZone: 'America/Los_Angeles',
+                },
+                end: {
+                  dateTime: primaryFermentationCurrentDate,
+                  timeZone: 'America/Los_Angeles',
+                },
 
-export function calculateBrewingSchedule(brewDate, beerType) {
-  if(beerType == "lager") {
-
-        let primaryFermentationCurrentDate = new Date(brewDate) //creating new object - setting aside more spaces in the memory
-        primaryFermentationCurrentDate.setDate(primaryFermentationCurrentDate.getDate() + schedulingParameters.lager.primaryFermentation)
-        let endPrimaryFermentationTime = new Date(primaryFermentationCurrentDate)
-        let dRestDate = endPrimaryFermentationTime.setDate(endPrimaryFermentationTime.getDate() + schedulingParameters.lager.dRest)
-        let endDRestDate = new Date(dRestDate)
-        let lageringDate = endDRestDate.setDate(endDRestDate.getDate() + schedulingParameters.lager.lagering)
-        let endDateLagering = new Date(lageringDate)
-        let carbonationDate = endDateLagering.setDate(endDateLagering.getDate() + schedulingParameters.lager.carbonation)
-        let lagerDoneDate = new Date(carbonationDate)
-        console.log("brewDate", brewDate, "primaryFermentationCurrentDate", primaryFermentationCurrentDate)
-
-        const lagerEventTimes = [
-          {
-            summary: "Primary Fermentation",
-            description: "description",
-            start: {
-              dateTime: brewDate,
-              timeZone: 'America/Los_Angeles',
-            },
-            end: {
-              dateTime: primaryFermentationCurrentDate,
-              timeZone: 'America/Los_Angeles',
-            },
-
-          },
-          {
-            summary: "D-Rest",
-            description: "description",
-            start: {
-              dateTime: primaryFermentationCurrentDate,
-              timeZone: 'America/Los_Angeles',
-            },
-            end: {
-              dateTime: endPrimaryFermentationTime,
-              timeZone: 'America/Los_Angeles',
-            },
-          },
-          {
-            summary: "Lagering",
-            description: "description",
-            start: {
-              dateTime: endPrimaryFermentationTime,
-              timeZone: 'America/Los_Angeles',
-            },
-            end: {
-              dateTime: endDateLagering,
-              timeZone: 'America/Los_Angeles',
-            },
-          },
-          {
-            summary: "Carbonation",
-            description: "description",
-            start: {
-              dateTime: endDateLagering,
-              timeZone: 'America/Los_Angeles',
-            },
-            end: {
-              dateTime: lagerDoneDate,
-              timeZone: 'America/Los_Angeles',
-            },
-          }
-         ]
-
-        let events = lagerEventTimes.map((val) => {
-          return val, console.log("val", val);
-        });
-
-        console.log("lagerEventTimes", lagerEventTimes )
-
-        const batch = gapi.client.newBatch()
-
-        batch.add(gapi.client
-          .request({
-            path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-            method: "POST",
-            body: lagerEventTimes[0],
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
-            },
-          }))
-          batch.add(gapi.client
-            .request({
-              path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-              method: "POST",
-              body: lagerEventTimes[1],
-              headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
               },
-            }))
+              {
+                summary: "D-Rest",
+                description: "description",
+                start: {
+                  dateTime: primaryFermentationCurrentDate,
+                  timeZone: 'America/Los_Angeles',
+                },
+                end: {
+                  dateTime: endPrimaryFermentationTime,
+                  timeZone: 'America/Los_Angeles',
+                },
+              },
+              {
+                summary: "Lagering",
+                description: "description",
+                start: {
+                  dateTime: endPrimaryFermentationTime,
+                  timeZone: 'America/Los_Angeles',
+                },
+                end: {
+                  dateTime: endDRestDate,
+                  timeZone: 'America/Los_Angeles',
+                },
+              },
+              {
+                summary: "Carbonation",
+                description: "description",
+                start: {
+                  dateTime: endDRestDate,
+                  timeZone: 'America/Los_Angeles',
+                },
+                end: {
+                  dateTime: endDateLagering,
+                  timeZone: 'America/Los_Angeles',
+                },
+              }
+             ]
+
+            let events = lagerEventTimes.map((val) => {
+              return val, console.log("val", val);
+            });
+
+            console.log("lagerEventTimes", lagerEventTimes )
+
+            const batch = gapi.client.newBatch()
+
             batch.add(gapi.client
               .request({
                 path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
                 method: "POST",
-                body: lagerEventTimes[2],
+                body: lagerEventTimes[0],
                 headers: {
                   "Content-type": "application/json",
-                  Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                  Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                 },
               }))
               batch.add(gapi.client
                 .request({
                   path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
                   method: "POST",
-                  body: lagerEventTimes[3],
+                  body: lagerEventTimes[1],
                   headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                    Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                   },
                 }))
-                batch.then(
-                  (response) => {
-                    console.log("sucess", response)
-                    return [true, response];
-                  },
-                  function (err) {
-                    console.log(err);
-                    return [false, err];
+                batch.add(gapi.client
+                  .request({
+                    path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
+                    method: "POST",
+                    body: lagerEventTimes[2],
+                    headers: {
+                      "Content-type": "application/json",
+                      Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
+                    },
+                  }))
+                  batch.add(gapi.client
+                    .request({
+                      path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
+                      method: "POST",
+                      body: lagerEventTimes[3],
+                      headers: {
+                        "Content-type": "application/json",
+                        Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
+                      },
+                    }))
+                    batch.then(
+                      (response) => {
+                        console.log("sucess", response)
+                        return [true, response];
+                      },
+                      function (err) {
+                        console.log(err);
+                        return [false, err];
+                      }
+                    )
+
+                    // batch.execute(batch => {
+                    //     window.open(batch.htmlLink);
+                    //   });
                   }
-                )
-              }
       else if (beerType == "ale") {
             let primaryFermentationCurrentDate = new Date(brewDate);
             primaryFermentationCurrentDate.setDate(primaryFermentationCurrentDate.getDate() + schedulingParameters.ale.primaryFermentation )
@@ -184,9 +181,6 @@ export function calculateBrewingSchedule(brewDate, beerType) {
             console.log("aleDoneDate", endDate )
 
             console.log("endPrimaryFermentationTime", endPrimaryFermentationTime, "endDRestDate", endDRestDate, "endColdCrashDate", endColdCrashDate, "endDate", endDate)
-
-
-            let startDate = new Date();
 
             const aleEventsTime = [
               {
@@ -222,7 +216,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                   timeZone: 'America/Los_Angeles',
                 },
                 end: {
-                  dateTime: endColdCrashDate,
+                  dateTime: endDRestDate,
                   timeZone: 'America/Los_Angeles',
                 },
               },
@@ -230,7 +224,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                 summary: "Carbonation",
                 description: "description",
                 start: {
-                  dateTime: endColdCrashDate,
+                  dateTime: endDRestDate,
                   timeZone: 'America/Los_Angeles',
                 },
                 end: {
@@ -253,7 +247,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                 body: aleEventsTime[0],
                 headers: {
                   "Content-type": "application/json",
-                  Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                  Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                 },
               }))
               batch.add(gapi.client
@@ -263,7 +257,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                   body: aleEventsTime[1],
                   headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                    Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                   },
                 }))
                 batch.add(gapi.client
@@ -273,7 +267,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                     body: aleEventsTime[2],
                     headers: {
                       "Content-type": "application/json",
-                      Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                      Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                     },
                   }))
                   batch.add(gapi.client
@@ -283,7 +277,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                       body: aleEventsTime[3],
                       headers: {
                         "Content-type": "application/json",
-                        Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                        Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                       },
                     }))
                     batch.then(
@@ -296,10 +290,10 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                         return [false, err];
                       }
                       )
-                    }
+                  }
       else if (beerType == "kettleSour"){
                   let startTimeSouringWortDate = new Date(brewDate)
-                  startTimeSouringWortDate = startTimeSouringWortDate.setDate(startTimeSouringWortDate.getDate() + schedulingParameters.kettleSour.primaryFermentation )
+                  startTimeSouringWortDate.setDate(startTimeSouringWortDate.getDate() + schedulingParameters.kettleSour.primaryFermentation )
                   let endTimeSouringWort = new Date(startTimeSouringWortDate)
                   let primaryFermentationCurrentDate = endTimeSouringWort.setDate(endTimeSouringWort.getDate() + schedulingParameters.kettleSour.primaryFermentation )
                   let endPrimaryFermentation = new Date(primaryFermentationCurrentDate)
@@ -357,7 +351,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                         timeZone: 'America/Los_Angeles',
                       },
                       end: {
-                        dateTime: endColdCrashDate,
+                        dateTime: endDRestDate,
                         timeZone: 'America/Los_Angeles',
                       },
                     },
@@ -365,7 +359,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                       summary: "Carbonation",
                       description: "description",
                       start: {
-                        dateTime: endColdCrashDate,
+                        dateTime: endDRestDate,
                         timeZone: 'America/Los_Angeles',
                       },
                       end: {
@@ -392,7 +386,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                       body: souringWortEvent[0],
                       headers: {
                         "Content-type": "application/json",
-                        Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                        Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                       },
                     }))
                     batch.add(gapi.client
@@ -402,7 +396,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                         body: souringWortEvent[1],
                         headers: {
                           "Content-type": "application/json",
-                          Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                          Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                         },
                       }))
                       batch.add(gapi.client
@@ -412,7 +406,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                           body: souringWortEvent[2],
                           headers: {
                             "Content-type": "application/json",
-                            Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                            Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                           },
                         }))
                         batch.add(gapi.client
@@ -422,7 +416,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                             body: souringWortEvent[3],
                             headers: {
                               "Content-type": "application/json",
-                              Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                              Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                             },
                           }))
                           batch.add(gapi.client
@@ -432,7 +426,7 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                               body: souringWortEvent[4],
                               headers: {
                                 "Content-type": "application/json",
-                                Authorization: `Bearer ya29.a0AeTM1ifaW948C1zz6wq8jvjToOn_UHJhky2Kuk04tjzeeXAuBhuuzkrENuRyTTu-Cz25guZPpuhsWbdKC3oRZfV518Kua36wE4CKYOuRxDJYpZQqwU6lwJp1IgSPGUgBS3vEIqoj25ar-ywtC3YpgLoI8pw5aCgYKASMSARASFQHWtWOm3VO0gkEWPtDa4euQCSEZkA0163`,
+                                Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                               },
                             }))
                             batch.then(
@@ -450,39 +444,26 @@ export function calculateBrewingSchedule(brewDate, beerType) {
                         };
 
 
-                  //   export function setDateCalendar() {
-                  //     let brewDate = new Date();
-                  //
-                  //
-                  //
-                  //
-                  //   )
-                  // }
-
-
-
-
-                  //
-                  // var makeRequest = function(events) {
-                  //   let header= {
-                  //     headers: {
-                  //       'Authorization': "Bearer ya29.a0AeTM1id7SpqWzpG3ZrQwck_7GYufnCZyJz-yPemmMaL_81LQ9bBHxTXC-swmncOskHKuyDsWBCxBLjZdKaSoYa6N-1sTzLaqG0AnCQYll2Q5mPmB4XMQpeXpxjzPxsqOPzmIm9KJAPZc33VU6nm4cmvyaR99aCgYKAfkSARASFQHWtWOmyKMt4Iirsa3Sayio7IEnRQ0163"
-                  //     }
-                  //   };
-                  //   gapi.client.load('calendar', 'v3', header, () => {
-                  //     var request = gapi.client.calendar.events.insert({
-                  //       'calendarId': 'primary',
-                  //       'resource': events,
-                  //       'method': 'POST',
-                  //     });
-                  //     request.execute(function(resp) {
-                  //       console.log(resp);
-                  //     });
-                  //   });
-                  // }
-                  //
-                  //
-                  // for(var j = 0; j<events.length; j++) {
-                  //   makeRequest(events[j]);
-                  //   console.log(makeRequest);
-                  // }
+  // var makeRequest = function(events) {
+  //   let header= {
+  //     headers: {
+  //       'Authorization': "Bearer ya29.a0AeTM1id7SpqWzpG3ZrQwck_7GYufnCZyJz-yPemmMaL_81LQ9bBHxTXC-swmncOskHKuyDsWBCxBLjZdKaSoYa6N-1sTzLaqG0AnCQYll2Q5mPmB4XMQpeXpxjzPxsqOPzmIm9KJAPZc33VU6nm4cmvyaR99aCgYKAfkSARASFQHWtWOmyKMt4Iirsa3Sayio7IEnRQ0163"
+  //     }
+  //   };
+  //   gapi.client.load('calendar', 'v3', header, () => {
+  //     var request = gapi.client.calendar.events.insert({
+  //       'calendarId': 'primary',
+  //       'resource': events,
+  //       'method': 'POST',
+  //     });
+  //     request.execute(function(resp) {
+  //       console.log(resp);
+  //     });
+  //   });
+  // }
+  //
+  //
+  // for(var j = 0; j<events.length; j++) {
+  //   makeRequest(events[j]);
+  //   console.log(makeRequest);
+  // }

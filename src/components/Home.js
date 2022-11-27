@@ -5,7 +5,6 @@ const Home = () => {
 
   return (
     <div>
-    \
 
     <section>
     <h1>To Do List</h1>

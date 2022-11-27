@@ -20,31 +20,6 @@
     const [beerType, setBeerType] = useState("lager");
     const [popUp, setPopUp] = useState(false);
 
-    const testBeerList = [
-        {
-          beerName: "Back Paddock",
-          abv: 5.5,
-          beerStyle: "Pilsner",
-          brewingTime: "Six Weeks",
-          grain: "Mecca",
-          yeast: "802",
-          hops: "Mouteka",
-        },
-        {
-          beerName: "Between Two Ferns",
-          abv: 5.5,
-          beerStyle: "Kolsch",
-          brewingTime: "Six Weeks",
-          grain: "2 row",
-          yeast: "340",
-          hops: "Mouteka",
-        },
-    ];
-
-
-      console.log("function check", calculateBrewingSchedule)
-      console.log("selectedRecipe", selectedRecipe)
-
 
     const settingBeerType = () => {
       if(selectedRecipe.beerStyle == "Pilsner"){
@@ -58,28 +33,27 @@
     return (
 
       <div>
-      {
-        !popUp ?
-        <>
-          <DateTimePicker
-            onChange={(e) => {
-              setStartTime(e)
-              settingBeerType(selectedRecipe.beerStyle)
-            }}
-            value={startTime}
-            disableClock={true}
-            format={"y-MM-dd h:mm:ss a"}
-            className="dateTimePicker"
-          />
-        <button onClick={() => {
-              calculateBrewingSchedule(startTime, beerType)
-              setPopUp(!popUp)
-            }}
-            >Schedule Beer</button>
-      </> : <PopUp />
-    }
-
-
+        {
+          !popUp ?
+          <>
+              <DateTimePicker
+                onChange={(e) => {
+                  setStartTime(e)
+                  settingBeerType(selectedRecipe.beerStyle)
+                }}
+                value={startTime}
+                disableClock={true}
+                format={"y-MM-dd h:mm:ss a"}
+                className="dateTimePicker"
+              />
+            <button onClick={() => {
+                  calculateBrewingSchedule(startTime, beerType)
+                  setPopUp(!popUp)
+                }}
+                >Schedule Beer</button>
+           </> :
+              <PopUp />
+      }
     </div>
 
   )
