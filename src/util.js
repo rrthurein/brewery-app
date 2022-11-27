@@ -7,11 +7,7 @@ import jwt_decode from "jwt-decode";
     const accessToken = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
 
 
-    // const calendar = {version : "v3"}
-    const CLIENT_ID = "890654996682-urq2der67lj97k6nj0dcrk9kkj6ts3oi.apps.googleusercontent.com"
-    // const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
-    const DISCOVERY_DOCS = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
-    const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
+ 
 
 
 
