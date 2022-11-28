@@ -17,21 +17,18 @@ import jwt_decode from "jwt-decode";
 
     const schedulingParameters = {
       lager: {
-        name: "Lager",
         primaryFermentation: 12,
         dRest: 2,
         lagering: 14,
         carbonation: 2
       },
       ale: {
-        name: "Ale",
         primaryFermentation: 9,
         dRest: 2,
         coldCrash: 1,
         carbonation: 2
       },
       kettleSour: {
-        name: "Kettle Sour",
         souringWort: 2,
         primaryFermentation: 7,
         dRest: 2,
@@ -39,120 +36,90 @@ import jwt_decode from "jwt-decode";
         carbonation: 2
       }
     }
-
+    // const startDate = (brewDate) => {
+    //   let startDate
+    //   if(Object.keys(schedulingParameters.lager)[i] == Object.keys(schedulingParameters.lager)[0]){
+    //                return   startDate = new Date(brewDate)
+    //   } else if(Object.keys(schedulingParameters.lager)[i]> Object.keys(schedulingParameters.lager)[0]){
+    //     startDate.setDate(startDate.getDate() + Object.values(schedulingParameters.lager)[i])
+    //    return new Date(startDate)
+    //   }
+    // }
+    // const endDate = (brewDate) => {
+    //   let endDate
+    //   let eventStartDate
+    //   if(Object.keys(schedulingParameters.lager)[i] == Object.keys(schedulingParameters.lager)[0]){
+    //     endDate.setDate(endDate.getDate() + Object.values(schedulingParameters.lager)[i])
+    //   return startDate = new Date(endDate)
+    //    }
+    //    else if(){
+    //     eventStartDate.setDate(eventStartDate.getDate() + Object.values(schedulingParameters.lager)[i])
+    //           new Date(endDate)
+    //   }
 
   export function calculateBrewingSchedule(brewDate, beerType) {
       if(beerType == "lager") {
-            let primaryFermentationCurrentDate = new Date(brewDate) //creating new object - setting aside more spaces in the memory
-            primaryFermentationCurrentDate.setDate(primaryFermentationCurrentDate.getDate() + schedulingParameters.lager.primaryFermentation)
-            let endPrimaryFermentationTime = new Date(primaryFermentationCurrentDate)
-            let dRestDate = endPrimaryFermentationTime.setDate(endPrimaryFermentationTime.getDate() + schedulingParameters.lager.dRest)
-            let endDRestDate = new Date(dRestDate)
-            let lageringDate = endDRestDate.setDate(endDRestDate.getDate() + schedulingParameters.lager.lagering)
-            let endDateLagering = new Date(lageringDate)
-            endDateLagering.setDate(endDateLagering.getDate() + schedulingParameters.lager.carbonation)
-            let lagerDoneDate = new Date(endDateLagering)
 
-            const lagerEventTimes = [
-              {
-                summary: "Primary Fermentation",
-                description: "description",
-                start: {
-                  dateTime: brewDate,
-                  timeZone: 'America/Los_Angeles',
-                },
-                end: {
-                  dateTime: primaryFermentationCurrentDate,
-                  timeZone: 'America/Los_Angeles',
-                },
 
-              },
-              {
-                summary: "D-Rest",
-                description: "description",
-                start: {
-                  dateTime: primaryFermentationCurrentDate,
-                  timeZone: 'America/Los_Angeles',
-                },
-                end: {
-                  dateTime: endPrimaryFermentationTime,
-                  timeZone: 'America/Los_Angeles',
-                },
-              },
-              {
-                summary: "Lagering",
-                description: "description",
-                start: {
-                  dateTime: endPrimaryFermentationTime,
-                  timeZone: 'America/Los_Angeles',
-                },
-                end: {
-                  dateTime: endDRestDate,
-                  timeZone: 'America/Los_Angeles',
-                },
-              },
-              {
-                summary: "Carbonation",
-                description: "description",
-                start: {
-                  dateTime: endDRestDate,
-                  timeZone: 'America/Los_Angeles',
-                },
-                end: {
-                  dateTime: endDateLagering,
-                  timeZone: 'America/Los_Angeles',
-                },
-              }
-             ]
+        const lagerLength = Object.keys(schedulingParameters.lager).length
+        const lagerEventTimes = []
+        let startDate = []
+        let endDate = []
+        for(let i = 0; i<=lagerLength; i++){
+          if(i == 0){
+            startDate.push(new Date(brewDate))
+            //startDate = [0] brewDate is 0
+            let endDateValue = brewDate + Object.values(schedulingParameters.lager)[i]
+            endDate.push(new Date(endDateValue))
+            //endDate = [12]
+            console.log("startDate[i].getDate()", startDate[i].getDate());
 
-            let events = lagerEventTimes.map((val) => {
-              return val, console.log("val", val);
-            });
+          } else if(i > 0){
+            //i now is 1
+            startDate.push(endDate[i - 1]) //startDate index is 1 right now
+            //startDate = [0] we are pushing 12 into startDate
+            //startDate is now [0,12]
+            endDate.push(new Date(startDate[i].setDate(startDate[i].getDate() + Object.values(schedulingParameters.lager)[i - 1])))
+          //  console.log("startDate[i].getDate()", startDate[i].getDate(), 'Object.values(schedulingParameters.lager)[i])', Object.values(schedulingParameters.lager)[i]);
+          }
+          lagerEventTimes[i] = {
+            summary: Object.keys(schedulingParameters.lager)[i],
+            start: {
+              dateTime: startDate[i],
+              timeZone: 'America/Los_Angeles',
+            },
+            end: {
+              dateTime: endDate[i],
+              timeZone: 'America/Los_Angeles',
+            }
+          }
 
-            console.log("lagerEventTimes", lagerEventTimes )
+        }
 
-            const batch = gapi.client.newBatch()
 
-            batch.add(gapi.client
-              .request({
-                path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                method: "POST",
-                body: lagerEventTimes[0],
-                headers: {
-                  "Content-type": "application/json",
-                  Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                },
-              }))
-              batch.add(gapi.client
-                .request({
-                  path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                  method: "POST",
-                  body: lagerEventTimes[1],
-                  headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                  },
-                }))
-                batch.add(gapi.client
-                  .request({
-                    path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                    method: "POST",
-                    body: lagerEventTimes[2],
-                    headers: {
-                      "Content-type": "application/json",
-                      Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                    },
-                  }))
+
+
+
+                lagerEventTimes.map((val) => {
+                  return val, console.log("val", val);
+                });
+
+                console.log("lagerEventTimes", lagerEventTimes, "schedulingParameters.lager length", Object.keys(schedulingParameters.lager)[0])
+
+                const batch = gapi.client.newBatch()
+
+                for(var j = 0; j<lagerEventTimes.length; j++) {
                   batch.add(gapi.client
                     .request({
                       path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
                       method: "POST",
-                      body: lagerEventTimes[3],
+                      body: lagerEventTimes[j],
                       headers: {
                         "Content-type": "application/json",
                         Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                       },
                     }))
+                }
                     batch.then(
                       (response) => {
                         console.log("sucess", response)
@@ -164,9 +131,6 @@ import jwt_decode from "jwt-decode";
                       }
                     )
 
-                    // batch.execute(batch => {
-                    //     window.open(batch.htmlLink);
-                    //   });
                   }
       else if (beerType == "ale") {
             let primaryFermentationCurrentDate = new Date(brewDate);
@@ -185,7 +149,6 @@ import jwt_decode from "jwt-decode";
             const aleEventsTime = [
               {
                 summary: "Primary Fermentation",
-                description: "description",
                 start: {
                   dateTime: brewDate,
                   timeZone: 'America/Los_Angeles',
@@ -198,7 +161,6 @@ import jwt_decode from "jwt-decode";
               },
               {
                 summary: "D-Rest",
-                description: "description",
                 start: {
                   dateTime: primaryFermentationCurrentDate,
                   timeZone: 'America/Los_Angeles',
@@ -210,7 +172,6 @@ import jwt_decode from "jwt-decode";
               },
               {
                 summary: "Lagering",
-                description: "description",
                 start: {
                   dateTime: endPrimaryFermentationTime,
                   timeZone: 'America/Los_Angeles',
@@ -222,7 +183,6 @@ import jwt_decode from "jwt-decode";
               },
               {
                 summary: "Carbonation",
-                description: "description",
                 start: {
                   dateTime: endDRestDate,
                   timeZone: 'America/Los_Angeles',
@@ -240,56 +200,30 @@ import jwt_decode from "jwt-decode";
 
             const batch = gapi.client.newBatch()
 
-            batch.add(gapi.client
-              .request({
-                path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                method: "POST",
-                body: aleEventsTime[0],
-                headers: {
-                  "Content-type": "application/json",
-                  Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                },
-              }))
+
+            for(var j = 0; j<aleEventsTime.length; j++) {
               batch.add(gapi.client
                 .request({
                   path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
                   method: "POST",
-                  body: aleEventsTime[1],
+                  body: aleEventsTime[j],
                   headers: {
                     "Content-type": "application/json",
                     Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                   },
                 }))
-                batch.add(gapi.client
-                  .request({
-                    path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                    method: "POST",
-                    body: aleEventsTime[2],
-                    headers: {
-                      "Content-type": "application/json",
-                      Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                    },
-                  }))
-                  batch.add(gapi.client
-                    .request({
-                      path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                      method: "POST",
-                      body: aleEventsTime[3],
-                      headers: {
-                        "Content-type": "application/json",
-                        Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                      },
-                    }))
-                    batch.then(
-                      (response) => {
-                        console.log("sucess", response)
-                        return [true, response];
-                      },
-                      function (err) {
-                        console.log(err);
-                        return [false, err];
-                      }
-                      )
+            }
+                batch.then(
+                  (response) => {
+                    console.log("sucess", response)
+                    return [true, response];
+                  },
+                  function (err) {
+                    console.log(err);
+                    return [false, err];
+                  }
+                )
+
                   }
       else if (beerType == "kettleSour"){
                   let startTimeSouringWortDate = new Date(brewDate)
@@ -308,7 +242,7 @@ import jwt_decode from "jwt-decode";
                   const souringWortEvent = [
                     {
                       summary: "Souring Wort",
-                      description: "description",
+
                       start: {
                         dateTime: brewDate,
                         timeZone: 'America/Los_Angeles',
@@ -321,7 +255,7 @@ import jwt_decode from "jwt-decode";
                     },
                     {
                       summary: "Primary Fermentation",
-                      description: "description",
+
                       start: {
                         dateTime: startTimeSouringWortDate,
                         timeZone: 'America/Los_Angeles',
@@ -333,7 +267,7 @@ import jwt_decode from "jwt-decode";
                     },
                     {
                       summary: "D-Rest",
-                      description: "description",
+
                       start: {
                         dateTime: endTimeSouringWort,
                         timeZone: 'America/Los_Angeles',
@@ -345,7 +279,6 @@ import jwt_decode from "jwt-decode";
                     },
                     {
                       summary: "Cold Crash",
-                      description: "description",
                       start: {
                         dateTime: endPrimaryFermentation,
                         timeZone: 'America/Los_Angeles',
@@ -357,7 +290,6 @@ import jwt_decode from "jwt-decode";
                     },
                     {
                       summary: "Carbonation",
-                      description: "description",
                       start: {
                         dateTime: endDRestDate,
                         timeZone: 'America/Los_Angeles',
@@ -379,70 +311,89 @@ import jwt_decode from "jwt-decode";
 
                   const batch = gapi.client.newBatch()
 
-                  batch.add(gapi.client
-                    .request({
-                      path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                      method: "POST",
-                      body: souringWortEvent[0],
-                      headers: {
-                        "Content-type": "application/json",
-                        Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                      },
-                    }))
+                  for(let s = 0; s<souringWortEvent.length; s++){
                     batch.add(gapi.client
                       .request({
                         path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
                         method: "POST",
-                        body: souringWortEvent[1],
+                        body: souringWortEvent[s],
                         headers: {
                           "Content-type": "application/json",
                           Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
                         },
                       }))
-                      batch.add(gapi.client
-                        .request({
-                          path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                          method: "POST",
-                          body: souringWortEvent[2],
-                          headers: {
-                            "Content-type": "application/json",
-                            Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                          },
-                        }))
-                        batch.add(gapi.client
-                          .request({
-                            path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                            method: "POST",
-                            body: souringWortEvent[3],
-                            headers: {
-                              "Content-type": "application/json",
-                              Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                            },
-                          }))
-                          batch.add(gapi.client
-                            .request({
-                              path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                              method: "POST",
-                              body: souringWortEvent[4],
-                              headers: {
-                                "Content-type": "application/json",
-                                Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                              },
-                            }))
-                            batch.then(
-                              (response) => {
-                                console.log("sucess", response)
-                                return [true, response];
-                              },
-                              function (err) {
-                                console.log(err);
-                                return [false, err];
-                              }
-                            )
+                  }
+                      batch.then(
+                        (response) => {
+                          console.log("sucess", response)
+                          return [true, response];
+                        },
+                        function (err) {
+                          console.log(err);
+                          return [false, err];
+                        }
+                      )
+                    }
+                  };
 
-                          }
-                        };
-
+                  // let primaryFermentationCurrentDate = new Date(brewDate) //creating new object - setting aside more spaces in the memory
+                  // primaryFermentationCurrentDate.setDate(primaryFermentationCurrentDate.getDate() + schedulingParameters.lager.primaryFermentation)
+                  // let endPrimaryFermentationTime = new Date(primaryFermentationCurrentDate)
+                  // let dRestDate = endPrimaryFermentationTime.setDate(endPrimaryFermentationTime.getDate() + schedulingParameters.lager.dRest)
+                  // let endDRestDate = new Date(dRestDate)
+                  // let lageringDate = endDRestDate.setDate(endDRestDate.getDate() + schedulingParameters.lager.lagering)
+                  // let endDateLagering = new Date(lageringDate)
+                  // endDateLagering.setDate(endDateLagering.getDate() + schedulingParameters.lager.carbonation)
+                  // let lagerDoneDate = new Date(endDateLagering)
+                  //
+                  // console.log(Object.keys(schedulingParameters.lager)[0])
+                  //
+                  // const lagerEventTimes = [
+                  //   {
+                  //     summary: "Primary Fermentation",
+                  //     start: {
+                  //       dateTime: brewDate,
+                  //       timeZone: 'America/Los_Angeles',
+                  //     },
+                  //     end: {
+                  //       dateTime: primaryFermentationCurrentDate,
+                  //       timeZone: 'America/Los_Angeles',
+                  //     },
+                  //   },
+                  //   {
+                  //     summary: "D-Rest",
+                  //     start: {
+                  //       dateTime: primaryFermentationCurrentDate,
+                  //       timeZone: 'America/Los_Angeles',
+                  //     },
+                  //     end: {
+                  //       dateTime: endPrimaryFermentationTime,
+                  //       timeZone: 'America/Los_Angeles',
+                  //     },
+                  //   },
+                  //   {
+                  //     summary: "Lagering",
+                  //     start: {
+                  //       dateTime: endPrimaryFermentationTime,
+                  //       timeZone: 'America/Los_Angeles',
+                  //     },
+                  //     end: {
+                  //       dateTime: endDRestDate,
+                  //       timeZone: 'America/Los_Angeles',
+                  //     },
+                  //   },
+                  //   {
+                  //     summary: "Carbonation",
+                  //     start: {
+                  //       dateTime: endDRestDate,
+                  //       timeZone: 'America/Los_Angeles',
+                  //     },
+                  //     end: {
+                  //       dateTime: endDateLagering,
+                  //       timeZone: 'America/Los_Angeles',
+                  //     },
+                  //   }
+                  //  ]
 
   // var makeRequest = function(events) {
   //   let header= {
