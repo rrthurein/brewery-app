@@ -60,28 +60,35 @@ import jwt_decode from "jwt-decode";
   export function calculateBrewingSchedule(brewDate, beerType) {
       if(beerType == "lager") {
 
-
         const lagerLength = Object.keys(schedulingParameters.lager).length
+        console.log(lagerLength)
         const lagerEventTimes = []
         let startDate = []
         let endDate = []
-        for(let i = 0; i<=lagerLength; i++){
+
+        for(let i = 0; i < lagerLength; i++){
+          console.log(lagerLength)
           if(i == 0){
             startDate.push(new Date(brewDate))
             //startDate = [0] brewDate is 0
-            let endDateValue = brewDate + Object.values(schedulingParameters.lager)[i]
+            let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.lager)[i])
             endDate.push(new Date(endDateValue))
             //endDate = [12]
-            console.log("startDate[i].getDate()", startDate[i].getDate());
+            console.log("endDate", endDate, "Object.values(schedulingParameters.lager)[i]", Object.values(schedulingParameters.lager)[i])
 
           } else if(i > 0){
             //i now is 1
+            console.log("startDate", startDate);
             startDate.push(endDate[i - 1]) //startDate index is 1 right now
+            console.log("startDate", startDate);
             //startDate = [0] we are pushing 12 into startDate
             //startDate is now [0,12]
-            endDate.push(new Date(startDate[i].setDate(startDate[i].getDate() + Object.values(schedulingParameters.lager)[i - 1])))
-          //  console.log("startDate[i].getDate()", startDate[i].getDate(), 'Object.values(schedulingParameters.lager)[i])', Object.values(schedulingParameters.lager)[i]);
+            const startDateValue = new Date(startDate[i]);
+            let endDateValue= startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.lager)[i])
+            endDate.push(new Date(endDateValue))
+            console.log("add date", startDateValue.getDate() + Object.values(schedulingParameters.lager)[i])
           }
+
           lagerEventTimes[i] = {
             summary: Object.keys(schedulingParameters.lager)[i],
             start: {
@@ -93,12 +100,9 @@ import jwt_decode from "jwt-decode";
               timeZone: 'America/Los_Angeles',
             }
           }
+          console.log(lagerEventTimes)
 
         }
-
-
-
-
 
                 lagerEventTimes.map((val) => {
                   return val, console.log("val", val);
@@ -145,7 +149,12 @@ import jwt_decode from "jwt-decode";
             console.log("aleDoneDate", endDate )
 
             console.log("endPrimaryFermentationTime", endPrimaryFermentationTime, "endDRestDate", endDRestDate, "endColdCrashDate", endColdCrashDate, "endDate", endDate)
-
+            // const aleLength = Object.keys(schedulingParameters.ale).length
+            // const aleEventsTime = []
+            // const startTime = []
+            // const endTime = []
+            //
+            // for(let i = 0; i <= )
             const aleEventsTime = [
               {
                 summary: "Primary Fermentation",
