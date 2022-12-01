@@ -36,394 +36,161 @@ import jwt_decode from "jwt-decode";
         carbonation: 2
       }
     }
-    // const startDate = (brewDate) => {
-    //   let startDate
-    //   if(Object.keys(schedulingParameters.lager)[i] == Object.keys(schedulingParameters.lager)[0]){
-    //                return   startDate = new Date(brewDate)
-    //   } else if(Object.keys(schedulingParameters.lager)[i]> Object.keys(schedulingParameters.lager)[0]){
-    //     startDate.setDate(startDate.getDate() + Object.values(schedulingParameters.lager)[i])
-    //    return new Date(startDate)
-    //   }
-    // }
-    // const endDate = (brewDate) => {
-    //   let endDate
-    //   let eventStartDate
-    //   if(Object.keys(schedulingParameters.lager)[i] == Object.keys(schedulingParameters.lager)[0]){
-    //     endDate.setDate(endDate.getDate() + Object.values(schedulingParameters.lager)[i])
-    //   return startDate = new Date(endDate)
-    //    }
-    //    else if(){
-    //     eventStartDate.setDate(eventStartDate.getDate() + Object.values(schedulingParameters.lager)[i])
-    //           new Date(endDate)
-    //   }
 
   export function calculateBrewingSchedule(brewDate, beerType) {
       if(beerType == "lager") {
+          const lagerLength = Object.keys(schedulingParameters.lager).length
+          const lagerEventTimes = []
+          let startDate = []
+          let endDate = []
 
-        const lagerLength = Object.keys(schedulingParameters.lager).length
-        console.log(lagerLength)
-        const lagerEventTimes = []
-        let startDate = []
-        let endDate = []
-
-        for(let i = 0; i < lagerLength; i++){
-          console.log(lagerLength)
-          if(i == 0){
-            startDate.push(new Date(brewDate))
-            //startDate = [0] brewDate is 0
-            let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.lager)[i])
-            endDate.push(new Date(endDateValue))
-            //endDate = [12]
-            console.log("endDate", endDate, "Object.values(schedulingParameters.lager)[i]", Object.values(schedulingParameters.lager)[i])
-
-          } else if(i > 0){
-            //i now is 1
-            console.log("startDate", startDate);
-            startDate.push(endDate[i - 1]) //startDate index is 1 right now
-            console.log("startDate", startDate);
-            //startDate = [0] we are pushing 12 into startDate
-            //startDate is now [0,12]
-            const startDateValue = new Date(startDate[i]);
-            let endDateValue= startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.lager)[i])
-            endDate.push(new Date(endDateValue))
-            console.log("add date", startDateValue.getDate() + Object.values(schedulingParameters.lager)[i])
-          }
-
-          lagerEventTimes[i] = {
-            summary: Object.keys(schedulingParameters.lager)[i],
-            start: {
-              dateTime: startDate[i],
-              timeZone: 'America/Los_Angeles',
-            },
-            end: {
-              dateTime: endDate[i],
-              timeZone: 'America/Los_Angeles',
+          for(let i = 0; i < lagerLength; i++){
+            if(i == 0){
+              startDate.push(new Date(brewDate))
+              let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.lager)[i])
+              endDate.push(new Date(endDateValue))
+            } else if(i > 0){
+              startDate.push(endDate[i - 1])
+              const startDateValue = new Date(startDate[i]);
+              let endDateValue= startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.lager)[i])
+              endDate.push(new Date(endDateValue))
             }
+
+            lagerEventTimes[i] = {
+              summary: Object.keys(schedulingParameters.lager)[i],
+              start: {
+                dateTime: startDate[i],
+                timeZone: 'America/Los_Angeles',
+              },
+              end: {
+                dateTime: endDate[i],
+                timeZone: 'America/Los_Angeles',
+              }
+            }
+            gapi.client
+            .request({
+              path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
+              method: "POST",
+              body: lagerEventTimes[i],
+              headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ya29.a0AeTM1ienyVro1J0UiejJeAFFkWJP92IYiFb0hWjaeQ6nRoBU4gdFYPnqSEdmkgMkZ376s8lKFx3GMC3KRusUKHl9fdwD4E2S-bODcNj_EjmKjgKNZAPOJsjReqSLawA61e_nBaozB7onUjQI8O5AcnhHV6jMaCgYKAaASARASFQHWtWOmptAOxZ5WcdNGhnCIa-TZIg0163`,
+              },
+            })
+            .then(
+              (response) => {
+                console.log("sucess", response)
+                return [true, response];
+              },
+              function (err) {
+                console.log(err);
+                return [false, err];
+              }
+            )
           }
-          console.log(lagerEventTimes)
-
         }
+      else if (beerType == "ale") {
+            const aleLength = Object.keys(schedulingParameters.ale).length
+            const aleEventsTime = []
+            const startTime = []
+            const endTime = []
 
-                lagerEventTimes.map((val) => {
-                  return val, console.log("val", val);
-                });
+            for(let i = 0; i < aleLength; i++){
+              if(i = 0){
+                startTime.push(new Date(brewDate))
+                let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.ale)[i])
+                endTime.push(new Date(endDateValue))
+              } else if(i > 0){
+                startTime.push(endTime[i - 1])
+                let startDateValue = new Date(startTime[i])
+                let endDateValue = startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.ale)[i])
+                endTime.push(new Date(endDateValue))
+              }
+              aleEventsTime[i] = {
+                summary: Object.keys(schedulingParameters.ale)[i],
+                start: {
+                  dateTime: startTime[i],
+                  timeZone: 'America/Los_Angeles',
+                },
+                end: {
+                  dateTime: endTime[i],
+                  timeZone: 'America/Los_Angeles',
+                },
+              }
+              gapi.client
+              .request({
+                path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
+                method: "POST",
+                body: aleEventTime[i],
+                headers: {
+                  "Content-type": "application/json",
+                  Authorization: `Bearer ya29.a0AeTM1ienyVro1J0UiejJeAFFkWJP92IYiFb0hWjaeQ6nRoBU4gdFYPnqSEdmkgMkZ376s8lKFx3GMC3KRusUKHl9fdwD4E2S-bODcNj_EjmKjgKNZAPOJsjReqSLawA61e_nBaozB7onUjQI8O5AcnhHV6jMaCgYKAaASARASFQHWtWOmptAOxZ5WcdNGhnCIa-TZIg0163`,
+                },
+              })
+              .then(
+                (response) => {
+                  console.log("sucess", response)
+                  return [true, response];
 
-                console.log("lagerEventTimes", lagerEventTimes, "schedulingParameters.lager length", Object.keys(schedulingParameters.lager)[0])
+                },
+                function (err) {
+                  console.log(err);
+                  return [false, err];
+                }
+              );
+            }
+      }
+      else if (beerType == "kettleSour"){
+                  const kettleSourLength = Object.keys(schedulingParameters.kettleSour).length
+                  let souringWortEvent = []
+                  let startDate = []
+                  let endDate = []
 
-                const batch = gapi.client.newBatch()
+                  for(let i = 0; i < kettleSourLength; i++){
+                    if(i = 0){
+                      startDate.push(new Date(brewDate))
+                      let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.kettleSour)[i])
+                      endDate.push(new Date(endDateValue))
+                    } else if(i > 0) {
+                      startDate.push(endDate[i - 1])
+                      let startDateValue = new Date(startDate[i])
+                      let endDateValue = startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.kettleSour)[i])
+                      endDate.push(new Date(endDateValue))
+                    }
+                    souringWortEvent[i] = {
+                      summary: Object.keys(schedulingParameters.kettleSour)[i],
 
-                for(var j = 0; j<lagerEventTimes.length; j++) {
-                  batch.add(gapi.client
+                      start: {
+                        dateTime: startDate[i],
+                        timeZone: 'America/Los_Angeles',
+                      },
+                      end: {
+                        dateTime: endDate[i],
+                        timeZone: 'America/Los_Angeles',
+                      },
+                    }
+                    gapi.client
                     .request({
                       path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
                       method: "POST",
-                      body: lagerEventTimes[j],
+                      body: souringWortEvent[i],
                       headers: {
                         "Content-type": "application/json",
-                        Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
+                        Authorization: `Bearer ya29.a0AeTM1ienyVro1J0UiejJeAFFkWJP92IYiFb0hWjaeQ6nRoBU4gdFYPnqSEdmkgMkZ376s8lKFx3GMC3KRusUKHl9fdwD4E2S-bODcNj_EjmKjgKNZAPOJsjReqSLawA61e_nBaozB7onUjQI8O5AcnhHV6jMaCgYKAaASARASFQHWtWOmptAOxZ5WcdNGhnCIa-TZIg0163`,
                       },
-                    }))
-                }
-                    batch.then(
+                    })
+                    .then(
                       (response) => {
                         console.log("sucess", response)
                         return [true, response];
+
                       },
                       function (err) {
                         console.log(err);
                         return [false, err];
                       }
                     )
-
                   }
-      else if (beerType == "ale") {
-            let primaryFermentationCurrentDate = new Date(brewDate);
-            primaryFermentationCurrentDate.setDate(primaryFermentationCurrentDate.getDate() + schedulingParameters.ale.primaryFermentation )
-            let endPrimaryFermentationTime = new Date(primaryFermentationCurrentDate)
-            let dRestDate = endPrimaryFermentationTime.setDate(endPrimaryFermentationTime.getDate() + schedulingParameters.ale.dRest)
-            let endDRestDate = new Date(dRestDate)
-            let coldCrashDate = endDRestDate.setDate(endDRestDate.getDate() + schedulingParameters.ale.coldCrash)
-            let endColdCrashDate = new Date(coldCrashDate)
-            let carbonationDate = endColdCrashDate.setDate(endColdCrashDate.getDate() + schedulingParameters.ale.carbonation)
-            let endDate = new Date(carbonationDate)
-            console.log("aleDoneDate", endDate )
 
-            console.log("endPrimaryFermentationTime", endPrimaryFermentationTime, "endDRestDate", endDRestDate, "endColdCrashDate", endColdCrashDate, "endDate", endDate)
-            // const aleLength = Object.keys(schedulingParameters.ale).length
-            // const aleEventsTime = []
-            // const startTime = []
-            // const endTime = []
-            //
-            // for(let i = 0; i <= )
-            const aleEventsTime = [
-              {
-                summary: "Primary Fermentation",
-                start: {
-                  dateTime: brewDate,
-                  timeZone: 'America/Los_Angeles',
-                },
-                end: {
-                  dateTime: primaryFermentationCurrentDate,
-                  timeZone: 'America/Los_Angeles',
-                },
-
-              },
-              {
-                summary: "D-Rest",
-                start: {
-                  dateTime: primaryFermentationCurrentDate,
-                  timeZone: 'America/Los_Angeles',
-                },
-                end: {
-                  dateTime: endPrimaryFermentationTime,
-                  timeZone: 'America/Los_Angeles',
-                },
-              },
-              {
-                summary: "Lagering",
-                start: {
-                  dateTime: endPrimaryFermentationTime,
-                  timeZone: 'America/Los_Angeles',
-                },
-                end: {
-                  dateTime: endDRestDate,
-                  timeZone: 'America/Los_Angeles',
-                },
-              },
-              {
-                summary: "Carbonation",
-                start: {
-                  dateTime: endDRestDate,
-                  timeZone: 'America/Los_Angeles',
-                },
-                end: {
-                  dateTime: endDate,
-                  timeZone: 'America/Los_Angeles',
-                },
               }
-            ]
-
-            let events = aleEventsTime.map((val) => {
-              return val, console.log("val", val);
-            });
-
-            const batch = gapi.client.newBatch()
-
-
-            for(var j = 0; j<aleEventsTime.length; j++) {
-              batch.add(gapi.client
-                .request({
-                  path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                  method: "POST",
-                  body: aleEventsTime[j],
-                  headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                  },
-                }))
-            }
-                batch.then(
-                  (response) => {
-                    console.log("sucess", response)
-                    return [true, response];
-                  },
-                  function (err) {
-                    console.log(err);
-                    return [false, err];
-                  }
-                )
-
-                  }
-      else if (beerType == "kettleSour"){
-                  let startTimeSouringWortDate = new Date(brewDate)
-                  startTimeSouringWortDate.setDate(startTimeSouringWortDate.getDate() + schedulingParameters.kettleSour.primaryFermentation )
-                  let endTimeSouringWort = new Date(startTimeSouringWortDate)
-                  let primaryFermentationCurrentDate = endTimeSouringWort.setDate(endTimeSouringWort.getDate() + schedulingParameters.kettleSour.primaryFermentation )
-                  let endPrimaryFermentation = new Date(primaryFermentationCurrentDate)
-                  let dRestDate = endPrimaryFermentation.setDate(endPrimaryFermentation.getDate() + schedulingParameters.kettleSour.dRest)
-                  let endDRestDate = new Date(dRestDate)
-                  let coldCrashDate = endDRestDate.setDate(endDRestDate.getDate() + schedulingParameters.kettleSour.coldCrash)
-                  let endColdCrashDate = new Date(coldCrashDate)
-                  let carbonationDate = endColdCrashDate.setDate(endColdCrashDate.getDate() + schedulingParameters.kettleSour.carbonation)
-                  let endDate = new Date(carbonationDate)
-                  console.log("today's date", brewDate, "kettleSourDoneDate", endDate, "souringWortDate", endTimeSouringWort)
-
-                  const souringWortEvent = [
-                    {
-                      summary: "Souring Wort",
-
-                      start: {
-                        dateTime: brewDate,
-                        timeZone: 'America/Los_Angeles',
-                      },
-                      end: {
-                        dateTime: startTimeSouringWortDate,
-                        timeZone: 'America/Los_Angeles',
-                      },
-
-                    },
-                    {
-                      summary: "Primary Fermentation",
-
-                      start: {
-                        dateTime: startTimeSouringWortDate,
-                        timeZone: 'America/Los_Angeles',
-                      },
-                      end: {
-                        dateTime: endTimeSouringWort,
-                        timeZone: 'America/Los_Angeles',
-                      },
-                    },
-                    {
-                      summary: "D-Rest",
-
-                      start: {
-                        dateTime: endTimeSouringWort,
-                        timeZone: 'America/Los_Angeles',
-                      },
-                      end: {
-                        dateTime: endPrimaryFermentation,
-                        timeZone: 'America/Los_Angeles',
-                      },
-                    },
-                    {
-                      summary: "Cold Crash",
-                      start: {
-                        dateTime: endPrimaryFermentation,
-                        timeZone: 'America/Los_Angeles',
-                      },
-                      end: {
-                        dateTime: endDRestDate,
-                        timeZone: 'America/Los_Angeles',
-                      },
-                    },
-                    {
-                      summary: "Carbonation",
-                      start: {
-                        dateTime: endDRestDate,
-                        timeZone: 'America/Los_Angeles',
-                      },
-                      end: {
-                        dateTime: endDate,
-                        timeZone: 'America/Los_Angeles',
-                      }
-                    }
-                  ]
-
-                  let events = souringWortEvent.map((val) => {
-                    return val, console.log("val", val);
-                  });
-
-                  console.log("souringWortEvent", souringWortEvent )
-                  console.log("aleDoneDate", endDate )
-
-
-                  const batch = gapi.client.newBatch()
-
-                  for(let s = 0; s<souringWortEvent.length; s++){
-                    batch.add(gapi.client
-                      .request({
-                        path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                        method: "POST",
-                        body: souringWortEvent[s],
-                        headers: {
-                          "Content-type": "application/json",
-                          Authorization: `Bearer ya29.a0AeTM1icuOc9WlSWvGTL2MxQYOZwK5JEDg7gQ7CEvw-T0gG7759Hb-El4_82jB36EyriZk6zTQNFtAnYYD4LcZV8xIdl_vFHllmzDItwUtktrSE2EoGoJyjUSTEeKdeQCu0GZIWGdg5PihSQwgm2kG5qpSsiBaCgYKATUSARASFQHWtWOmKWLR_dn_qq4mCEeTy7NsyA0163`,
-                        },
-                      }))
-                  }
-                      batch.then(
-                        (response) => {
-                          console.log("sucess", response)
-                          return [true, response];
-                        },
-                        function (err) {
-                          console.log(err);
-                          return [false, err];
-                        }
-                      )
-                    }
-                  };
-
-                  // let primaryFermentationCurrentDate = new Date(brewDate) //creating new object - setting aside more spaces in the memory
-                  // primaryFermentationCurrentDate.setDate(primaryFermentationCurrentDate.getDate() + schedulingParameters.lager.primaryFermentation)
-                  // let endPrimaryFermentationTime = new Date(primaryFermentationCurrentDate)
-                  // let dRestDate = endPrimaryFermentationTime.setDate(endPrimaryFermentationTime.getDate() + schedulingParameters.lager.dRest)
-                  // let endDRestDate = new Date(dRestDate)
-                  // let lageringDate = endDRestDate.setDate(endDRestDate.getDate() + schedulingParameters.lager.lagering)
-                  // let endDateLagering = new Date(lageringDate)
-                  // endDateLagering.setDate(endDateLagering.getDate() + schedulingParameters.lager.carbonation)
-                  // let lagerDoneDate = new Date(endDateLagering)
-                  //
-                  // console.log(Object.keys(schedulingParameters.lager)[0])
-                  //
-                  // const lagerEventTimes = [
-                  //   {
-                  //     summary: "Primary Fermentation",
-                  //     start: {
-                  //       dateTime: brewDate,
-                  //       timeZone: 'America/Los_Angeles',
-                  //     },
-                  //     end: {
-                  //       dateTime: primaryFermentationCurrentDate,
-                  //       timeZone: 'America/Los_Angeles',
-                  //     },
-                  //   },
-                  //   {
-                  //     summary: "D-Rest",
-                  //     start: {
-                  //       dateTime: primaryFermentationCurrentDate,
-                  //       timeZone: 'America/Los_Angeles',
-                  //     },
-                  //     end: {
-                  //       dateTime: endPrimaryFermentationTime,
-                  //       timeZone: 'America/Los_Angeles',
-                  //     },
-                  //   },
-                  //   {
-                  //     summary: "Lagering",
-                  //     start: {
-                  //       dateTime: endPrimaryFermentationTime,
-                  //       timeZone: 'America/Los_Angeles',
-                  //     },
-                  //     end: {
-                  //       dateTime: endDRestDate,
-                  //       timeZone: 'America/Los_Angeles',
-                  //     },
-                  //   },
-                  //   {
-                  //     summary: "Carbonation",
-                  //     start: {
-                  //       dateTime: endDRestDate,
-                  //       timeZone: 'America/Los_Angeles',
-                  //     },
-                  //     end: {
-                  //       dateTime: endDateLagering,
-                  //       timeZone: 'America/Los_Angeles',
-                  //     },
-                  //   }
-                  //  ]
-
-  // var makeRequest = function(events) {
-  //   let header= {
-  //     headers: {
-  //       'Authorization': "Bearer ya29.a0AeTM1id7SpqWzpG3ZrQwck_7GYufnCZyJz-yPemmMaL_81LQ9bBHxTXC-swmncOskHKuyDsWBCxBLjZdKaSoYa6N-1sTzLaqG0AnCQYll2Q5mPmB4XMQpeXpxjzPxsqOPzmIm9KJAPZc33VU6nm4cmvyaR99aCgYKAfkSARASFQHWtWOmyKMt4Iirsa3Sayio7IEnRQ0163"
-  //     }
-  //   };
-  //   gapi.client.load('calendar', 'v3', header, () => {
-  //     var request = gapi.client.calendar.events.insert({
-  //       'calendarId': 'primary',
-  //       'resource': events,
-  //       'method': 'POST',
-  //     });
-  //     request.execute(function(resp) {
-  //       console.log(resp);
-  //     });
-  //   });
-  // }
-  //
-  //
-  // for(var j = 0; j<events.length; j++) {
-  //   makeRequest(events[j]);
-  //   console.log(makeRequest);
-  // }
+          }
