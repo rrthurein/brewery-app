@@ -65,7 +65,8 @@ import jwt_decode from "jwt-decode";
               end: {
                 dateTime: endDate[i],
                 timeZone: 'America/Los_Angeles',
-              }
+              },
+              colorId: 5,
             }
             gapi.client
             .request({
@@ -74,7 +75,7 @@ import jwt_decode from "jwt-decode";
               body: lagerEventTimes[i],
               headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ya29.a0AeTM1ienyVro1J0UiejJeAFFkWJP92IYiFb0hWjaeQ6nRoBU4gdFYPnqSEdmkgMkZ376s8lKFx3GMC3KRusUKHl9fdwD4E2S-bODcNj_EjmKjgKNZAPOJsjReqSLawA61e_nBaozB7onUjQI8O5AcnhHV6jMaCgYKAaASARASFQHWtWOmptAOxZ5WcdNGhnCIa-TZIg0163`,
+                Authorization: `Bearer ya29.a0AeTM1ifoXHCsZ9a-sYc_21xZW3Q4wu6VJL8vmj70SIHoXQiXRee-kz0_lFMEOun9Ca_y8F2nYQTnhj3YjCx-C6Q8cEhcXa3zM156A4t5Rx_xN-GvJMP-xys1FojdJcHhHYmQpEdVrko-gARhZByQ0lAWlhbeaCgYKAXoSARASFQHWtWOmX4zjWssFbO1qU82B5rwqxQ0163`,
               },
             })
             .then(
@@ -88,43 +89,43 @@ import jwt_decode from "jwt-decode";
               }
             )
           }
-        }
-      else if (beerType == "ale") {
+        } else if (beerType == "ale") {
             const aleLength = Object.keys(schedulingParameters.ale).length
-            const aleEventsTime = []
-            const startTime = []
-            const endTime = []
+            let aleEventsTime = []
+            let startTime = []
+            let endTime = []
 
-            for(let i = 0; i < aleLength; i++){
-              if(i = 0){
+            for(let j = 0; j < aleLength; j++){
+              if(j == 0){
                 startTime.push(new Date(brewDate))
-                let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.ale)[i])
+                let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.ale)[j])
                 endTime.push(new Date(endDateValue))
-              } else if(i > 0){
-                startTime.push(endTime[i - 1])
-                let startDateValue = new Date(startTime[i])
-                let endDateValue = startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.ale)[i])
+              } else if(j > 0){
+                startTime.push(endTime[j - 1])
+                let startDateValue = new Date(startTime[j])
+                let endDateValue = startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.ale)[j])
                 endTime.push(new Date(endDateValue))
               }
-              aleEventsTime[i] = {
-                summary: Object.keys(schedulingParameters.ale)[i],
+              aleEventsTime[j] = {
+                summary: Object.keys(schedulingParameters.ale)[j],
                 start: {
-                  dateTime: startTime[i],
+                  dateTime: startTime[j],
                   timeZone: 'America/Los_Angeles',
                 },
                 end: {
-                  dateTime: endTime[i],
+                  dateTime: endTime[j],
                   timeZone: 'America/Los_Angeles',
                 },
+                colorId: 4,
               }
               gapi.client
               .request({
                 path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
                 method: "POST",
-                body: aleEventTime[i],
+                body: aleEventsTime[j],
                 headers: {
                   "Content-type": "application/json",
-                  Authorization: `Bearer ya29.a0AeTM1ienyVro1J0UiejJeAFFkWJP92IYiFb0hWjaeQ6nRoBU4gdFYPnqSEdmkgMkZ376s8lKFx3GMC3KRusUKHl9fdwD4E2S-bODcNj_EjmKjgKNZAPOJsjReqSLawA61e_nBaozB7onUjQI8O5AcnhHV6jMaCgYKAaASARASFQHWtWOmptAOxZ5WcdNGhnCIa-TZIg0163`,
+                  Authorization: `Bearer ya29.a0AeTM1ifoXHCsZ9a-sYc_21xZW3Q4wu6VJL8vmj70SIHoXQiXRee-kz0_lFMEOun9Ca_y8F2nYQTnhj3YjCx-C6Q8cEhcXa3zM156A4t5Rx_xN-GvJMP-xys1FojdJcHhHYmQpEdVrko-gARhZByQ0lAWlhbeaCgYKAXoSARASFQHWtWOmX4zjWssFbO1qU82B5rwqxQ0163`,
                 },
               })
               .then(
@@ -139,44 +140,43 @@ import jwt_decode from "jwt-decode";
                 }
               );
             }
-      }
-      else if (beerType == "kettleSour"){
+          } else if (beerType == "kettleSour"){
                   const kettleSourLength = Object.keys(schedulingParameters.kettleSour).length
                   let souringWortEvent = []
                   let startDate = []
                   let endDate = []
 
-                  for(let i = 0; i < kettleSourLength; i++){
-                    if(i = 0){
+                  for(let k = 0; k < kettleSourLength; k++){
+                    if(k = 0){
                       startDate.push(new Date(brewDate))
-                      let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.kettleSour)[i])
+                      let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.kettleSour)[k])
                       endDate.push(new Date(endDateValue))
-                    } else if(i > 0) {
-                      startDate.push(endDate[i - 1])
-                      let startDateValue = new Date(startDate[i])
-                      let endDateValue = startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.kettleSour)[i])
+                    } else if(k > 0) {
+                      startDate.push(endDate[k - 1])
+                      let startDateValue = new Date(startDate[k])
+                      let endDateValue = startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.kettleSour)[k])
                       endDate.push(new Date(endDateValue))
                     }
-                    souringWortEvent[i] = {
-                      summary: Object.keys(schedulingParameters.kettleSour)[i],
-
+                    souringWortEvent[k] = {
+                      summary: Object.keys(schedulingParameters.kettleSour)[k],
                       start: {
-                        dateTime: startDate[i],
+                        dateTime: startDate[k],
                         timeZone: 'America/Los_Angeles',
                       },
                       end: {
-                        dateTime: endDate[i],
+                        dateTime: endDate[k],
                         timeZone: 'America/Los_Angeles',
                       },
+                      colorId: 11,
                     }
                     gapi.client
                     .request({
                       path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
                       method: "POST",
-                      body: souringWortEvent[i],
+                      body: souringWortEvent[k],
                       headers: {
                         "Content-type": "application/json",
-                        Authorization: `Bearer ya29.a0AeTM1ienyVro1J0UiejJeAFFkWJP92IYiFb0hWjaeQ6nRoBU4gdFYPnqSEdmkgMkZ376s8lKFx3GMC3KRusUKHl9fdwD4E2S-bODcNj_EjmKjgKNZAPOJsjReqSLawA61e_nBaozB7onUjQI8O5AcnhHV6jMaCgYKAaASARASFQHWtWOmptAOxZ5WcdNGhnCIa-TZIg0163`,
+                        Authorization: `Bearer ya29.a0AeTM1ifoXHCsZ9a-sYc_21xZW3Q4wu6VJL8vmj70SIHoXQiXRee-kz0_lFMEOun9Ca_y8F2nYQTnhj3YjCx-C6Q8cEhcXa3zM156A4t5Rx_xN-GvJMP-xys1FojdJcHhHYmQpEdVrko-gARhZByQ0lAWlhbeaCgYKAXoSARASFQHWtWOmX4zjWssFbO1qU82B5rwqxQ0163`,
                       },
                     })
                     .then(
@@ -191,6 +191,5 @@ import jwt_decode from "jwt-decode";
                       }
                     )
                   }
-
               }
           }

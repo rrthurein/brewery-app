@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
+import BeerTypeContext from "../BeerTypeContext";
+import SelectedRecipeContext from "../SelectedRecipeContext";
 
 const RecipeDetail = (props) => {
+
+  const { beerType, setBeerType } = useContext(BeerTypeContext);
+  const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
+
   const navigate = useNavigate();
 
+  const settingBeerType = () => {
+    if(selectedRecipe.beerStyle == "Pilsner"){
+      return setBeerType("lager")
+    } else if(selectedRecipe.beerStyle == "IPA" || "Belgian Blonde"){
+      return setBeerType("ale")
+    }
+  }
   const handleClickBrewDay = () => {
     navigate("/calendar")
+    settingBeerType(selectedRecipe.beerStyle)
   }
 
  return(
@@ -18,6 +32,7 @@ const RecipeDetail = (props) => {
        <div className="keyName">Beer Style</div>
        <hr className="hr"></hr>
        <div className="valueName">{props.selectedRecipe.beerStyle} </div>
+
 
        <div className="keyName">Beer ABV</div>
        <hr className="hr"></hr>
@@ -41,8 +56,6 @@ const RecipeDetail = (props) => {
 
        <button style={{width: 100, height: 50}} onClick={handleClickBrewDay}>Add Schedule</button>
       </div>
-
-
  )
 }
 

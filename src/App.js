@@ -9,6 +9,7 @@ import WithNav from "./components/WithNav";
 import WithoutNav from "./components/WithoutNav";
 import BeerListContext from "./BeerListContext";
 import AddingBeerBooleanContext from "./AddingBeerBooleanContext";
+import BeerTypeContext from "./BeerTypeContext";
 import SelectedRecipeContext from "./SelectedRecipeContext";
 import RecipeDetail from "./components/RecipeDetail";
 import Calendar from "./components/Calendar";
@@ -45,13 +46,15 @@ function App() {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const selected = { selectedRecipe, setSelectedRecipe }
 
-
+  const [beerType, setBeerType] = useState("");
+  const selectedBeerType = { beerType, setBeerType }
 
   return (
 
         <AddingBeerBooleanContext.Provider value={toggleSetting}>
           <SelectedRecipeContext.Provider value={selected}>
             <BeerListContext.Provider value={value}>
+              <BeerTypeContext.Provider value={selectedBeerType}>
               <Routes>
                   <Route element={<WithoutNav />}>
                       <Route path="/" element={<OnBoarding />} />
@@ -64,6 +67,7 @@ function App() {
                     <Route path="calendar" element={<Calendar />} />
                   </Route>
                </Routes>
+                  </BeerTypeContext.Provider>
                </BeerListContext.Provider>
               </SelectedRecipeContext.Provider>
         </AddingBeerBooleanContext.Provider>

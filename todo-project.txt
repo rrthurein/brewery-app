@@ -21,15 +21,14 @@ this is the unexpected thing that's happening
  in the arguments from the array of  the results from the calculate functions.
 
 
-how do i loop through an object of different time block and set it to google calendars
-I will have a loop of three different types of styles of beer. I will click on one type of style and it will insert
-multiple events that has different start times and end times. When I click on a type of beer, it will select that object.
-How do i select the object through a loop?
 
 
 Beer List -> Beer Recipe -> Schedule -> Set Date -> Show Pop Up that it's completed and/or open google calendar.
 
-Now that I managed to set the Date 
+To Do
+ - Add Auth (Google Sign In)
+ - To be able to Edit the event in the setting or before adding the event.
+ - Fix input for the Beer Recipes 
 
 
 command option J to open console

@@ -11,7 +11,7 @@ import "../util";
 
 function OnBoarding() {
   const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
-
+  const { beerList, setBeerList } = useContext(BeerListContext);
 
   const [beerName, setBeerName] = useState('');
   const [beerStyle, setBeerStyle] = useState('');
@@ -52,7 +52,7 @@ function OnBoarding() {
     setHops(e.target.value)
   }
 
-  const { beerList, setBeerList } = useContext(BeerListContext);
+
 
 
   const handleClick = () => {
@@ -66,11 +66,11 @@ function OnBoarding() {
       yeast: yeast,
       hops: hops,
     }
-    const newBeerRecipes = beerList.concat([beerRecipeObj])
-    beerList.forEach((beer, index) => beer.id = index + 1);
-    //adds an ID everytime a new object is created in the array
-    console.log(beerList);
-    setBeerList(newBeerRecipes)
+    beerRecipeObj.id = +1
+    console.log([beerRecipeObj])
+    // const newBeerRecipes = beerList.concat([beerRecipeObj])
+    setBeerList(beerList.concat([beerRecipeObj]))
+      console.log(beerList);
     setAddingBeer(!addingBeer)
     console.log("state", addingBeer)
     navigate("beer-list")

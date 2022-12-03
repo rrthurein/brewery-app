@@ -2,6 +2,7 @@
   import BeerListContext from "../BeerListContext";
   import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
   import SelectedRecipeContext from "../SelectedRecipeContext";
+  import BeerTypeContext from "../BeerTypeContext";
   // import { GoogleOAuthProvider } from '@react-oauth/google';
   // import { googleLogout } from '@react-oauth/google';
   import { gapi } from 'gapi-script';
@@ -16,19 +17,11 @@
     const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
     const { beerList, setBeerList } = useContext(BeerListContext)
     const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
+    const { beerType, setBeerType } = useContext(BeerTypeContext);
     const [startTime, setStartTime] = useState(new Date());
-    const [beerType, setBeerType] = useState("lager");
     const [popUp, setPopUp] = useState(false);
 
-
-    const settingBeerType = () => {
-      if(selectedRecipe.beerStyle == "Pilsner"){
-        return setBeerType("lager")
-      } else if(selectedRecipe.beerStyle == "IPA" || "Belgian Blonde"){
-        return setBeerType("ale")
-
-      }
-    }
+    console.log("beerType", beerType)
 
     return (
 
@@ -39,7 +32,6 @@
               <DateTimePicker
                 onChange={(e) => {
                   setStartTime(e)
-                  settingBeerType(selectedRecipe.beerStyle)
                 }}
                 value={startTime}
                 disableClock={true}
@@ -49,8 +41,8 @@
             <button onClick={() => {
                   calculateBrewingSchedule(startTime, beerType)
                   setPopUp(!popUp)
-                }}
-                >Schedule Beer</button>
+                }}>
+                Schedule Beer</button>
            </> :
               <PopUp />
       }
