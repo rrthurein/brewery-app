@@ -5,13 +5,10 @@
   import BeerTypeContext from "../BeerTypeContext";
   // import { GoogleOAuthProvider } from '@react-oauth/google';
   // import { googleLogout } from '@react-oauth/google';
-  import { gapi } from 'gapi-script';
   import jwt_decode from "jwt-decode";
   import DateTimePicker from 'react-datetime-picker';
   import PopUp from "./PopUp";
   import { calculateBrewingSchedule  } from "../util.js";
-
-
 
   const Calendar = (props) => {
     const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)

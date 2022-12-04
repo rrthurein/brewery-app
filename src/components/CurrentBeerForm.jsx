@@ -1,4 +1,6 @@
 import React from 'react'
+import beerStylesData from "../beerStylesData.json";
+
 
 const CurrentBeerForm = (props) => {
 
@@ -18,9 +20,9 @@ const CurrentBeerForm = (props) => {
         <input type="text" name="beerName" placeholder="Beer Name" onChange={handleNameChange} required/>
         <label>Beer Style:</label>
         <select name="beerStyle" onChange={handleBeerStyleChange}>
-        <option value="IPA">IPA</option>
-        <option value="Pilsner">Pilsner</option>
-        <option value="Belgian Blonde">Belgian Blonde</option>
+            {beerStylesData.map(beerStyle => (
+              <option value={beerStyle.beerStyle}>{beerStyle.beerStyle}</option>
+            ))}
         </select>
         <label>ABV:</label>
         <input type="number" required name="ABV" placeholder="ABV" onChange={handleABVChange}/>

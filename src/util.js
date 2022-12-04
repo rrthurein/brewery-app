@@ -38,14 +38,14 @@ import jwt_decode from "jwt-decode";
     }
 
   export function calculateBrewingSchedule(brewDate, beerType) {
-      if(beerType == "lager") {
+      if(beerType === "lager") {
           const lagerLength = Object.keys(schedulingParameters.lager).length
           const lagerEventTimes = []
           let startDate = []
           let endDate = []
 
           for(let i = 0; i < lagerLength; i++){
-            if(i == 0){
+            if(i === 0){
               startDate.push(new Date(brewDate))
               let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.lager)[i])
               endDate.push(new Date(endDateValue))
@@ -89,14 +89,14 @@ import jwt_decode from "jwt-decode";
               }
             )
           }
-        } else if (beerType == "ale") {
+        } else if (beerType === "ale") {
             const aleLength = Object.keys(schedulingParameters.ale).length
             let aleEventsTime = []
             let startTime = []
             let endTime = []
 
             for(let j = 0; j < aleLength; j++){
-              if(j == 0){
+              if(j === 0){
                 startTime.push(new Date(brewDate))
                 let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.ale)[j])
                 endTime.push(new Date(endDateValue))
@@ -140,7 +140,7 @@ import jwt_decode from "jwt-decode";
                 }
               );
             }
-          } else if (beerType == "kettleSour"){
+          } else if (beerType === "kettleSour"){
                   const kettleSourLength = Object.keys(schedulingParameters.kettleSour).length
                   let souringWortEvent = []
                   let startDate = []
