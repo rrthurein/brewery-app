@@ -70,7 +70,6 @@ function OnBoarding() {
     console.log([beerRecipeObj])
     // const newBeerRecipes = beerList.concat([beerRecipeObj])
     setBeerList(beerList.concat([beerRecipeObj]))
-      console.log(beerList);
     setAddingBeer(!addingBeer)
     console.log("state", addingBeer)
     navigate("beer-list")

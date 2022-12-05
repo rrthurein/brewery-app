@@ -4,8 +4,7 @@ import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
 import SelectedRecipeContext from "../SelectedRecipeContext";
 import RecipeDetail from "./RecipeDetail";
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
-
-
+import beerStylesData from "../beerStylesData.json";
 
 const BeerList = () => {
   const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
@@ -14,18 +13,15 @@ const BeerList = () => {
   const navigate = useNavigate();
  
 
-
    const selectRecipe = (beer) => {
        setSelectedRecipe(beer);
     }
 
    const nullSelectedRecipe = () => {
      setSelectedRecipe(null);
-     // console.log("selectedRecipeBacktoNull", selectedRecipe)
    }
 
     const showRecipeDetail = selectedRecipe
-    //const showClickRecipe = beerList.length >= 1 check back
 
     if(showRecipeDetail) {
       return(

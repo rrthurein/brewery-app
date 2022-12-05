@@ -1,27 +1,27 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
-import BeerTypeContext from "../BeerTypeContext";
 import SelectedRecipeContext from "../SelectedRecipeContext";
 import beerStylesData from "../beerStylesData.json";
+import BeerTypeContext from "../BeerTypeContext";
 
 const RecipeDetail = (props) => {
 
-  const { beerType, setBeerType } = useContext(BeerTypeContext);
   const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
+  const { beerType, setBeerType } = useContext(BeerTypeContext);
 
-  console.log("beerStylesData.beerStyle", beerStylesData.beerStyle,
-              "beerStylesData.beerType", beerStylesData.beerType)
-//need to make a loop in the array through each object to pick the the same beer style and make a variable and set it to beerType
   const navigate = useNavigate();
 
   const settingBeerType = () => {
-    if(selectedRecipe.beerStyle == beerStylesData.beerStyle){
-      return setBeerType(beerStylesData.beerType)
-    }
-  }
+    for(let i = 0;i < beerStylesData.length; i++){
+      if(selectedRecipe.beerStyle === Object.values(beerStylesData[i])[1]){
+        setBeerType(Object.values(beerStylesData[i])[2])
+      }
+     }
+   }
+
   const handleClickBrewDay = () => {
     navigate("/calendar")
-    settingBeerType(selectedRecipe.beerStyle)
+    settingBeerType()
   }
 
  return(
