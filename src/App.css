@@ -11,6 +11,21 @@
   background-color: #D1512D;
 }
 
+* section {
+  text-align: center;
+  padding-top: 25vh;
+}
+
+.scheduleBeer {
+  margin-top: 1vh;
+}
+
+.react-datetime-picker__wrapper {
+  border-radius: 8px;
+  width: 40vh;
+  background-color: #D1512D;
+}
+
 .add-beer {
   text-align: center;
   margin: auto;
@@ -78,7 +93,6 @@
   height: 5%;
   width: 25%;
 }
-
 
 #selectButton {
   margin-top: 5%;
@@ -209,22 +223,27 @@
     border: 2px solid #9A1663;
     width: 19em;
     height: 33em;
-    margin: auto;
-    padding: 2vh;
     border-radius: 8px;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
+    padding-bottom: 8em;
+  }
+  .beerInfo-div tr{
+    align: justify;
+    border-spacing: 20cm;
   }
   .RecipeDetail {
-    margin-top: 10%;
+    margin-top: 0.5vh;
+    padding-top: 5vh;
   }
-  .beerInfo-div-button button {
-    margin-left: 70%;
-    margin-top: 1vh;
-    height: 5%;
-    width: 15%;
+  .beerInfo-div button {
+    display: block;
+    height: 4em;
+    width: 6em;
   }
 }
 
 .react-datetime-picker__button {
   width: 30px;
+  height: 50;
+  border-radius: 10px;
 }

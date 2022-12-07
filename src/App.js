@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import OnBoarding from "./components/OnBoarding";
 import Home from "./components/Home";
 import Brew from "./components/Brew";
@@ -13,6 +13,7 @@ import BeerTypeContext from "./BeerTypeContext";
 import SelectedRecipeContext from "./SelectedRecipeContext";
 import RecipeDetail from "./components/RecipeDetail";
 import Calendar from "./components/Calendar";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const testBeerList = [
     {
@@ -35,12 +36,15 @@ const testBeerList = [
     },
 ];
 
+const beerListFromLocalStorage = JSON.parse(localStorage.getItem('beerList') || '[]')
+const addingBeerFromLocalStorage = JSON.parse(localStorage.getItem('addingBeerList') || 'false')
+
 function App() {
 
-  const [beerList, setBeerList] = useState([]);
+  const [beerList, setBeerList] = useState(beerListFromLocalStorage);
   const value = { beerList, setBeerList };
 
-  const [addingBeer, setAddingBeer] = useState(false);
+  const [addingBeer, setAddingBeer] = useState(addingBeerFromLocalStorage);
   const toggleSetting = { addingBeer, setAddingBeer }
 
   const [selectedRecipe, setSelectedRecipe] = useState(null);
@@ -49,8 +53,14 @@ function App() {
   const [beerType, setBeerType] = useState("");
   const selectedBeerType = { beerType, setBeerType }
 
+  useEffect(() => {
+      window.localStorage.setItem("beerList", JSON.stringify(beerList))
+      window.localStorage.setItem("addingBeer", JSON.stringify(addingBeer))
+  }, [beerList])
+
   return (
 
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_CALENDAR_ID}>
         <AddingBeerBooleanContext.Provider value={toggleSetting}>
           <SelectedRecipeContext.Provider value={selected}>
             <BeerListContext.Provider value={value}>
@@ -71,6 +81,7 @@ function App() {
                </BeerListContext.Provider>
               </SelectedRecipeContext.Provider>
         </AddingBeerBooleanContext.Provider>
+    </GoogleOAuthProvider>
    )
 }
 

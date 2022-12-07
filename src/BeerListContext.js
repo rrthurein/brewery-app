@@ -4,6 +4,7 @@ import React from "react";
 const BeerListContext = React.createContext({
         beerList: [],
         setBeerList: () => {}
-      }); //creating context so that the context can give the child component data
+      },
+    ); //creating context so that the context can give the child component data
 
 export default BeerListContext;

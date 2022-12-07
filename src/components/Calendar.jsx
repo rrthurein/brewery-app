@@ -3,8 +3,8 @@
   import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
   import SelectedRecipeContext from "../SelectedRecipeContext";
   import BeerTypeContext from "../BeerTypeContext";
-  // import { GoogleOAuthProvider } from '@react-oauth/google';
-  // import { googleLogout } from '@react-oauth/google';
+  import { GoogleLogin } from '@react-oauth/google';
+  import { googleLogout } from '@react-oauth/google';
   import jwt_decode from "jwt-decode";
   import DateTimePicker from 'react-datetime-picker';
   import PopUp from "./PopUp";
@@ -18,14 +18,38 @@
     const [startTime, setStartTime] = useState(new Date());
     const [popUp, setPopUp] = useState(false);
 
+
+    const responseGoogle = credentialResponse => {
+      console.log(credentialResponse)
+    }
+    const responseError = error => {
+      console.log('Login Failed')
+    }
     console.log("beerType", beerType)
 
     return (
 
-      <div>
+      <section>
         {
           !popUp ?
           <>
+          <GoogleLogin
+            clientId={process.env.REACT_APP_CLIENT_ID}
+            buttonText="Sign in & Authorize Calendar"
+            onSuccess={responseGoogle}
+            onFailure={responseError}
+            cookiePolicy={'single_host_origin'}
+            // this is important if you don’t do it you won’t get refresh token on the backend server
+            // this is from react-google-login npm package
+            responseType="code"
+            accessType="offline"
+            //so that we can use this code we get back from the google authorization on the
+            // backend server we can get the refresh token which can be used even when they're offline
+            //basically it means that we can use the refresh token generated on this code anytime
+            scope="openid profile email https://www.googleapis.com/auth/calendar"
+            //we need to put in the calendar scope for the refresh token because we need to access google calendar
+            useOneTap
+            />
               <DateTimePicker
                 onChange={(e) => {
                   setStartTime(e)
@@ -35,15 +59,17 @@
                 format={"y-MM-dd h:mm:ss a"}
                 className="dateTimePicker"
               />
+              <div className="scheduleBeer">
             <button onClick={() => {
                   calculateBrewingSchedule(startTime, beerType)
                   setPopUp(!popUp)
                 }}>
                 Schedule Beer</button>
+              </div>
            </> :
               <PopUp />
       }
-    </div>
+    </section>
 
   )
 
@@ -65,31 +91,10 @@
   //   Object.keys(user).length != 0 && <button onClick={ (e) => handleSignOut(e) }>Sign Out</button>
   // }
 
-  // const responseGoogle = credentialResponse => {
-  //   console.log(credentialResponse)
-  // }
-  // const responseError = error => {
-  //   console.log('Login Failed')
-  // }
 
 
 
-  // {<GoogleLogin
-  //   clientId={process.env.REACT_APP_CLIENT_ID}
-  //   buttonText="Sign in & Authorize Calendar"
-  //   onSuccess={responseGoogle}
-  //   onFailure={responseError}
-  //   cookiePolicy={'single_host_origin'}
-  //   // this is important if you don’t do it you won’t get refresh token on the backend server
-  //   // this is from react-google-login npm package
-  //   responseType="code"
-  //   accessType="offline"
-  //   //so that we can use this code we get back from the google authorization on the
-  //   // backend server we can get the refresh token which can be used even when they're offline
-  //   //basically it means that we can use the refresh token generated on this code anytime
-  //   scope="openid profile email https://www.googleapis.com/auth/calendar"
-  //   //we need to put in the calendar scope for the refresh token because we need to access google calendar
-  //   />}
+
 
   // const chooseBeer = () => {
   //   if(addingBeer === true) {

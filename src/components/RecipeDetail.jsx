@@ -11,6 +11,10 @@ const RecipeDetail = (props) => {
 
   const navigate = useNavigate();
 
+   const nullSelectedRecipe = () => {
+     setSelectedRecipe(null);
+   }
+
   const settingBeerType = () => {
     for(let i = 0;i < beerStylesData.length; i++){
       if(selectedRecipe.beerStyle === Object.values(beerStylesData[i])[1]){
@@ -29,34 +33,40 @@ const RecipeDetail = (props) => {
      <div className="beerInfo-div">
        <div className="keyName">Beer Name</div>
        <hr className="hr"></hr>
-       <div className="valueName">{props.selectedRecipe.beerName} </div>
+       <div className="valueName">{selectedRecipe.beerName} </div>
 
        <div className="keyName">Beer Style</div>
        <hr className="hr"></hr>
-       <div className="valueName">{props.selectedRecipe.beerStyle} </div>
-
+       <div className="valueName">{selectedRecipe.beerStyle} </div>
 
        <div className="keyName">Beer ABV</div>
        <hr className="hr"></hr>
-       <div className="valueName">{props.selectedRecipe.abv} </div>
+       <div className="valueName">{selectedRecipe.abv} </div>
 
        <div className="keyName">Brewing</div>
        <hr className="hr"></hr>
-       <div className="valueName">{props.selectedRecipe.brewingTime} </div>
+       <div className="valueName">{selectedRecipe.brewingTime} </div>
 
        <div className="keyName">Grain</div>
        <hr className="hr"></hr>
-       <div className="valueName">{props.selectedRecipe.grain} </div>
+       <div className="valueName">{selectedRecipe.grain} </div>
 
        <div className="keyName">Yeast</div>
        <hr className="hr"></hr>
-       <div className="valueName">{props.selectedRecipe.yeast} </div>
+       <div className="valueName">{selectedRecipe.yeast} </div>
 
        <div className="keyName">Hops</div>
        <hr className="hr"></hr>
-       <div className="valueName">{props.selectedRecipe.hops}</div>
+       <div className="valueName">{selectedRecipe.hops}</div>
 
-       <button style={{width: 100, height: 50}} onClick={handleClickBrewDay}>Add Schedule</button>
+       <table>
+         <tr>
+          <td><button type="button" onClick={handleClickBrewDay}>Add Schedule</button></td>
+          <td><button type="button" onClick={() => navigate("brew")}>Brew</button></td>
+          <td><button type="button" onClick={() => nullSelectedRecipe()}>Back</button></td>
+         </tr>
+       </table>
+
       </div>
  )
 }

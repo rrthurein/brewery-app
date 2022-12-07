@@ -11,27 +11,18 @@ const BeerList = () => {
   const { beerList, setBeerList } = useContext(BeerListContext);
   const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
   const navigate = useNavigate();
- 
 
-   const selectRecipe = (beer) => {
-       setSelectedRecipe(beer);
-    }
-
-   const nullSelectedRecipe = () => {
-     setSelectedRecipe(null);
+  const selectRecipe = (beer) => {
+      setSelectedRecipe(beer);
    }
+
 
     const showRecipeDetail = selectedRecipe
 
     if(showRecipeDetail) {
       return(
         <section className="RecipeDetail">
-           <RecipeDetail selectedRecipe={selectedRecipe}/>
-
-           <div className="beerInfo-div-button">
-             <button type="button" onClick={() => navigate("brew")}>Brew</button>
-             <button type="button" onClick={() => nullSelectedRecipe()}>Back</button>
-           </div>
+           <RecipeDetail/>
       </section>
     );} else {
         return (
