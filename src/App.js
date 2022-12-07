@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
       window.localStorage.setItem("beerList", JSON.stringify(beerList))
       window.localStorage.setItem("addingBeer", JSON.stringify(addingBeer))
-  }, [beerList])
+  }, [selectedRecipe])
 
   return (
 

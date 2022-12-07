@@ -3,17 +3,31 @@ import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 import SelectedRecipeContext from "../SelectedRecipeContext";
 import beerStylesData from "../beerStylesData.json";
 import BeerTypeContext from "../BeerTypeContext";
+import BeerListContext from "../BeerListContext";
 
 const RecipeDetail = (props) => {
 
   const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
   const { beerType, setBeerType } = useContext(BeerTypeContext);
+  const { beerList, setBeerList } = useContext(BeerListContext);
 
   const navigate = useNavigate();
 
    const nullSelectedRecipe = () => {
      setSelectedRecipe(null);
    }
+
+   const deleteBeer = () => { beerList.map((beer) => {
+     if(beer == selectedRecipe){
+       const deleteThisIndex = beerList.indexOf(beer)
+       beerList.splice(deleteThisIndex, 1)
+       setBeerList(beerList)
+       console.log(beerList)
+       setSelectedRecipe(null);
+       }
+     })
+   }
+
 
   const settingBeerType = () => {
     for(let i = 0;i < beerStylesData.length; i++){
@@ -63,6 +77,7 @@ const RecipeDetail = (props) => {
          <tr>
           <td><button type="button" onClick={handleClickBrewDay}>Add Schedule</button></td>
           <td><button type="button" onClick={() => navigate("brew")}>Brew</button></td>
+          <td><button type="button" onClick={() => deleteBeer()}>Delete</button></td>
           <td><button type="button" onClick={() => nullSelectedRecipe()}>Back</button></td>
          </tr>
        </table>
