@@ -22,7 +22,6 @@ const RecipeDetail = (props) => {
        const deleteThisIndex = beerList.indexOf(beer)
        beerList.splice(deleteThisIndex, 1)
        setBeerList(beerList)
-       console.log(beerList)
        setSelectedRecipe(null);
        }
      })
@@ -73,15 +72,12 @@ const RecipeDetail = (props) => {
        <hr className="hr"></hr>
        <div className="valueName">{selectedRecipe.hops}</div>
 
-       <table>
-         <tr>
-          <td><button type="button" onClick={handleClickBrewDay}>Add Schedule</button></td>
-          <td><button type="button" onClick={() => navigate("brew")}>Brew</button></td>
-          <td><button type="button" onClick={() => deleteBeer()}>Delete</button></td>
-          <td><button type="button" onClick={() => nullSelectedRecipe()}>Back</button></td>
-         </tr>
-       </table>
-
+        <div className="buttonDiv">
+          <div><button type="button" onClick={handleClickBrewDay}>Schedule</button></div>
+          <div><button type="button" onClick={() => navigate("brew")}>Brew</button></div>
+          <div><button type="button" onClick={() => deleteBeer()}>Delete</button></div>
+          <div> <button type="button" onClick={() => nullSelectedRecipe()}>Back</button></div>
+        </div>
       </div>
  )
 }

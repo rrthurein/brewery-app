@@ -9,11 +9,26 @@
   border: 0;
   cursor: pointer;
   background-color: #D1512D;
+  font-family: "Lucida Console", monospace;
 }
 
 * section {
   text-align: center;
-  padding-top: 25vh;
+  padding-top: 5vh;
+}
+
+* h1, label, nav{
+  font-family: "Monaco", monospace;
+}
+
+
+.buttonDiv {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 4vh;
+}
+.buttonDiv button {
+  width: 10vh;
 }
 
 .scheduleBeer {
@@ -85,7 +100,7 @@
 }
 
 .BeerList h1 {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Monaco", monospace;
 }
 
 .BeerList button {
@@ -110,21 +125,22 @@
 .beerInfo-div {
   border: 2px solid #9A1663;
   width: 60vh;
-  height: 80vh;
   margin: auto;
   padding: 2vh;
   border-radius: 8px;
 }
 
 .keyName {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Monaco", monospace;
   font-size: 1rem;
   padding-top: 0.5rem;
 }
 
 .valueName {
   padding: 1rem;
+  padding-top: 0;
   border-radius: 8px;
+  font-family: "Courier New", monospace;
 }
 
 .hr {
@@ -154,6 +170,10 @@
     border: 0;
     cursor: pointer;
     background-color: #D1512D;
+  }
+
+  * section {
+      padding-top: 2.5vh;
   }
   .add-beer {
     text-align: center;
@@ -222,19 +242,16 @@
   .beerInfo-div {
     border: 2px solid #9A1663;
     width: 19em;
-    height: 33em;
     border-radius: 8px;
     margin-bottom: 2em;
     padding-bottom: 8em;
   }
-  .beerInfo-div tr{
-    align: justify;
-    border-spacing: 20cm;
-  }
+
   .RecipeDetail {
     margin-top: 0.5vh;
-    padding-top: 5vh;
+    padding-top: 2vh;
   }
+
   .beerInfo-div button {
     display: block;
     height: 4em;
