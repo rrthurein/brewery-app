@@ -86,13 +86,12 @@ function App() {
  }
   useEffect(() => {
     try{
-      window.localStorage.setItem("beerList", JSON.stringify(beerList))
-      console.log("beerList", beerList)
-      window.localStorage.setItem("addingBeer", JSON.stringify(addingBeer))
+      localStorage.setItem("beerList", JSON.stringify(beerList))
+      localStorage.setItem("addingBeer", JSON.stringify(addingBeer))
     } catch (error){
       handleError(error)
     }
-  }, [beerType])
+  }, [beerList])
 
 
   return (

@@ -22,10 +22,8 @@ function OnBoarding() {
   const [hops, setHops] = useState('')
   const [beerType, setBeerType] = useState('')
   const [scheudlingParameter, SetSchedulingParameter] = useState({})
-  const [nextId, setNextId] = useState(0)
 
   const [form, setForm] = useState({
-    id: nextId,
     beerName: beerName,
     abv: abv,
     beerStyle: beerStyle,
@@ -53,86 +51,51 @@ useEffect(() => {
     const matchingBeerKettleSour = beerStylesData.map(
       (beer) => beer.beerStyle == form.beerStyle && beer.beerType == "KettleSour"
     );
-
     // If a matching beer was found, update the form object with the
     // appropriate scheduling parameters
-    if (matchingBeerAle) {
+    if (matchingBeerAle.beerType === "Ale") {
       setForm({
         ...form,
         schedulingParameters: globalSchedulingParameters.Ale,
       });
-    }
-    else if (matchingBeerLager){
+    } else if (matchingBeerLager.beerType === "Lager") {
       setForm({
         ...form,
         schedulingParameters: globalSchedulingParameters.Lager,
       });
-    }
-    else if (matchingBeerKettleSour){
+    } else if (matchingBeerKettleSour.beerType === "KettleSour") {
       setForm({
         ...form,
         schedulingParameters: globalSchedulingParameters.KettleSour,
       });
     }
-    setBeerList(beerList.concat([form]))
   }, [beerType]);
 
-  const handleNameChange = (e) => {
-    setForm({
+  const handleInputChange = (e) => {
+    //create an object
+    let newBeer = {
       ...form,
-      beerName: e.target.value
-    })
+    }
+    //use brackets to interpolate dynamic/variable key name
+    newBeer[e.target.name] = e.target.value
+    setForm(newBeer)
   }
-
-  const handleBeerStyleChange = (e) => {
-    setForm({
-      ...form,
-      beerStyle: e.target.value
-    })}
-
-  const handleABVChange = (e) => {
-    setForm({
-      ...form,
-      abv: e.target.value
-    })
-  }
-
-  const handleGrainChange = (e) => {
-    setForm({
-      ...form,
-      grain: e.target.value
-    })
-  }
-  const handleYeastChange = (e) => {
-    setForm({
-      ...form,
-      yeast: e.target.value
-    })
-  }
-  const handleHopsChange = (e) => {
-    setForm({
-      ...form,
-      hops: e.target.value
-    })
-  }
- 
 
   const handleClick = () => {
-        setForm({
-          ...form,
-          id: nextId + 1,
-        })
-        console.log("form", form)
-      for(let i = 0; i < beerStylesData.length; i++){
-        if(beerStylesData[i].beerStyle == form.beerStyle){
-          setBeerType(beerStylesData[i].beerType)
-          }
-        }
+    let newBeer = {
+      ...form,
+      id: beerList.length
     }
-console.log("beerList", beerList)
+    console.log("new beer", newBeer)
 
-
-
+    setBeerList(beerList.concat([newBeer]))
+    for(let i = 0; i < beerStylesData.length; i++){
+      if(beerStylesData[i].beerStyle == form.beerStyle){
+        setBeerType(beerStylesData[i].beerType)
+      }
+    }
+  }
+  console.log("rendering onboarding beerList", beerList)
   const renderView = () => {
 
       if (addingBeer) {
@@ -140,17 +103,12 @@ console.log("beerList", beerList)
               <div className="BeerForm-row">
               <img className="BeerFormPhoto" src="./images/beer-cup.jpg"/>
             <CurrentBeerForm
-            handleNameChange = {handleNameChange}
-            handleABVChange = {handleABVChange}
-            handleBeerStyleChange = {handleBeerStyleChange}
-            handleGrainChange = {handleGrainChange}
-            handleYeastChange = {handleYeastChange}
-            handleHopsChange = {handleHopsChange}
-            handleClick = {handleClick}
-            beerStyle = {beerStyle}
-            beerType = {beerType}
-            form = {form}
-            setForm = {setForm}
+              handleInputChange = {handleInputChange}
+              handleClick = {handleClick}
+              beerStyle = {beerStyle}
+              beerType = {beerType}
+              form = {form}
+              setForm = {setForm}
             />
             </div>
           );
