@@ -166,47 +166,40 @@ const CurrentBeerForm = (props) => {
 
 
   const beerRecipeRenderView = () => {
-    if(beerType == "Ale"){
+    if(beerType){
       return(
         <div>
         <h1>Scheduling Parameters</h1>
         <h2>{beerType}</h2>
         <label>Primary Fermentation</label>
         <input type="number" value={form.schedulingParameters.primaryFermentation} name="primaryFermentation" placeholder="Primary Fermentation" onChange={handlePriFermentation}/>
-        <label>Secondary Fermentation</label>
-        <input type="number" value={form.schedulingParameters.secondaryFermetation} name="secondaryFermentation" placeholder="Secondary Fermentation" onChange={handleSecondaryFermentation}/>
+        {
+          beerType == "Ale" ?
+            <>
+              <label>Secondary Fermentation</label>
+              <input type="number" value={form.schedulingParameters.secondaryFermetation} name="secondaryFermentation" placeholder="Secondary Fermentation" onChange={handleSecondaryFermentation}/>
+            </> : null
+
+        }
         <label>Dump Yeast & Hops</label>
         <input type="number" value={form.schedulingParameters.dumpYeastAndHops} name="dumpYeast&Hops" placeholder="Dump Yeast & Hops" onChange={handleDumpYeastAndHops}/>
         <label>Diacetyl Rest</label>
         <input type="number" value={form.schedulingParameters.dRest} name="dRest" placeholder="Diacetyl Rest" onChange={handleDRest}/>
+        {
+          beerType == "Lager" ?
+            <>
+              <label>Lagering</label>
+              <input type="number" value={form.schedulingParameters.lagering} name="lagering" placeholder="Lagering" onChange={handleLagering}/>
+            </>: null
+        }
         <label>Cold Crash</label>
         <input type="number" value={form.schedulingParameters.coldCrash} name="coldCrash" placeholder="Cold Crash" onChange={handleColdCrash}/>
         <label>Carbonation</label>
         <input type="number" value={form.schedulingParameters.carbonation} name="primaryFermentation" placeholder="Carbonation" onChange={handleCarbonation}/>
         <button type="button" onClick={parametersInputPage}>Add Beer!</button>
         </div>
-      )}
-       else if(beerType == "Lager"){
-         return(
-           <div>
-           <h1>Scheudling Parameters</h1>
-           <h2>{beerType}</h2>
-           <label>Primary Fermentation</label>
-           <input type="number" value={form.schedulingParameters.primaryFermentation} name="primaryFermentation" placeholder="Primary Fermentation" onChange={handlePriFermentation}/>
-           <label>Diacetyl Rest</label>
-           <input type="number" value={form.schedulingParameters.dRest} name="dRest" placeholder="Diacetyl Rest" onChange={handleDRest}/>
-           <label>Dump Yeast & Hops</label>
-           <input type="number" value={form.schedulingParameters.dumpYeastAndHops} name="dumpYeast&Hops" placeholder="Dump Yeast & Hops" onChange={handleDumpYeastAndHops}/>
-           <label>Lagering</label>
-           <input type="number" value={form.schedulingParameters.lagering} name="lagering" placeholder="Lagering" onChange={handleLagering}/>
-           <label>Cold Crash</label>
-           <input type="number" value={form.schedulingParameters.coldCrash} name="coldCrash" placeholder="Cold Crash" onChange={handleColdCrash}/>
-           <label>Carbonation</label>
-           <input type="number" value={form.schedulingParameters.carbonation} name="primaryFermentation" placeholder="Carbonation" onChange={handleCarbonation}/>
-           <button type="button" onClick={parametersInputPage}>Add Beer!</button>
-           </div>
-         )}
-      else {
+      )
+    }else {
         return(
           <div>
             <h1>Beer Recipe Setup</h1>
