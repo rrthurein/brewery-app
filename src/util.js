@@ -1,18 +1,17 @@
 import { gapi } from 'gapi-script';
 import jwt_decode from "jwt-decode";
+import App from "./App"
 
 
     const calendarID = process.env.REACT_APP_CALENDAR_ID;
     const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
     const accessToken = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
 
-
     // const calendar = {version : "v3"}
     const CLIENT_ID = "890654996682-urq2der67lj97k6nj0dcrk9kkj6ts3oi.apps.googleusercontent.com"
     // const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
     const DISCOVERY_DOCS = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
     const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
-
 
 
     const schedulingParameters = {
@@ -35,6 +34,11 @@ import jwt_decode from "jwt-decode";
         coldCrash: 2,
         carbonation: 2
       }
+    }
+
+    export function utilSchedulingParameters(){
+      let sP = schedulingParameters
+      console.log(sP)
     }
 
   export function calculateBrewingSchedule(brewDate, beerType) {

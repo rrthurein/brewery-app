@@ -5,7 +5,7 @@ import beerStylesData from "../beerStylesData.json";
 import BeerTypeContext from "../BeerTypeContext";
 import BeerListContext from "../BeerListContext";
 
-const RecipeDetail = (props) => {
+const RecipeDetail = () => {
 
   const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
   const { beerType, setBeerType } = useContext(BeerTypeContext);
@@ -26,7 +26,6 @@ const RecipeDetail = (props) => {
        }
      })
    }
-
 
   const settingBeerType = () => {
     for(let i = 0;i < beerStylesData.length; i++){
@@ -55,10 +54,6 @@ const RecipeDetail = (props) => {
        <div className="keyName">Beer ABV</div>
        <hr className="hr"></hr>
        <div className="valueName">{selectedRecipe.abv} </div>
-
-       <div className="keyName">Brewing</div>
-       <hr className="hr"></hr>
-       <div className="valueName">{selectedRecipe.brewingTime} </div>
 
        <div className="keyName">Grain</div>
        <hr className="hr"></hr>

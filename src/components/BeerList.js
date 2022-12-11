@@ -31,21 +31,19 @@ const BeerList = () => {
                 <div className="BeerListBorder">
                     { beerList.map((beer) => {
                         return(
-                        <div  key={beer.hops}>
+                        <div key={beer.id}>
                               <button id="selectButton" type="button" onClick={() => {selectRecipe(beer)}} >
                                {
                                 beer.beerName
                              }</button>
                              </div>
-                      )
-                                              })
-                                            }
-                      <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/");  }}>Add Beer</button>
-
-
-                  </div>
+                         )
+                      })
+                     }
+                <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/");  }}>Add Beer</button>
+                </div>
             </section>
-            );
+            )
           }
 }
 

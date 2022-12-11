@@ -1,28 +1,40 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import BeerList from "./BeerList";
 import CurrentBeerForm from "./CurrentBeerForm";
 import BeerListContext from "../BeerListContext";
 import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
 import App from "../App";
-import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
-import "../util";
-
-
+import beerStylesData from "../beerStylesData.json";
+import GlobalSchedulingParametersContext from "../GlobalSchedulingParametersContext";
 
 function OnBoarding() {
   const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
-  const { beerList, setBeerList } = useContext(BeerListContext);
+  const { beerList, setBeerList } = useContext(BeerListContext)
+  const { globalSchedulingParameters, setGlobalSchedulingParameters } = useContext(GlobalSchedulingParametersContext)
+
+
 
   const [beerName, setBeerName] = useState('');
   const [beerStyle, setBeerStyle] = useState('');
   const [abv, setABV] = useState('');
-  const [brewingTime, setBrewingTime] = useState('');
   const [grain, setGrain] = useState('');
   const [yeast, setYeast] = useState('');
   const [hops, setHops] = useState('')
+  const [beerType, setBeerType] = useState('')
+  const [scheudlingParameter, SetSchedulingParameter] = useState({})
+  const [nextId, setNextId] = useState(0)
 
+  const [form, setForm] = useState({
+    id: nextId,
+    beerName: beerName,
+    abv: abv,
+    beerStyle: beerStyle,
+    grain: grain,
+    yeast: yeast,
+    hops: hops,
+    schedulingParameters: scheudlingParameter,
+  });
 
-  const navigate = useNavigate() //Navigating Programmatically
 
   const addBeer = () => {
       setAddingBeer(!addingBeer) //set is always updating a value
@@ -30,51 +42,95 @@ function OnBoarding() {
     }
 
 
+useEffect(() => {
+    // Use the map() method to find the matching beer style and type
+    const matchingBeerAle = beerStylesData.map(
+      (beer) => beer.beerStyle == form.beerStyle && beer.beerType == "Ale"
+    );
+    const matchingBeerLager = beerStylesData.map(
+      (beer) => beer.beerStyle == form.beerStyle && beer.beerType == "Lager"
+    );
+    const matchingBeerKettleSour = beerStylesData.map(
+      (beer) => beer.beerStyle == form.beerStyle && beer.beerType == "KettleSour"
+    );
+
+    // If a matching beer was found, update the form object with the
+    // appropriate scheduling parameters
+    if (matchingBeerAle) {
+      setForm({
+        ...form,
+        schedulingParameters: globalSchedulingParameters.Ale,
+      });
+    }
+    else if (matchingBeerLager){
+      setForm({
+        ...form,
+        schedulingParameters: globalSchedulingParameters.Lager,
+      });
+    }
+    else if (matchingBeerKettleSour){
+      setForm({
+        ...form,
+        schedulingParameters: globalSchedulingParameters.KettleSour,
+      });
+    }
+    setBeerList(beerList.concat([form]))
+  }, [beerType]);
+
   const handleNameChange = (e) => {
-    setBeerName(e.target.value)
+    setForm({
+      ...form,
+      beerName: e.target.value
+    })
   }
-  const handleABVChange = (e) => {
-    setABV(e.target.value)
-  }
+
   const handleBeerStyleChange = (e) => {
-    setBeerStyle(e.target.value)
+    setForm({
+      ...form,
+      beerStyle: e.target.value
+    })}
+
+  const handleABVChange = (e) => {
+    setForm({
+      ...form,
+      abv: e.target.value
+    })
   }
-  const handleBrewingTimeChange = (e) => {
-    setBrewingTime(e.target.value)
-  }
+
   const handleGrainChange = (e) => {
-    setGrain(e.target.value)
+    setForm({
+      ...form,
+      grain: e.target.value
+    })
   }
   const handleYeastChange = (e) => {
-    setYeast(e.target.value)
+    setForm({
+      ...form,
+      yeast: e.target.value
+    })
   }
   const handleHopsChange = (e) => {
-    setHops(e.target.value)
+    setForm({
+      ...form,
+      hops: e.target.value
+    })
   }
-
-
-
+ 
 
   const handleClick = () => {
-
-    const beerRecipeObj = {
-      beerName: beerName,
-      abv: abv,
-      beerStyle: beerStyle,
-      brewingTime: brewingTime,
-      grain: grain,
-      yeast: yeast,
-      hops: hops,
+        setForm({
+          ...form,
+          id: nextId + 1,
+        })
+        console.log("form", form)
+      for(let i = 0; i < beerStylesData.length; i++){
+        if(beerStylesData[i].beerStyle == form.beerStyle){
+          setBeerType(beerStylesData[i].beerType)
+          }
+        }
     }
-    beerRecipeObj.id = +1
-    console.log([beerRecipeObj])
-    // const newBeerRecipes = beerList.concat([beerRecipeObj])
-    setBeerList(beerList.concat([beerRecipeObj]))
-    setAddingBeer(!addingBeer)
-    console.log("state", addingBeer)
-    navigate("beer-list")
-  }
-  console.log("state", addingBeer)
+console.log("beerList", beerList)
+
 
 
   const renderView = () => {
@@ -87,11 +143,14 @@ function OnBoarding() {
             handleNameChange = {handleNameChange}
             handleABVChange = {handleABVChange}
             handleBeerStyleChange = {handleBeerStyleChange}
-            handleBrewingTimeChange = {handleBrewingTimeChange}
             handleGrainChange = {handleGrainChange}
             handleYeastChange = {handleYeastChange}
             handleHopsChange = {handleHopsChange}
             handleClick = {handleClick}
+            beerStyle = {beerStyle}
+            beerType = {beerType}
+            form = {form}
+            setForm = {setForm}
             />
             </div>
           );

@@ -11,9 +11,11 @@ import BeerListContext from "./BeerListContext";
 import AddingBeerBooleanContext from "./AddingBeerBooleanContext";
 import BeerTypeContext from "./BeerTypeContext";
 import SelectedRecipeContext from "./SelectedRecipeContext";
+import GlobalSchedulingParametersContext from "./GlobalSchedulingParametersContext";
 import RecipeDetail from "./components/RecipeDetail";
 import Calendar from "./components/Calendar";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+
 
 const testBeerList = [
     {
@@ -34,12 +36,38 @@ const testBeerList = [
       yeast: "340",
       hops: "Mouteka",
     },
-];
+  ]
+
+const schedulingParameters = {
+    Lager: {
+      primaryFermentation: 12,
+      dRest: 2,
+      lagering: 14,
+      carbonation: 2
+    },
+    Ale: {
+      primaryFermentation: 9,
+      dRest: 2,
+      coldCrash: 1,
+      carbonation: 2
+    },
+    KettleSour: {
+      souringWort: 2,
+      primaryFermentation: 7,
+      dRest: 2,
+      coldCrash: 2,
+      carbonation: 2
+    }
+  }
+
 
 const beerListFromLocalStorage = JSON.parse(localStorage.getItem('beerList') || '[]')
 const addingBeerFromLocalStorage = JSON.parse(localStorage.getItem('addingBeerList') || 'false')
 
 function App() {
+
+  const [globalSchedulingParameters, setGlobalSchedulingParameters] = useState(schedulingParameters)
+  const schedulingParametersValues = { globalSchedulingParameters, setGlobalSchedulingParameters};
 
   const [beerList, setBeerList] = useState(beerListFromLocalStorage);
   const value = { beerList, setBeerList };
@@ -53,14 +81,24 @@ function App() {
   const [beerType, setBeerType] = useState("");
   const selectedBeerType = { beerType, setBeerType }
 
+ const handleError = (error) => {
+   console.log(error)
+ }
   useEffect(() => {
+    try{
       window.localStorage.setItem("beerList", JSON.stringify(beerList))
+      console.log("beerList", beerList)
       window.localStorage.setItem("addingBeer", JSON.stringify(addingBeer))
-  }, [selectedRecipe])
+    } catch (error){
+      handleError(error)
+    }
+  }, [beerType])
+
 
   return (
 
     <GoogleOAuthProvider clientId={process.env.REACT_APP_CALENDAR_ID}>
+      <GlobalSchedulingParametersContext.Provider value={schedulingParametersValues}>
         <AddingBeerBooleanContext.Provider value={toggleSetting}>
           <SelectedRecipeContext.Provider value={selected}>
             <BeerListContext.Provider value={value}>
@@ -81,8 +119,11 @@ function App() {
                </BeerListContext.Provider>
               </SelectedRecipeContext.Provider>
         </AddingBeerBooleanContext.Provider>
+      </GlobalSchedulingParametersContext.Provider>
     </GoogleOAuthProvider>
    )
 }
+
+
 
 export default App;
