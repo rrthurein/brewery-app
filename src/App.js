@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState, useContext, useEffect } from 'react';
 import OnBoarding from "./components/OnBoarding";
+import SchedulingParameters from "./components/SchedulingParameters";
 import Home from "./components/Home";
 import Brew from "./components/Brew";
 import BeerList from "./components/BeerList";
@@ -112,6 +113,7 @@ function App() {
                     <Route path="beer-list/brew" element={<Brew />} />
                     <Route path="recipe-detail" element={<RecipeDetail />} />
                     <Route path="calendar" element={<Calendar />} />
+                    <Route path="scheduling-parameters/:id" element={<SchedulingParameters />} />
                   </Route>
                </Routes>
                   </BeerTypeContext.Provider>

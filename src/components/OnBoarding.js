@@ -1,18 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
 import BeerList from "./BeerList";
-import CurrentBeerForm from "./CurrentBeerForm";
 import BeerListContext from "../BeerListContext";
 import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
 import App from "../App";
 import beerStylesData from "../beerStylesData.json";
 import GlobalSchedulingParametersContext from "../GlobalSchedulingParametersContext";
+import { useNavigate, useParams} from 'react-router-dom'; //Navigating Programmatically
 
-function OnBoarding() {
+
+const OnBoarding = () => {
   const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
   const { beerList, setBeerList } = useContext(BeerListContext)
   const { globalSchedulingParameters, setGlobalSchedulingParameters } = useContext(GlobalSchedulingParametersContext)
 
-
+  const navigate = useNavigate();
 
   const [beerName, setBeerName] = useState('');
   const [beerStyle, setBeerStyle] = useState('');
@@ -21,7 +22,7 @@ function OnBoarding() {
   const [yeast, setYeast] = useState('');
   const [hops, setHops] = useState('')
   const [beerType, setBeerType] = useState('')
-  const [scheudlingParameter, SetSchedulingParameter] = useState({})
+  const [schedulingParameters, SetSchedulingParameter] = useState({})
 
   const [form, setForm] = useState({
     beerName: beerName,
@@ -30,17 +31,17 @@ function OnBoarding() {
     grain: grain,
     yeast: yeast,
     hops: hops,
-    schedulingParameters: scheudlingParameter,
+    schedulingParameters: schedulingParameters,
   });
 
 
   const addBeer = () => {
-      setAddingBeer(!addingBeer) //set is always updating a value
-        console.log("state", addingBeer)
-    }
+    setAddingBeer(!addingBeer) //set is always updating a value
+    console.log("state", addingBeer)
+  }
 
 
-useEffect(() => {
+  useEffect(() => {
     // Use the map() method to find the matching beer style and type
     const matchingBeerAle = beerStylesData.map(
       (beer) => beer.beerStyle == form.beerStyle && beer.beerType == "Ale"
@@ -94,47 +95,60 @@ useEffect(() => {
         setBeerType(beerStylesData[i].beerType)
       }
     }
+    navigate("/scheduling-parameters/" + beerList.length)
   }
-  console.log("rendering onboarding beerList", beerList)
+  console.log("rendering CHECK beerList", beerList)
+
+  const beerRecipeRenderView = () => {
+    return(
+      <div>
+      <h1>Beer Recipe Setup</h1>
+      <label>Beer Name:</label>
+      <input type="text" name="beerName" placeholder="Beer Name" onChange={handleInputChange} required/>
+      <label>Beer Style:</label>
+      <select name="beerStyle" onChange={handleInputChange}>
+      {beerStylesData.map(beerStyle => (
+        <option value={beerStyle.beerStyle}>{beerStyle.beerStyle}</option>
+      ))}
+      </select>
+      <label>ABV:</label>
+      <input type="number" required name="abv" placeholder="ABV" onChange={handleInputChange}/>
+      <label>Grain:</label>
+      <input type="text" name="grain" placeholder="Grain" required onChange={handleInputChange}/>
+      <label>Yeast:</label>
+      <input type="text" name="yeast" placeholder="Yeast" required onChange={handleInputChange}/>
+      <label>Hops:</label>
+      <input type="text" name="hops" placeholder="Hops" required onChange={handleInputChange}/>
+      <button type="button" onClick={handleClick}>Schedule Parameters</button>
+      </div>
+    )
+  }
+
   const renderView = () => {
 
-      if (addingBeer) {
-          return(
-              <div className="BeerForm-row">
-              <img className="BeerFormPhoto" src="./images/beer-cup.jpg"/>
-            <CurrentBeerForm
-              handleInputChange = {handleInputChange}
-              handleClick = {handleClick}
-              beerStyle = {beerStyle}
-              beerType = {beerType}
-              form = {form}
-              setForm = {setForm}
-            />
-            </div>
-          );
-      }
-
-       else {
-        return (
-          <div className="add-beer">
-          <h2>Add Beer Recipe!</h2>
-          <button id="firstButtonAddBeer" type="button" onClick={addBeer}>Add</button>
-          </div>
-        );
-      }
+    if(addingBeer){
+      console.log("condition 1")
+      return(
+        <div className="BeerRecipeForm">
+        {beerRecipeRenderView()}
+        </div>
+      );
     }
-
+    else {
+      console.log("condition 2")
+      return (
+        <div className="add-beer">
+        <h2>Add Beer Recipe!</h2>
+        <button id="firstButtonAddBeer" type="button" onClick={addBeer}>Add</button>
+        </div>
+      );
+    }
+  }
 
   return (
-
-          <div className="Beer-Inventory-Setup">
-
-          <header>
-            { renderView() }
-          </header>
-
-        </div>
-
+    <div className="Beer-Inventory-Setup">
+      { renderView() }
+    </div>
   )
 }
 
