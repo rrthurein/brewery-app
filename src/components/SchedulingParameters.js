@@ -18,15 +18,6 @@ const SchedulingParameters = () => {
 
   const handleInputChange = (e) =>{
 
-    //default according beer type
-    const newSchedulingParameters = {
-      ...globalSchedulingParameters[beerType],
-    }
-
-    //add the value from the changed input e.g. primary/secondary/drest
-    newSchedulingParameters[e.target.name] = e.target.value
-    console.log("newSchedulingParameters[e.target.name]", newSchedulingParameters[e.target.name], newSchedulingParameters)
-
     //merge selected key and value to the object so that it's combine before the data is update
     const newForm = {
       ...form,
@@ -34,21 +25,20 @@ const SchedulingParameters = () => {
     }
     console.log("newForm", newForm, "form", form)
     setForm(newForm)
+
     //combine data into updated beer entry
     const updatedBeer = {
       ...beerList[id],
       schedulingParameters : newForm
     }
-    console.log("after updatedBeer newSchedulingParameters", newSchedulingParameters)
+    //console.log("after updatedBeer newSchedulingParameters", newSchedulingParameters)
     console.log("updatedBeer", updatedBeer)
 
     //updating the schedulingParameters with updatedBeer variable to the selected beerList
     beerList[id] = updatedBeer
     console.log("beerList[id]", beerList[id])
+    console.log("beerList", beerList)
     setBeerList(beerList)
-
-    console.log("form", form)
-    console.log("parameters beerList[id]", beerList[id])
   }
 
   return(

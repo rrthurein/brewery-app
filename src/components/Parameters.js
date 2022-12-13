@@ -1,10 +1,13 @@
 import React, { useContext } from 'react'
 import SelectedRecipeContext from '../SelectedRecipeContext'
 import BeerTypeContext from '../BeerTypeContext'
+import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
+
 
 const Parameters = () => {
   const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext)
   const { beerType, setBeerType } = useContext(BeerTypeContext)
+  const navigate = useNavigate()
   const nullSelectedRecipe = () => {
     setSelectedRecipe(null);
   }
@@ -55,7 +58,7 @@ const Parameters = () => {
       <div className="valueName">{selectedRecipe.schedulingParameters.carbonation} </div>
 
        <div className="buttonDiv">
-         <div> <button type="button" onClick={() => nullSelectedRecipe()}>Back</button></div>
+         <div> <button type="button" onClick={()=>{navigate("/")}}>Back</button></div>
        </div>
      </div>
   )
