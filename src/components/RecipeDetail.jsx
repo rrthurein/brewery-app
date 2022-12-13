@@ -12,7 +12,7 @@ const RecipeDetail = () => {
   const { beerList, setBeerList } = useContext(BeerListContext);
 
   const navigate = useNavigate();
-
+  console.log("selectedRecipe", selectedRecipe)
    const nullSelectedRecipe = () => {
      setSelectedRecipe(null);
    }
@@ -69,7 +69,7 @@ const RecipeDetail = () => {
 
         <div className="buttonDiv">
           <div><button type="button" onClick={handleClickBrewDay}>Schedule</button></div>
-          <div><button type="button" onClick={() => navigate("brew")}>Brew</button></div>
+          <div><button type="button" onClick={() => navigate("parameters")}>Parameters</button></div>
           <div><button type="button" onClick={() => deleteBeer()}>Delete</button></div>
           <div> <button type="button" onClick={() => nullSelectedRecipe()}>Back</button></div>
         </div>

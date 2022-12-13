@@ -40,7 +40,7 @@ const BeerList = () => {
                          )
                       })
                      }
-                <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/");  }}>Add Beer</button>
+                <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/OnBoarding");  }}>Add Beer</button>
                 </div>
             </section>
             )

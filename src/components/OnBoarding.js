@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import BeerList from "./BeerList";
 import BeerListContext from "../BeerListContext";
+import BeerTypeContext from "../BeerTypeContext"
 import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
 import App from "../App";
 import beerStylesData from "../beerStylesData.json";
@@ -11,6 +12,7 @@ import { useNavigate, useParams} from 'react-router-dom'; //Navigating Programma
 const OnBoarding = () => {
   const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
   const { beerList, setBeerList } = useContext(BeerListContext)
+  const { beerType, setBeerType } = useContext(BeerTypeContext)
   const { globalSchedulingParameters, setGlobalSchedulingParameters } = useContext(GlobalSchedulingParametersContext)
 
   const navigate = useNavigate();
@@ -21,7 +23,6 @@ const OnBoarding = () => {
   const [grain, setGrain] = useState('');
   const [yeast, setYeast] = useState('');
   const [hops, setHops] = useState('')
-  const [beerType, setBeerType] = useState('')
   const [schedulingParameters, SetSchedulingParameter] = useState({})
 
   const [form, setForm] = useState({
@@ -52,6 +53,7 @@ const OnBoarding = () => {
     const matchingBeerKettleSour = beerStylesData.map(
       (beer) => beer.beerStyle == form.beerStyle && beer.beerType == "KettleSour"
     );
+
     // If a matching beer was found, update the form object with the
     // appropriate scheduling parameters
     if (matchingBeerAle.beerType === "Ale") {
@@ -95,31 +97,34 @@ const OnBoarding = () => {
         setBeerType(beerStylesData[i].beerType)
       }
     }
+    console.log("onBoarding BeerType", beerType)
     navigate("/scheduling-parameters/" + beerList.length)
   }
-  console.log("rendering CHECK beerList", beerList)
 
   const beerRecipeRenderView = () => {
     return(
-      <div>
-      <h1>Beer Recipe Setup</h1>
-      <label>Beer Name:</label>
-      <input type="text" name="beerName" placeholder="Beer Name" onChange={handleInputChange} required/>
-      <label>Beer Style:</label>
-      <select name="beerStyle" onChange={handleInputChange}>
-      {beerStylesData.map(beerStyle => (
-        <option value={beerStyle.beerStyle}>{beerStyle.beerStyle}</option>
-      ))}
-      </select>
-      <label>ABV:</label>
-      <input type="number" required name="abv" placeholder="ABV" onChange={handleInputChange}/>
-      <label>Grain:</label>
-      <input type="text" name="grain" placeholder="Grain" required onChange={handleInputChange}/>
-      <label>Yeast:</label>
-      <input type="text" name="yeast" placeholder="Yeast" required onChange={handleInputChange}/>
-      <label>Hops:</label>
-      <input type="text" name="hops" placeholder="Hops" required onChange={handleInputChange}/>
-      <button type="button" onClick={handleClick}>Schedule Parameters</button>
+        <div className="BeerForm-row">
+          <img className="BeerFormPhoto" src="./images/beer-cup.jpg"/>
+            <div className="BeerRecipeForm">
+            <h1>Beer Recipe Setup</h1>
+            <label>Beer Name:</label>
+            <input type="text" name="beerName" placeholder="Beer Name" onChange={handleInputChange} required/>
+            <label>Beer Style:</label>
+            <select name="beerStyle" onChange={handleInputChange}>
+            {beerStylesData.map(beerStyle => (
+              <option value={beerStyle.beerStyle}>{beerStyle.beerStyle}</option>
+            ))}
+            </select>
+            <label>ABV:</label>
+            <input type="number" required name="abv" placeholder="ABV" onChange={handleInputChange}/>
+            <label>Grain:</label>
+            <input type="text" name="grain" placeholder="Grain" required onChange={handleInputChange}/>
+            <label>Yeast:</label>
+            <input type="text" name="yeast" placeholder="Yeast" required onChange={handleInputChange}/>
+            <label>Hops:</label>
+            <input type="text" name="hops" placeholder="Hops" required onChange={handleInputChange}/>
+            <button type="button" onClick={handleClick}>Schedule Parameters</button>
+          </div>
       </div>
     )
   }
@@ -129,7 +134,7 @@ const OnBoarding = () => {
     if(addingBeer){
       console.log("condition 1")
       return(
-        <div className="BeerRecipeForm">
+        <div>
         {beerRecipeRenderView()}
         </div>
       );

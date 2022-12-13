@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState, useContext, useEffect } from 'react';
 import OnBoarding from "./components/OnBoarding";
 import SchedulingParameters from "./components/SchedulingParameters";
-import Home from "./components/Home";
+import Parameters from "./components/Parameters";
 import Brew from "./components/Brew";
 import BeerList from "./components/BeerList";
 import { Routes, Route } from "react-router-dom";
@@ -105,11 +105,11 @@ function App() {
               <BeerTypeContext.Provider value={selectedBeerType}>
               <Routes>
                   <Route element={<WithoutNav />}>
-                      <Route path="/" element={<OnBoarding />} />
+                      <Route path="/OnBoarding" element={<OnBoarding />} />
                   </Route>
                   <Route  element={<WithNav />}>
-                    <Route path="home" element={<Home />} />
-                    <Route path="beer-list" element={<BeerList />} />
+                    <Route path="/" element={<BeerList />} />
+                    <Route path="parameters" element={<Parameters />} />
                     <Route path="beer-list/brew" element={<Brew />} />
                     <Route path="recipe-detail" element={<RecipeDetail />} />
                     <Route path="calendar" element={<Calendar />} />
