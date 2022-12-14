@@ -44,27 +44,21 @@ const RecipeDetail = () => {
 
      <div className="beerInfo-div">
        <div className="keyName">Beer Name</div>
-       <hr className="hr"></hr>
        <div className="valueName">{selectedRecipe.beerName} </div>
 
        <div className="keyName">Beer Style</div>
-       <hr className="hr"></hr>
        <div className="valueName">{selectedRecipe.beerStyle} </div>
 
        <div className="keyName">Beer ABV</div>
-       <hr className="hr"></hr>
        <div className="valueName">{selectedRecipe.abv} </div>
 
        <div className="keyName">Grain</div>
-       <hr className="hr"></hr>
        <div className="valueName">{selectedRecipe.grain} </div>
 
        <div className="keyName">Yeast</div>
-       <hr className="hr"></hr>
        <div className="valueName">{selectedRecipe.yeast} </div>
 
        <div className="keyName">Hops</div>
-       <hr className="hr"></hr>
        <div className="valueName">{selectedRecipe.hops}</div>
 
         <div className="buttonDiv">

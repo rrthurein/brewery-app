@@ -16,6 +16,7 @@ const BeerList = () => {
       setSelectedRecipe(beer);
    }
 
+console.log("beerList", beerList)
 
     const showRecipeDetail = selectedRecipe
 

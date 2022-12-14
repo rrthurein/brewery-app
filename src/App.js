@@ -103,19 +103,19 @@ function App() {
           <SelectedRecipeContext.Provider value={selected}>
             <BeerListContext.Provider value={value}>
               <BeerTypeContext.Provider value={selectedBeerType}>
-              <Routes>
-                  <Route element={<WithoutNav />}>
-                      <Route path="/OnBoarding" element={<OnBoarding />} />
-                  </Route>
-                  <Route  element={<WithNav />}>
-                    <Route path="/" element={<BeerList />} />
-                    <Route path="parameters" element={<Parameters />} />
-                    <Route path="beer-list/brew" element={<Brew />} />
-                    <Route path="recipe-detail" element={<RecipeDetail />} />
-                    <Route path="calendar" element={<Calendar />} />
-                    <Route path="scheduling-parameters/:id" element={<SchedulingParameters />} />
-                  </Route>
-               </Routes>
+                    <Routes>
+                        <Route element={<WithoutNav />}>
+                            <Route path="/OnBoarding" element={<OnBoarding />} />
+                        </Route>
+                        <Route  element={<WithNav />}>
+                          <Route path="/" element={<BeerList />} />
+                          <Route path="parameters" element={<Parameters />} />
+                          <Route path="beer-list/brew" element={<Brew />} />
+                          <Route path="recipe-detail" element={<RecipeDetail />} />
+                          <Route path="calendar" element={<Calendar />} />
+                          <Route path="scheduling-parameters/:id" element={<SchedulingParameters />} />
+                        </Route>
+                     </Routes>
                   </BeerTypeContext.Provider>
                </BeerListContext.Provider>
               </SelectedRecipeContext.Provider>
