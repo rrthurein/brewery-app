@@ -6,7 +6,7 @@ const PopUp = () => {
   const navigate = useNavigate();
 
   const closeButton = () => {
-    navigate("/home")
+    navigate("/")
   }
 
   const openCalendar = () =>{

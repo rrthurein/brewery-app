@@ -14,36 +14,36 @@ import App from "./App"
     const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
 
 
-    const schedulingParameters = {
-      lager: {
-        primaryFermentation: 12,
-        dRest: 2,
-        lagering: 14,
-        carbonation: 2
-      },
-      ale: {
-        primaryFermentation: 9,
-        dRest: 2,
-        coldCrash: 1,
-        carbonation: 2
-      },
-      kettleSour: {
-        souringWort: 2,
-        primaryFermentation: 7,
-        dRest: 2,
-        coldCrash: 2,
-        carbonation: 2
-      }
-    }
+    // const schedulingParameters = {
+    //   lager: {
+    //     primaryFermentation: 12,
+    //     dRest: 2,
+    //     lagering: 14,
+    //     carbonation: 2
+    //   },
+    //   ale: {
+    //     primaryFermentation: 9,
+    //     dRest: 2,
+    //     coldCrash: 1,
+    //     carbonation: 2
+    //   },
+    //   kettleSour: {
+    //     souringWort: 2,
+    //     primaryFermentation: 7,
+    //     dRest: 2,
+    //     coldCrash: 2,
+    //     carbonation: 2
+    //   }
+    // }
+    //
+    // export function utilSchedulingParameters(){
+    //   let sP = schedulingParameters
+    //   console.log(sP)
+    // }
 
-    export function utilSchedulingParameters(){
-      let sP = schedulingParameters
-      console.log(sP)
-    }
-
-  export function calculateBrewingSchedule(brewDate, beerType) {
-      if(beerType === "lager") {
-          const lagerLength = Object.keys(schedulingParameters.lager).length
+  export function calculateBrewingSchedule(brewDate, beerType, schedulingParameters) {
+      if(beerType === "Lager") {
+          const lagerLength = Object.keys(schedulingParameters).length
           const lagerEventTimes = []
           let startDate = []
           let endDate = []
@@ -51,17 +51,17 @@ import App from "./App"
           for(let i = 0; i < lagerLength; i++){
             if(i === 0){
               startDate.push(new Date(brewDate))
-              let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.lager)[i])
+              let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters)[i])
               endDate.push(new Date(endDateValue))
             } else if(i > 0){
               startDate.push(endDate[i - 1])
               const startDateValue = new Date(startDate[i]);
-              let endDateValue= startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.lager)[i])
+              let endDateValue= startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters)[i])
               endDate.push(new Date(endDateValue))
             }
 
             lagerEventTimes[i] = {
-              summary: Object.keys(schedulingParameters.lager)[i],
+              summary: Object.keys(schedulingParameters)[i],
               start: {
                 dateTime: startDate[i],
                 timeZone: 'America/Los_Angeles',
@@ -79,7 +79,7 @@ import App from "./App"
               body: lagerEventTimes[i],
               headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ya29.a0AeTM1ifoXHCsZ9a-sYc_21xZW3Q4wu6VJL8vmj70SIHoXQiXRee-kz0_lFMEOun9Ca_y8F2nYQTnhj3YjCx-C6Q8cEhcXa3zM156A4t5Rx_xN-GvJMP-xys1FojdJcHhHYmQpEdVrko-gARhZByQ0lAWlhbeaCgYKAXoSARASFQHWtWOmX4zjWssFbO1qU82B5rwqxQ0163`,
+                Authorization: `Bearer ya29.a0AX9GBdU8iHvjjR38xerVV82IJveVHfQmPJSDL0R4ND8NrjJQyQQvtU5-_xNBOjc6Rkx1TllbTbrMySELhLpi9IKRQ-U0hnjzyvvdfmmmjbiM6_zmaOJigYVXbwlRmTwlLdrMwVi7kSoqZq7nK3gHyAXeaw69I8kaCgYKAVMSAQASFQHUCsbCYhK0hjEKyoG53C6wVMuH_g0166`,
               },
             })
             .then(
@@ -93,25 +93,31 @@ import App from "./App"
               }
             )
           }
-        } else if (beerType === "ale") {
-            const aleLength = Object.keys(schedulingParameters.ale).length
+        } else if (beerType === "Ale") {
+            const aleLength = Object.keys(schedulingParameters).length
+            console.log("aleLength", aleLength)
             let aleEventsTime = []
             let startTime = []
             let endTime = []
-
+            console.log(brewDate, startTime, endTime)
             for(let j = 0; j < aleLength; j++){
+
               if(j === 0){
                 startTime.push(new Date(brewDate))
-                let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.ale)[j])
+                //setDate and getDate are not logging correct date. when the these two codes are tested in the calendar
+                //component it is adding up correctly. Somewhere along the line the data is getting mixed up.
+                let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters)[j])
                 endTime.push(new Date(endDateValue))
+
               } else if(j > 0){
                 startTime.push(endTime[j - 1])
                 let startDateValue = new Date(startTime[j])
-                let endDateValue = startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.ale)[j])
+                let endDateValue = startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters)[j])
                 endTime.push(new Date(endDateValue))
               }
+
               aleEventsTime[j] = {
-                summary: Object.keys(schedulingParameters.ale)[j],
+                summary: Object.keys(schedulingParameters)[j],
                 start: {
                   dateTime: startTime[j],
                   timeZone: 'America/Los_Angeles',
@@ -122,30 +128,34 @@ import App from "./App"
                 },
                 colorId: 4,
               }
-              gapi.client
-              .request({
-                path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                method: "POST",
-                body: aleEventsTime[j],
-                headers: {
-                  "Content-type": "application/json",
-                  Authorization: `Bearer ya29.a0AeTM1ifoXHCsZ9a-sYc_21xZW3Q4wu6VJL8vmj70SIHoXQiXRee-kz0_lFMEOun9Ca_y8F2nYQTnhj3YjCx-C6Q8cEhcXa3zM156A4t5Rx_xN-GvJMP-xys1FojdJcHhHYmQpEdVrko-gARhZByQ0lAWlhbeaCgYKAXoSARASFQHWtWOmX4zjWssFbO1qU82B5rwqxQ0163`,
-                },
-              })
-              .then(
-                (response) => {
-                  console.log("sucess", response)
-                  return [true, response];
 
-                },
-                function (err) {
-                  console.log(err);
-                  return [false, err];
-                }
-              );
+              console.log("aleEventsTime", aleEventsTime[j])
             }
-          } else if (beerType === "kettleSour"){
-                  const kettleSourLength = Object.keys(schedulingParameters.kettleSour).length
+            //   gapi.client
+            //   .request({
+            //     path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
+            //     method: "POST",
+            //     body: aleEventsTime[j],
+            //     headers: {
+            //       "Content-type": "application/json",
+            //       Authorization: `Bearer ya29.a0AX9GBdU8iHvjjR38xerVV82IJveVHfQmPJSDL0R4ND8NrjJQyQQvtU5-_xNBOjc6Rkx1TllbTbrMySELhLpi9IKRQ-U0hnjzyvvdfmmmjbiM6_zmaOJigYVXbwlRmTwlLdrMwVi7kSoqZq7nK3gHyAXeaw69I8kaCgYKAVMSAQASFQHUCsbCYhK0hjEKyoG53C6wVMuH_g0166`,
+            //     },
+            //   })
+            //   .then(
+            //     (response) => {
+            //       console.log("sucess", response)
+            //       return [true, response];
+            //
+            //     },
+            //     function (err) {
+            //       console.log(err);
+            //       return [false, err];
+            //     }
+            //   );
+            // }
+
+          } else if (beerType === "KettleSour"){
+                  const kettleSourLength = Object.keys(schedulingParameters).length
                   let souringWortEvent = []
                   let startDate = []
                   let endDate = []
@@ -153,16 +163,16 @@ import App from "./App"
                   for(let k = 0; k < kettleSourLength; k++){
                     if(k = 0){
                       startDate.push(new Date(brewDate))
-                      let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters.kettleSour)[k])
+                      let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters)[k])
                       endDate.push(new Date(endDateValue))
                     } else if(k > 0) {
                       startDate.push(endDate[k - 1])
                       let startDateValue = new Date(startDate[k])
-                      let endDateValue = startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters.kettleSour)[k])
+                      let endDateValue = startDateValue.setDate(startDateValue.getDate() + Object.values(schedulingParameters)[k])
                       endDate.push(new Date(endDateValue))
                     }
                     souringWortEvent[k] = {
-                      summary: Object.keys(schedulingParameters.kettleSour)[k],
+                      summary: Object.keys(schedulingParameters)[k],
                       start: {
                         dateTime: startDate[k],
                         timeZone: 'America/Los_Angeles',
@@ -180,7 +190,7 @@ import App from "./App"
                       body: souringWortEvent[k],
                       headers: {
                         "Content-type": "application/json",
-                        Authorization: `Bearer ya29.a0AeTM1ifoXHCsZ9a-sYc_21xZW3Q4wu6VJL8vmj70SIHoXQiXRee-kz0_lFMEOun9Ca_y8F2nYQTnhj3YjCx-C6Q8cEhcXa3zM156A4t5Rx_xN-GvJMP-xys1FojdJcHhHYmQpEdVrko-gARhZByQ0lAWlhbeaCgYKAXoSARASFQHWtWOmX4zjWssFbO1qU82B5rwqxQ0163`,
+                        Authorization: `Bearer ya29.a0AX9GBdU8iHvjjR38xerVV82IJveVHfQmPJSDL0R4ND8NrjJQyQQvtU5-_xNBOjc6Rkx1TllbTbrMySELhLpi9IKRQ-U0hnjzyvvdfmmmjbiM6_zmaOJigYVXbwlRmTwlLdrMwVi7kSoqZq7nK3gHyAXeaw69I8kaCgYKAVMSAQASFQHUCsbCYhK0hjEKyoG53C6wVMuH_g0166`,
                       },
                     })
                     .then(
