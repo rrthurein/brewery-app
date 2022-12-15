@@ -109,7 +109,7 @@ function App() {
                         </Route>
                         <Route  element={<WithNav />}>
                           <Route path="/" element={<BeerList />} />
-                          <Route path="parameters" element={<Parameters />} />
+                          <Route path="parameters/:beerName" element={<Parameters />} />
                           <Route path="beer-list/brew" element={<Brew />} />
                           <Route path="recipe-detail" element={<RecipeDetail />} />
                           <Route path="calendar" element={<Calendar />} />

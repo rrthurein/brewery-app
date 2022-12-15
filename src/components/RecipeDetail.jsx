@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
+import { useNavigate, useParams } from 'react-router-dom'; //Navigating Programmatically
 import SelectedRecipeContext from "../SelectedRecipeContext";
 import beerStylesData from "../beerStylesData.json";
 import BeerTypeContext from "../BeerTypeContext";
@@ -39,7 +39,7 @@ const RecipeDetail = () => {
     navigate("/calendar")
     settingBeerType()
   }
-
+ console.log("selectedRecipe.id", selectedRecipe.id)
  return(
 
      <div className="beerInfo-div">
@@ -63,7 +63,7 @@ const RecipeDetail = () => {
 
         <div className="buttonDiv">
           <div><button type="button" onClick={handleClickBrewDay}>Schedule</button></div>
-          <div><button type="button" onClick={() => navigate("parameters")}>Parameters</button></div>
+          <div><button type="button" onClick={() => navigate("/parameters/" + selectedRecipe.beerName)}>Parameters</button></div>
           <div><button type="button" onClick={() => deleteBeer()}>Delete</button></div>
           <div> <button type="button" onClick={() => nullSelectedRecipe()}>Back</button></div>
         </div>
