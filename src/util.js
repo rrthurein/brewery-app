@@ -104,9 +104,15 @@ import App from "./App"
 
               if(j === 0){
                 startTime.push(new Date(brewDate))
+                console.log("brewDate", new Date(brewDate),"this data is the selected day of the month", brewDate.getDate())
+                let testAddSelectedDay = brewDate.getDate() + Number(Object.values(schedulingParameters)[j])
+                console.log("testAddSelectedDay", testAddSelectedDay)
                 //setDate and getDate are not logging correct date. when the these two codes are tested in the calendar
                 //component it is adding up correctly. Somewhere along the line the data is getting mixed up.
-                let endDateValue = brewDate.setDate(brewDate.getDate() + Object.values(schedulingParameters)[j])
+                let endDateValue = brewDate.setDate(testAddSelectedDay)
+                console.log("the days data that adds to the selected date", Object.values(schedulingParameters)[j],
+                "this data is the selected day of the month", brewDate.getDate(),
+              )
                 endTime.push(new Date(endDateValue))
 
               } else if(j > 0){
