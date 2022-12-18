@@ -26,18 +26,7 @@
     const responseError = error => {
       console.log('Login Failed')
     }
- //   const testCocde = (startTime) => {
- //     let startDate = []
- //     let endTime = []
- //     startDate.push(new Date(startTime))
- //     let endDateValue = startTime.setDate(startTime.getDate() + 12)
- //     console.log(
- //       "brewDate.getDate()", startTime.getDate(),
- //        startTime.setDate(startTime.getDate() + 12)
- //     )
- //     endTime.push(new Date(endDateValue))
- //     console.log(startDate, endTime)
- //   }
+
 
     return (
 
@@ -57,7 +46,6 @@
               <div className="scheduleBeer">
             <button onClick={() => {
                   calculateBrewingSchedule(startTime, beerType, schedulingParameters)
-                  // testCocde(startTime)
                   setPopUp(!popUp)
                 }}>
                 Schedule Beer</button>
