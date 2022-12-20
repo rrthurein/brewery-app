@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import BeerList from "./BeerList";
 import BeerListContext from "../BeerListContext";
 import BeerTypeContext from "../BeerTypeContext"
+import SelectedRecipeContext from "../SelectedRecipeContext"
 import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
 import App from "../App";
 import beerStylesData from "../beerStylesData.json";
@@ -13,6 +14,7 @@ const OnBoarding = () => {
   const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
   const { beerList, setBeerList } = useContext(BeerListContext)
   const { beerType, setBeerType } = useContext(BeerTypeContext)
+  const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext)
   const { globalSchedulingParameters, setGlobalSchedulingParameters } = useContext(GlobalSchedulingParametersContext)
 
   const navigate = useNavigate();
@@ -24,6 +26,8 @@ const OnBoarding = () => {
   const [yeast, setYeast] = useState('');
   const [hops, setHops] = useState('')
   const [schedulingParameters, SetSchedulingParameter] = useState({})
+  const [renderScheduleParameter, setRenderScheduleParameter] = useState(false);
+
 
   const [form, setForm] = useState({
     beerName: beerName,
@@ -36,43 +40,13 @@ const OnBoarding = () => {
   });
 
 
+  console.log("beerType", beerType, form)
+
   const addBeer = () => {
     setAddingBeer(!addingBeer) //set is always updating a value
     console.log("state", addingBeer)
   }
 
-
-  useEffect(() => {
-    // Use the map() method to find the matching beer style and type
-    const matchingBeerAle = beerStylesData.map(
-      (beer) => beer.beerStyle == form.beerStyle && beer.beerType == "Ale"
-    );
-    const matchingBeerLager = beerStylesData.map(
-      (beer) => beer.beerStyle == form.beerStyle && beer.beerType == "Lager"
-    );
-    const matchingBeerKettleSour = beerStylesData.map(
-      (beer) => beer.beerStyle == form.beerStyle && beer.beerType == "KettleSour"
-    );
-
-    // If a matching beer was found, update the form object with the
-    // appropriate scheduling parameters
-    if (matchingBeerAle.beerType === "Ale") {
-      setForm({
-        ...form,
-        schedulingParameters: globalSchedulingParameters.Ale,
-      });
-    } else if (matchingBeerLager.beerType === "Lager") {
-      setForm({
-        ...form,
-        schedulingParameters: globalSchedulingParameters.Lager,
-      });
-    } else if (matchingBeerKettleSour.beerType === "KettleSour") {
-      setForm({
-        ...form,
-        schedulingParameters: globalSchedulingParameters.KettleSour,
-      });
-    }
-  }, [beerType]);
 
   const handleInputChange = (e) => {
     //create an object
@@ -81,6 +55,17 @@ const OnBoarding = () => {
     }
     //use brackets to interpolate dynamic/variable key name
     newBeer[e.target.name] = e.target.value
+
+    //setBeerType for
+    if(newBeer.beerStyle){
+      beerStylesData.map((beer) =>{
+        if(beer.beerStyle === newBeer.beerStyle){
+          setBeerType(beer.beerType)
+        }
+      })
+    }
+
+    console.log(newBeer)
     setForm(newBeer)
   }
 
@@ -101,31 +86,57 @@ const OnBoarding = () => {
     navigate("/scheduling-parameters/" + beerList.length)
   }
 
+  const handleScheduleBeer = () => {
+
+    let newBeer = {
+      ...form,
+      id: beerList.length,
+      schedulingParameters: globalSchedulingParameters[beerType]
+    }
+    setSelectedRecipe(newBeer)
+
+    //adding newBeer Form to array
+    beerList[beerList.length] = newBeer
+    setBeerList(beerList)
+
+    navigate("/calendar")
+  }
+
+
   const beerRecipeRenderView = () => {
     return(
-        <div className="BeerForm-row">
-          <img className="BeerFormPhoto" src="./images/beer-cup.jpg"/>
-            <div className="BeerRecipeForm">
-            <h1>Beer Recipe Setup</h1>
-            <label>Beer Name:</label>
-            <input type="text" name="beerName" placeholder="Beer Name" onChange={handleInputChange} required/>
-            <label>Beer Style:</label>
-            <select name="beerStyle" onChange={handleInputChange}>
-            {beerStylesData.map(beerStyle => (
-              <option value={beerStyle.beerStyle}>{beerStyle.beerStyle}</option>
-            ))}
-            </select>
-            <label>ABV:</label>
-            <input type="number" required name="abv" placeholder="ABV" onChange={handleInputChange}/>
-            <label>Grain:</label>
-            <input type="text" name="grain" placeholder="Grain" required onChange={handleInputChange}/>
-            <label>Yeast:</label>
-            <input type="text" name="yeast" placeholder="Yeast" required onChange={handleInputChange}/>
-            <label>Hops:</label>
-            <input type="text" name="hops" placeholder="Hops" required onChange={handleInputChange}/>
-            <button type="button" onClick={handleClick}>Schedule Parameters</button>
-          </div>
-      </div>
+
+      !renderScheduleParameter ?
+          <div className="BeerForm-row">
+            <img className="BeerFormPhoto" src="./images/beer-cup.jpg"/>
+              <div className="BeerRecipeForm">
+              <h1>Beer Recipe Setup</h1>
+              <label>Beer Name:</label>
+              <input type="text" name="beerName" placeholder="Beer Name" onChange={handleInputChange} required/>
+              <label>Beer Style:</label>
+              <select name="beerStyle" onChange={handleInputChange}>
+              {beerStylesData.map(beerStyle => (
+                <option value={beerStyle.beerStyle}>{beerStyle.beerStyle}</option>
+              ))}
+              </select>
+              <label>ABV:</label>
+              <input type="number" required name="abv" placeholder="ABV" onChange={handleInputChange}/>
+              <label>Grain:</label>
+              <input type="text" name="grain" placeholder="Grain" required onChange={handleInputChange}/>
+              <label>Yeast:</label>
+              <input type="text" name="yeast" placeholder="Yeast" required onChange={handleInputChange}/>
+              <label>Hops:</label>
+              <input type="text" name="hops" placeholder="Hops" required onChange={handleInputChange}/>
+              <button type="button" onClick={() =>{setRenderScheduleParameter(!renderScheduleParameter)}}>Schedule Parameter</button>
+            </div>
+          </div> :
+          <>
+            <div className="BeerForm-row">
+            <button type="button" onClick={handleClick}>Add Your Own Parameters</button>
+            <button type="button" onClick={handleScheduleBeer}>Scehdule Beer</button>
+            </div>
+          </>
+
     )
   }
 

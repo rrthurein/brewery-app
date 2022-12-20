@@ -26,8 +26,7 @@
     const responseError = error => {
       console.log('Login Failed')
     }
-
-
+    
     return (
 
       <section>
@@ -47,6 +46,7 @@
             <button onClick={() => {
                   calculateBrewingSchedule(startTime, beerType, schedulingParameters)
                   setPopUp(!popUp)
+
                 }}>
                 Schedule Beer</button>
               </div>
