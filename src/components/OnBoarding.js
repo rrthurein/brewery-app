@@ -52,6 +52,7 @@ const OnBoarding = () => {
     let newBeer = {
       ...form,
     }
+
     //use brackets to interpolate dynamic/variable key name
     newBeer[e.target.name] = e.target.value
 
@@ -111,7 +112,7 @@ const OnBoarding = () => {
               <label>Beer Name:</label>
               <input type="text" name="beerName" placeholder="Beer Name" onChange={handleInputChange} required/>
               <label>Beer Style:</label>
-              <select name="beerStyle" onChange={handleInputChange}>
+              <select name="beerStyle" value={beerStyle.beerStyle} onChange={handleInputChange}>
               {beerStylesData.map(beerStyle => (
                 <option value={beerStyle.beerStyle}>{beerStyle.beerStyle}</option>
               ))}

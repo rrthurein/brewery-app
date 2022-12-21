@@ -21,11 +21,6 @@ const RecipeDetail = () => {
   const params = useParams()
   const beerName = params.beerName
 
-  console.log("selectedRecipe", selectedRecipe)
-   // const nullSelectedRecipe = () => {
-   //   setSelectedRecipe(null);
-   // }
-
 
   const settingBeerType = () => {
     for(let i = 0;i < beerStylesData.length; i++){
@@ -41,6 +36,7 @@ const RecipeDetail = () => {
 
    const editDoneClick = () => {
      setEditParameter(!editParameter)
+
    }
 
    const handleEditChange = (e) => {
@@ -51,6 +47,7 @@ const RecipeDetail = () => {
        ...selectedRecipe,
        [e.target.name] : e.target.value
      }
+     setSelectedRecipe(newSelectedRecipe)
 
      //updates the newSelectedRecipe object to the
      // setEditSelectedRecipe(newSelectedRecipe)
@@ -60,6 +57,7 @@ const RecipeDetail = () => {
        ...beerList,
        [e.target.id] : newSelectedRecipe
      }
+
 
      console.log(updatedSelectedRecipe);
 
@@ -112,19 +110,42 @@ const RecipeDetail = () => {
 
 
          <div className="keyName">Beer Style</div>
-         <div className="valueName">{selectedRecipe.beerStyle} </div>
+         {
+           editParameter == false ?
+           <div className="valueName">{selectedRecipe.beerStyle} </div>
+           : <input className="valueName" type="text" id={selectedRecipe.id} defaultValue={selectedRecipe.beerStyle} name="beerStyle" placeholder="beerStyle" onChange={handleEditChange} required/>
+         }
+
 
          <div className="keyName">Beer ABV</div>
-         <div className="valueName">{selectedRecipe.abv} </div>
+         {
+           editParameter == false ?
+           <div className="valueName">{selectedRecipe.abv} </div>
+           : <input className="valueName" type="text" id={selectedRecipe.id} defaultValue={selectedRecipe.abv} name="abv" placeholder="abv" onChange={handleEditChange} required/>
+         }
+
 
          <div className="keyName">Grain</div>
-         <div className="valueName">{selectedRecipe.grain} </div>
+         {
+           editParameter == false ?
+           <div className="valueName">{selectedRecipe.grain} </div>
+           : <input className="valueName" type="text" id={selectedRecipe.id} defaultValue={selectedRecipe.grain} name="grain" placeholder="grain" onChange={handleEditChange} required/>
+         }
+
 
          <div className="keyName">Yeast</div>
-         <div className="valueName">{selectedRecipe.yeast} </div>
+         {
+           editParameter == false ?
+           <div className="valueName">{selectedRecipe.yeast} </div>
+           : <input className="valueName" type="text" id={selectedRecipe.id} defaultValue={selectedRecipe.yeast} name="yeast" placeholder="yeast" onChange={handleEditChange} required/>
+         }
 
          <div className="keyName">Hops</div>
-         <div className="valueName">{selectedRecipe.hops}</div>
+         {
+           editParameter == false ?
+           <div className="valueName">{selectedRecipe.hops} </div>
+           : <input className="valueName" type="text" id={selectedRecipe.id} defaultValue={selectedRecipe.hops} name="hops" placeholder="hops" onChange={handleEditChange} required/>
+         }
 
           <div className="buttonDiv">
             <div>
