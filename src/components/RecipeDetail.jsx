@@ -14,6 +14,9 @@ const RecipeDetail = () => {
   const { beerType, setBeerType } = useContext(BeerTypeContext);
   const { beerList, setBeerList } = useContext(BeerListContext);
 
+  const [editParameter, setEditParameter] = useState(false);
+  // const [editSelectedRecipe, setEditSelectedRecipe] = useState({});
+
   const navigate = useNavigate();
   const params = useParams()
   const beerName = params.beerName
@@ -32,47 +35,112 @@ const RecipeDetail = () => {
      }
    }
 
+   const editHandleClick = () => {
+     setEditParameter(!editParameter)
+   }
+
+   const editDoneClick = () => {
+     setEditParameter(!editParameter)
+   }
+
+   const handleEditChange = (e) => {
+     e.preventDefault()
+
+     //adds selected input to the newSelectedRecipe object
+     let newSelectedRecipe = {
+       ...selectedRecipe,
+       [e.target.name] : e.target.value
+     }
+
+     //updates the newSelectedRecipe object to the
+     // setEditSelectedRecipe(newSelectedRecipe)
+
+     //updated the beerList with newSelectedRecipe
+     let updatedSelectedRecipe = {
+       ...beerList,
+       [e.target.id] : newSelectedRecipe
+     }
+
+     console.log(updatedSelectedRecipe);
+
+     //updates beerList with the updatedSelectedRecipe
+     const updatedBeerList = beerList.map((beer) =>{
+       console.log(beer, newSelectedRecipe.beerName)
+       if(beer.id == newSelectedRecipe.id){
+         let id = e.target.id
+         return updatedSelectedRecipe[id]
+       } else{
+         return beer
+       }
+     })
+
+     // updates the beerList state with the updatedBeerList
+     console.log(updatedBeerList)
+     setBeerList(updatedBeerList)
+   }
+
+
   const handleClickBrewDay = () => {
     navigate("/calendar")
     settingBeerType()
   }
- console.log("selectedRecipe.id", selectedRecipe.id)
+
+
+
  return(
    <section className="RecipeDetail">
-
      <div>
       <button type="button" onClick={() => navigate("/")}
-      style={{marginLeft: 180, marginTop: "2em", fontSize: 20, letterSpacing: "0.2em"}}>
+      style={{marginLeft: 180, fontSize: 20, letterSpacing: "0.2em"}}>
       <FontAwesomeIcon icon={faChevronUp} rotation={270}/> Back
       </button>
      </div>
      <div className="beerInfo-div">
+     <div className="buttonDiv-RecipeDetailButton">
       <h1>Recipe Detail</h1>
-       <div className="keyName">Beer Name</div>
-       <div className="valueName">{selectedRecipe.beerName} </div>
-
-       <div className="keyName">Beer Style</div>
-       <div className="valueName">{selectedRecipe.beerStyle} </div>
-
-       <div className="keyName">Beer ABV</div>
-       <div className="valueName">{selectedRecipe.abv} </div>
-
-       <div className="keyName">Grain</div>
-       <div className="valueName">{selectedRecipe.grain} </div>
-
-       <div className="keyName">Yeast</div>
-       <div className="valueName">{selectedRecipe.yeast} </div>
-
-       <div className="keyName">Hops</div>
-       <div className="valueName">{selectedRecipe.hops}</div>
-
-        <div className="buttonDiv">
-          <div><button type="button" onClick={handleClickBrewDay}>Schedule</button></div>
-          <div><button type="button" onClick={() => navigate("/parameters/" + selectedRecipe.beerName)} style={{width: 92}}>
-          Parameters</button></div>
+          { editParameter == false ?
+            <div><button type="button" onClick={editHandleClick}>Edit</button></div>
+            : <div><button type="button" onClick={editDoneClick}>Done</button></div>}
         </div>
+
+         <div className="keyName">Beer Name</div>
+         {
+           editParameter == false ?
+           <div className="valueName">{selectedRecipe.beerName}</div>
+           : <input className="valueName" type="text" id={selectedRecipe.id} defaultValue={selectedRecipe.beerName} name="beerName" placeholder="beerName" onChange={handleEditChange} required/>
+         }
+
+
+         <div className="keyName">Beer Style</div>
+         <div className="valueName">{selectedRecipe.beerStyle} </div>
+
+         <div className="keyName">Beer ABV</div>
+         <div className="valueName">{selectedRecipe.abv} </div>
+
+         <div className="keyName">Grain</div>
+         <div className="valueName">{selectedRecipe.grain} </div>
+
+         <div className="keyName">Yeast</div>
+         <div className="valueName">{selectedRecipe.yeast} </div>
+
+         <div className="keyName">Hops</div>
+         <div className="valueName">{selectedRecipe.hops}</div>
+
+          <div className="buttonDiv">
+            <div>
+              <button type="button" onClick={handleClickBrewDay}>
+                Schedule
+              </button>
+            </div>
+            <div>
+              <button type="button" onClick={() => navigate("/parameters/" + selectedRecipe.beerName)} style={{width: 92}}>
+                Parameters
+              </button>
+            </div>
+
       </div>
-    </section>
+    </div>
+  </section>
  )
 }
 

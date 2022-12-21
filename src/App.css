@@ -1,14 +1,13 @@
 * button {
-  color: white;
+  color: black;
+  background-color: white;
   margin: auto;
   height: 5vh;
   width: 20vh;
   text-align: center;
   padding: 8px;
   border-radius: 8px;
-  border: 0;
   cursor: pointer;
-  background-color: #D1512D;
   font-family: "Lucida Console", monospace;
 }
 
@@ -16,17 +15,23 @@
   padding-top: 5vh;
 }
 
-* h1, label, nav{
+* h1, h2, label, nav{
   font-family: "Monaco", monospace;
 }
+
+nav {
+  background-color: #272727;
+  color: #d8d8d8;
+}
+
 
 .beerListButton {
   display: flex;
   justify-content: space-between;
 }
 
-.beerListButton button:hover {
-  background-color: red;
+* button:hover {
+  background-color: silver;
 }
 
 .buttonDiv {
@@ -34,6 +39,13 @@
   justify-content: space-evenly;
   padding-top: 4vh;
 }
+
+.buttonDiv-RecipeDetailButton{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .buttonDiv button {
   width: 10vh;
 }
@@ -59,7 +71,7 @@
 
 .BeerFormPhoto {
   max-width: 50vw;
-  height: 50em;
+  height: 51.2em;
 }
 
 .BeerForm-row {
@@ -93,7 +105,6 @@
 }
 
 .Beer-Inventory-Setup {
-  background-color: #F5E8E4;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -122,15 +133,20 @@
   width: 50%;
 }
 
+.ScheduleParameterButton {
+  display: flex;
+  flex-direction: column;
+}
+
 .BeerListBorder {
-  border: 2px solid #9A1663;
+  border: 2px solid #0a0a0a;
   border-radius: 8px;
   padding-top: 5vh;
   padding-bottom: 10vh;
 }
 
 .beerInfo-div {
-  border: 2px solid #9A1663;
+  border: 2px solid #0a0a0a;
   width: 60vh;
   margin: auto;
   padding: 2vh;
@@ -231,7 +247,6 @@
   .Beer-Inventory-Setup {
     min-height: 47em;
     margin-top: auto;
-    margin-bottom: auto;
   }
   .BeerList {
     max-width: 50vh;
@@ -251,7 +266,7 @@
     font-size: 10px;
   }
   .beerInfo-div {
-    border: 2px solid #9A1663;
+    border: 2px solid #0a0a0a;
     width: 19em;
     border-radius: 8px;
     margin-bottom: 2em;
@@ -280,4 +295,5 @@
   width: 30px;
   height: 50;
   border-radius: 10px;
+  color: #0a0a0a;
 }

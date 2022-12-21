@@ -26,7 +26,6 @@ const OnBoarding = () => {
   const [yeast, setYeast] = useState('');
   const [hops, setHops] = useState('')
   const [schedulingParameters, SetSchedulingParameter] = useState({})
-  const [renderScheduleParameter, setRenderScheduleParameter] = useState(false);
 
 
   const [form, setForm] = useState({
@@ -105,8 +104,6 @@ const OnBoarding = () => {
 
   const beerRecipeRenderView = () => {
     return(
-
-      !renderScheduleParameter ?
           <div className="BeerForm-row">
             <img className="BeerFormPhoto" src="./images/beer-cup.jpg"/>
               <div className="BeerRecipeForm">
@@ -127,15 +124,15 @@ const OnBoarding = () => {
               <input type="text" name="yeast" placeholder="Yeast" required onChange={handleInputChange}/>
               <label>Hops:</label>
               <input type="text" name="hops" placeholder="Hops" required onChange={handleInputChange}/>
-              <button type="button" onClick={() =>{setRenderScheduleParameter(!renderScheduleParameter)}}>Schedule Parameter</button>
+              <div className="ScheduleParameterButton">
+              <button type="button" onClick={handleClick}>Add Your Own Parameters</button>
+              <button type="button" onClick={handleScheduleBeer}>Scehdule Beer</button>
+              </div>
             </div>
-          </div> :
-          <>
-            <div className="BeerForm-row">
-            <button type="button" onClick={handleClick}>Add Your Own Parameters</button>
-            <button type="button" onClick={handleScheduleBeer}>Scehdule Beer</button>
-            </div>
-          </>
+          </div>
+
+
+
 
     )
   }

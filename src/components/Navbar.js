@@ -7,6 +7,7 @@ const Navbar = () => {
     return {
       fontWeight: isActive ? 'bold' : 'normal',
       textDecoration: isActive ? 'none' : 'thick',
+      color: isActive ? "gold" : "white",
     }
   }
 
