@@ -5,7 +5,7 @@ import beerStylesData from "../beerStylesData.json";
 import BeerTypeContext from "../BeerTypeContext";
 import BeerListContext from "../BeerListContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 
 const RecipeDetail = () => {
@@ -87,17 +87,16 @@ const RecipeDetail = () => {
 
  return(
    <section className="RecipeDetail">
-     <div>
-      <button type="button" onClick={() => navigate("/")}
-      style={{marginLeft: 180, fontSize: 20, letterSpacing: "0.2em"}}>
-      <FontAwesomeIcon icon={faChevronUp} rotation={270}/> Back
+     <div className="backButtonRecipeDetail">
+      <button type="button" onClick={() => navigate("/")}>
+        <FontAwesomeIcon icon={faChevronUp} rotation={270}/> Back
       </button>
      </div>
      <div className="beerInfo-div">
      <div className="buttonDiv-RecipeDetailButton">
       <h1>Recipe Detail</h1>
           { editParameter == false ?
-            <div><button type="button" onClick={editHandleClick}>Edit</button></div>
+            <div><button type="button" onClick={editHandleClick}><FontAwesomeIcon icon={faEdit}/></button></div>
             : <div><button type="button" onClick={editDoneClick}>Done</button></div>}
         </div>
 

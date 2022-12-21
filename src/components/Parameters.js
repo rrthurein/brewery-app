@@ -4,7 +4,7 @@ import BeerTypeContext from '../BeerTypeContext'
 import BeerListContext from '../BeerListContext'
 import { useNavigate, useParams } from 'react-router-dom'; //Navigating Programmatically
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 
 const Parameters = () => {
@@ -77,7 +77,7 @@ const Parameters = () => {
                 { editParameter == false ?
                   <div>
                     <button type="button" onClick={editHandleClick}>
-                    Edit
+                      <FontAwesomeIcon icon={faEdit}/>
                     </button>
                   </div>
                   : <div>
