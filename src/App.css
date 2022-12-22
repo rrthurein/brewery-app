@@ -57,6 +57,7 @@ nav {
 
 .scheduleBeer {
   margin-top: 1vh;
+  align-items: center;
 }
 
 .react-datetime-picker__wrapper {
@@ -254,7 +255,7 @@ nav {
   .BeerList {
     max-width: 50vh;
     margin:  auto;
-    margin-top: 6em;
+    margin-top: 4.5em;
     text-align: center;
     padding: 5px;
     font-size: 20px;
@@ -286,7 +287,7 @@ nav {
     padding: 5px;
     margin: auto;
     margin-top: 30px;
-    margin-left: 50px;
+    margin-left: 25px;
     margin-right: 0px;
   }
 
@@ -300,6 +301,44 @@ nav {
     display: block;
     height: 4em;
     width: 6em;
+  }
+
+  .calendarPage-div {
+    display: grid;
+    justify-content: center;
+    padding: 15%;
+  }
+
+  .scheduleBeer {
+    margin-top: 3vh;
+    align-items: center;
+    display: grid;
+  }
+  .scheduleBeer button{
+    height: auto;
+    width: auto;
+  }
+
+  .react-datetime-picker__inputGroup{
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    height: auto;
+  }
+
+  .react-datetime-picker__wrapper {
+    background-color: white;
+  }
+
+  .react-datetime-picker__inputGroup span{
+    padding-top: 3px
+  }
+  .react-datetime-picker__inputGroup__leadingZero {
+    align-self: center;
+  }
+
+  .react-datetime-picker__clear-button react-datetime-picker__button {
+    background-color: white;
   }
 }
 

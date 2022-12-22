@@ -26,10 +26,10 @@
     const responseError = error => {
       console.log('Login Failed')
     }
-    
+
     return (
 
-      <section>
+       <div className="calendarPage-div">
         {
           !popUp ?
           <>
@@ -53,7 +53,7 @@
            </> :
               <PopUp />
       }
-    </section>
+     </div>
 
   )
 
