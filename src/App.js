@@ -14,6 +14,8 @@ import SelectedRecipeContext from "./SelectedRecipeContext";
 import GlobalSchedulingParametersContext from "./GlobalSchedulingParametersContext";
 import RecipeDetail from "./components/RecipeDetail";
 import Calendar from "./components/Calendar";
+import SuccessPage from "./components/SuccessPage";
+import Tabs from "./components/Tabs";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 
@@ -88,9 +90,10 @@ function App() {
                         </Route>
                         <Route  element={<WithNav />}>
                           <Route path="/" element={<BeerList />} />
-                          <Route path="parameters/:beerName" element={<Parameters />} />
-                          <Route path="recipe-detail/:beerName" element={<RecipeDetail />} />
                           <Route path="calendar" element={<Calendar />} />
+                          <Route path="parameters/:beerName" element={<Parameters />} />
+                          <Route path="tabs/recipe-detail/:beerName" element={<Tabs />} />
+                          <Route path="calendar/success-page" element={<SuccessPage />} />
                         </Route>
                      </Routes>
                   </BeerTypeContext.Provider>

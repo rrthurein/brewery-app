@@ -7,18 +7,19 @@
   // import { googleLogout } from '@react-oauth/google';
   import jwt_decode from "jwt-decode";
   import DateTimePicker from 'react-datetime-picker';
-  import PopUp from "./PopUp";
   import { calculateBrewingSchedule  } from "../util.js";
+  import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
-  const Calendar = (props) => {
+  const Calendar = () => {
     const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
     const { beerList, setBeerList } = useContext(BeerListContext)
     const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
     const { beerType, setBeerType } = useContext(BeerTypeContext);
     const [startTime, setStartTime] = useState(new Date());
-    const [popUp, setPopUp] = useState(false);
 
     const schedulingParameters = selectedRecipe.schedulingParameters
+
+    const navigate = useNavigate();
 
     const responseGoogle = credentialResponse => {
       console.log(credentialResponse)
@@ -27,12 +28,10 @@
       console.log('Login Failed')
     }
 
+
     return (
 
        <div className="calendarPage-div">
-        {
-          !popUp ?
-          <>
               <DateTimePicker
                 onChange={(e) => {
                   setStartTime(e)
@@ -45,14 +44,10 @@
               <div className="scheduleBeer">
             <button onClick={() => {
                   calculateBrewingSchedule(startTime, beerType, schedulingParameters)
-                  setPopUp(!popUp)
-
+                  navigate("success-page")
                 }}>
                 Schedule Beer</button>
               </div>
-           </> :
-              <PopUp />
-      }
      </div>
 
   )

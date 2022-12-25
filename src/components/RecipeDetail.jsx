@@ -5,7 +5,7 @@ import beerStylesData from "../beerStylesData.json";
 import BeerTypeContext from "../BeerTypeContext";
 import BeerListContext from "../BeerListContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 
 const RecipeDetail = () => {
@@ -15,12 +15,8 @@ const RecipeDetail = () => {
   const { beerList, setBeerList } = useContext(BeerListContext);
 
   const [editParameter, setEditParameter] = useState(false);
-  // const [editSelectedRecipe, setEditSelectedRecipe] = useState({});
 
   const navigate = useNavigate();
-  const params = useParams()
-  const beerName = params.beerName
-
 
   const settingBeerType = () => {
     for(let i = 0;i < beerStylesData.length; i++){
@@ -49,8 +45,6 @@ const RecipeDetail = () => {
      }
      setSelectedRecipe(newSelectedRecipe)
 
-     //updates the newSelectedRecipe object to the
-     // setEditSelectedRecipe(newSelectedRecipe)
 
      //updated the beerList with newSelectedRecipe
      let updatedSelectedRecipe = {
@@ -86,18 +80,13 @@ const RecipeDetail = () => {
 
 
  return(
-   <section className="RecipeDetail">
-     <div className="backButtonRecipeDetail">
-      <button type="button" onClick={() => navigate("/")}>
-        <FontAwesomeIcon icon={faChevronUp} rotation={270}/> Back
-      </button>
-     </div>
+   <section className="Detail-div">
      <div className="beerInfo-div">
      <div className="buttonDiv-RecipeDetailButton">
       <h1>Recipe Detail</h1>
           { editParameter == false ?
             <div><button type="button" onClick={editHandleClick}><FontAwesomeIcon icon={faEdit}/></button></div>
-            : <div><button type="button" onClick={editDoneClick}>Done</button></div>}
+            : <div><button type="button" onClick={editDoneClick}><FontAwesomeIcon icon={faCheck}/></button></div>}
         </div>
 
          <div className="keyName">Beer Name</div>
@@ -146,22 +135,23 @@ const RecipeDetail = () => {
            : <input className="valueName" type="text" id={selectedRecipe.id} defaultValue={selectedRecipe.hops} name="hops" placeholder="hops" onChange={handleEditChange} required/>
          }
 
-          <div className="buttonDiv">
-            <div>
-              <button type="button" onClick={handleClickBrewDay}>
-                Schedule
-              </button>
-            </div>
-            <div>
-              <button type="button" onClick={() => navigate("/parameters/" + selectedRecipe.beerName)} style={{width: 92}}>
-                Parameters
-              </button>
-            </div>
 
-      </div>
     </div>
   </section>
  )
 }
 
 export default RecipeDetail
+
+// <div className="scheduleAndParameter-button">
+//   <div>
+//     <button type="button" onClick={handleClickBrewDay}>
+//       Schedule
+//     </button>
+//   </div>
+//   <div>
+//     <button type="button" onClick={() => navigate("/parameters/" + selectedRecipe.beerName)}>
+//       Parameters
+//     </button>
+//   </div>
+// </div>

@@ -4,7 +4,7 @@ import BeerTypeContext from '../BeerTypeContext'
 import BeerListContext from '../BeerListContext'
 import { useNavigate, useParams } from 'react-router-dom'; //Navigating Programmatically
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 
 const Parameters = () => {
@@ -61,14 +61,7 @@ const Parameters = () => {
 
  //beerList.splice(id, 1, updatedBeerList)
   return (
-    <div>
-
-        <div>
-          <button type="button" onClick={()=>{navigate("/recipe-detail/" + selectedRecipe.id)}}
-          style={{marginLeft: 180, fontSize: 20, letterSpacing: "0.2em"}}>
-           <FontAwesomeIcon icon={faChevronUp} rotation={270}/> Back
-          </button>
-        </div>
+    <div className="Detail-div">
 
         <div className="beerInfo-div">
 
@@ -82,7 +75,7 @@ const Parameters = () => {
                   </div>
                   : <div>
                       <button type="button" onClick={editDoneClick}>
-                        Done
+                        <FontAwesomeIcon icon={faCheck}/>
                       </button>
                     </div>
                 }

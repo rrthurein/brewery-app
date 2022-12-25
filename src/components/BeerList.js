@@ -12,6 +12,8 @@ const BeerList = () => {
   const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
 
   const navigate = useNavigate();
+  const params = useParams()
+  const beerName = params.beerName;
 
   const deleteBeer = (beer) => {
       const deleteThisIndex = beerList.indexOf(beer)
@@ -31,14 +33,14 @@ const BeerList = () => {
 
                                 <button style={{width: 250, marginRight: 0}} id="selectButton" type="button" onClick={() => {
                                   setSelectedRecipe(beer)
-                                  navigate("/recipe-detail/" + beer.beerName);
+                                  navigate("tabs/recipe-detail/" + beer.beerName);
                                     }} >
                                  {
                                   beer.beerName
                                }</button>
 
 
-                            <button type="button" style={{width: "3em", marginLeft: "1em" }}
+                            <button type="button" style={{width: "3em", marginLeft: "1em", borderStyle: "none" }}
                             onClick={() => deleteBeer(beer)}>
                                 <FontAwesomeIcon icon={faTrash}/>
                               </button>
@@ -47,7 +49,9 @@ const BeerList = () => {
                          )
                       })
                      }
-                <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/OnBoarding"); }}>Add Beer</button>
+                <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/OnBoarding"); }}>
+                  Add Beer
+                </button>
                 </div>
             </section>
   )

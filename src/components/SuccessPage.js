@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
 
-const PopUp = () => {
+const SuccessPage = () => {
   const navigate = useNavigate();
 
   const closeButton = () => {
@@ -24,4 +24,4 @@ const PopUp = () => {
   )
 }
 
-export default PopUp
+export default SuccessPage

@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import BeerList from "./BeerList";
 import BeerListContext from "../BeerListContext";
 import BeerTypeContext from "../BeerTypeContext"
 import SelectedRecipeContext from "../SelectedRecipeContext"
