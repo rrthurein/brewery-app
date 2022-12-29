@@ -18,13 +18,6 @@ const RecipeDetail = () => {
 
   const navigate = useNavigate();
 
-  const settingBeerType = () => {
-    for(let i = 0;i < beerStylesData.length; i++){
-      if(selectedRecipe.beerStyle === Object.values(beerStylesData[i])[1]){
-        setBeerType(Object.values(beerStylesData[i])[2])
-      }
-     }
-   }
 
    const editHandleClick = () => {
      setEditParameter(!editParameter)
@@ -74,7 +67,6 @@ const RecipeDetail = () => {
 
   const handleClickBrewDay = () => {
     navigate("/calendar")
-    settingBeerType()
   }
 
 

@@ -2,10 +2,8 @@
   import BeerListContext from "../BeerListContext";
   import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
   import SelectedRecipeContext from "../SelectedRecipeContext";
+  import GoogleSignInContext from "../GoogleSignInContext";
   import BeerTypeContext from "../BeerTypeContext";
-  // import { GoogleLogin } from '@react-oauth/google';
-  // import { googleLogout } from '@react-oauth/google';
-  import jwt_decode from "jwt-decode";
   import DateTimePicker from 'react-datetime-picker';
   import { calculateBrewingSchedule  } from "../util.js";
   import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
@@ -15,19 +13,14 @@
     const { beerList, setBeerList } = useContext(BeerListContext)
     const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
     const { beerType, setBeerType } = useContext(BeerTypeContext);
+    const { googleSignIn, setGoogleSignIn } = useContext(GoogleSignInContext);
     const [startTime, setStartTime] = useState(new Date());
 
     const schedulingParameters = selectedRecipe.schedulingParameters
 
     const navigate = useNavigate();
-
-    const responseGoogle = credentialResponse => {
-      console.log(credentialResponse)
-    }
-    const responseError = error => {
-      console.log('Login Failed')
-    }
-
+    console.log(beerType)
+    const accessToken = googleSignIn.access_token
 
     return (
 
@@ -43,7 +36,7 @@
               />
               <div className="scheduleBeer">
             <button onClick={() => {
-                  calculateBrewingSchedule(startTime, beerType, schedulingParameters)
+                  calculateBrewingSchedule(startTime, beerType, schedulingParameters, accessToken)
                   navigate("success-page")
                 }}>
                 Schedule Beer</button>
@@ -55,40 +48,8 @@
   }
 
   export default Calendar
-  // {chooseBeer()}
-  // <div id="signInDiv"></div>
-  // { user &&
-  //   <div>
-  //   <picture>
-  //   <img src={user.picture}></img>
-  //   </picture>
-  //   <h3>{user.name}</h3>
-  //   </div>
-  //
-  // }
-  // {
-  //   Object.keys(user).length != 0 && <button onClick={ (e) => handleSignOut(e) }>Sign Out</button>
-  // }
-  //
-  //
-  // <GoogleLogin
-  //   clientId={process.env.REACT_APP_CLIENT_ID}
-  //   buttonText="Sign in & Authorize Calendar"
-  //   onSuccess={responseGoogle}
-  //   onFailure={responseError}
-  //   cookiePolicy={'single_host_origin'}
-  //   // this is important if you don’t do it you won’t get refresh token on the backend server
-  //   // this is from react-google-login npm package
-  //   responseType="code"
-  //   accessType="offline"
-  //   //so that we can use this code we get back from the google authorization on the
-  //   // backend server we can get the refresh token which can be used even when they're offline
-  //   //basically it means that we can use the refresh token generated on this code anytime
-  //   scope="openid profile email https://www.googleapis.com/auth/calendar"
-  //   //we need to put in the calendar scope for the refresh token because we need to access google calendar
-  //   useOneTap
-  //   />
-  //
+
+
 
 
   // const chooseBeer = () => {

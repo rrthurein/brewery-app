@@ -9,6 +9,7 @@ import WithNav from "./components/WithNav";
 import WithoutNav from "./components/WithoutNav";
 import BeerListContext from "./BeerListContext";
 import AddingBeerBooleanContext from "./AddingBeerBooleanContext";
+import GoogleSignInContext from "./GoogleSignInContext";
 import BeerTypeContext from "./BeerTypeContext";
 import SelectedRecipeContext from "./SelectedRecipeContext";
 import GlobalSchedulingParametersContext from "./GlobalSchedulingParametersContext";
@@ -43,6 +44,7 @@ const schedulingParameters = {
 
 
 const beerListFromLocalStorage = JSON.parse(localStorage.getItem('beerList') || '[]')
+const googleSignInFromLocalStorage = JSON.parse(localStorage.getItem('googleSignIn') || '{}')
 const addingBeerFromLocalStorage = JSON.parse(localStorage.getItem('addingBeerList') || 'false')
 
 function App() {
@@ -62,13 +64,18 @@ function App() {
   const [beerType, setBeerType] = useState("");
   const selectedBeerType = { beerType, setBeerType }
 
+  const [googleSignIn, setGoogleSignIn] = useState({});
+  const signedIn = { googleSignIn, setGoogleSignIn }
+
  const handleError = (error) => {
    console.log(error)
  }
+
   useEffect(() => {
     try{
       localStorage.setItem("beerList", JSON.stringify(beerList))
       localStorage.setItem("addingBeer", JSON.stringify(addingBeer))
+      localStorage.setItem("googleSignIn", JSON.stringify(googleSignIn))
     } catch (error){
       handleError(error)
     } console.log(beerList, "useEffect beerlist")
@@ -77,30 +84,31 @@ function App() {
 
   return (
 
-    <GoogleOAuthProvider clientId={process.env.REACT_APP_CALENDAR_ID}>
-      <GlobalSchedulingParametersContext.Provider value={schedulingParametersValues}>
-        <AddingBeerBooleanContext.Provider value={toggleSetting}>
-          <SelectedRecipeContext.Provider value={selected}>
-            <BeerListContext.Provider value={value}>
-              <BeerTypeContext.Provider value={selectedBeerType}>
-                    <Routes>
-                        <Route element={<WithoutNav />}>
-                            <Route path="/OnBoarding" element={<OnBoarding />} />
-                            <Route path="scheduling-parameters/:id" element={<SchedulingParameters />} />
-                        </Route>
-                        <Route  element={<WithNav />}>
-                          <Route path="/" element={<BeerList />} />
-                          <Route path="calendar" element={<Calendar />} />
-                          <Route path="parameters/:beerName" element={<Parameters />} />
-                          <Route path="tabs/recipe-detail/:beerName" element={<Tabs />} />
-                          <Route path="calendar/success-page" element={<SuccessPage />} />
-                        </Route>
-                     </Routes>
-                  </BeerTypeContext.Provider>
-               </BeerListContext.Provider>
-              </SelectedRecipeContext.Provider>
-        </AddingBeerBooleanContext.Provider>
-      </GlobalSchedulingParametersContext.Provider>
+    <GoogleOAuthProvider clientId="">
+      <GoogleSignInContext.Provider value={signedIn}>
+        <GlobalSchedulingParametersContext.Provider value={schedulingParametersValues}>
+          <AddingBeerBooleanContext.Provider value={toggleSetting}>
+            <SelectedRecipeContext.Provider value={selected}>
+              <BeerListContext.Provider value={value}>
+                <BeerTypeContext.Provider value={selectedBeerType}>
+                      <Routes>
+                          <Route element={<WithoutNav />}>
+                              <Route path="/OnBoarding" element={<OnBoarding />} />
+                              <Route path="scheduling-parameters/:id" element={<SchedulingParameters />} />
+                          </Route>
+                          <Route  element={<WithNav />}>
+                            <Route path="/" element={<BeerList />} />
+                            <Route path="calendar" element={<Calendar />} />
+                            <Route path="tabs/recipe-detail/:beerName" element={<Tabs />} />
+                            <Route path="tabs/recipe-detail/:beerName/success-page" element={<SuccessPage />} />
+                          </Route>
+                       </Routes>
+                    </BeerTypeContext.Provider>
+                 </BeerListContext.Provider>
+                </SelectedRecipeContext.Provider>
+          </AddingBeerBooleanContext.Provider>
+        </GlobalSchedulingParametersContext.Provider>
+      </GoogleSignInContext.Provider>
     </GoogleOAuthProvider>
    )
 }

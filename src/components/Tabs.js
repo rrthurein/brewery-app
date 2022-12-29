@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import App from "../App";
 import Calendar from "../components/Calendar";
-import RecipeDetail from "../components/RecipeDetail";
+import SelectedRecipeContext from "../SelectedRecipeContext";
+import BeerTypeContext from "../BeerTypeContext";
+import RecipeDetail from "../components/Parameters";
 import Parameters from "../components/Parameters";
+import beerStylesData from "../beerStylesData";
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
@@ -10,6 +13,8 @@ import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
 const Tabs = () => {
   const [toggleState, setToggleState] = useState(1);
+  const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
+  const { beerType, setBeerType } = useContext(BeerTypeContext);
 
   const navigate = useNavigate();
 
@@ -17,10 +22,18 @@ const Tabs = () => {
     setToggleState(index);
   }
 
+  const settingBeerType = () => {
+    for(let i = 0;i < beerStylesData.length; i++){
+      if(selectedRecipe.beerStyle === Object.values(beerStylesData[i])[1]){
+        setBeerType(Object.values(beerStylesData[i])[2])
+      }
+     }
+   }
+
   return (
     <>
 
-    <div className="backButtonRecipeDetail">
+    <div className="backButtonToBeerList">
      <button type="button" onClick={() => navigate("/")}>
        <FontAwesomeIcon icon={faChevronUp} rotation={270}/> Back
      </button>
@@ -33,7 +46,10 @@ const Tabs = () => {
           <button className={toggleState === 1 ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab(1)}>
             Recipe
           </button>
-          <button className={toggleState === 2 ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab(2)}>
+          <button className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
+          onClick={() => {
+             toggleTab(2)
+             settingBeerType()}}>
             Schedule
           </button>
           <button className={toggleState === 3 ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab(3)}>
@@ -63,19 +79,3 @@ const Tabs = () => {
 }
 
 export default Tabs
-
-// <>
-//   <RecipeDetail
-//      isActive={tab === "recipe-detail"}
-//      onClick={() => { setTab("recipe-detail")}}>
-//      Recipe Detail
-//    </ RecipeDetail>
-//    <Calendar
-//      isActive={tab === "calendar"}
-//      onClick={() => { setTab("calendar")}}>
-//      Calendar
-//    </ Calendar>
-//    <hr />
-//    {tab === "recipe-detail" && <RecipeDetail />}
-//    {tab === "calendar" && <Calendar />}
-// </>

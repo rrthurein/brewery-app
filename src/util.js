@@ -5,13 +5,12 @@
 
   const calendarID = process.env.REACT_APP_CALENDAR_ID;
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-  const accessToken = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
-
-  // const calendar = {version : "v3"}
-  const CLIENT_ID = "890654996682-urq2der67lj97k6nj0dcrk9kkj6ts3oi.apps.googleusercontent.com"
-  // const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
+  const clientID = process.env.REACT_APP_CLIENT_ID;
+  const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
   const DISCOVERY_DOCS = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
   const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
+
+
 
   const makeApiRequest = async (request, progressCb) => {
     let retryCount = 0;
@@ -35,9 +34,10 @@
   }
 
 
-
-  export function calculateBrewingSchedule(brewDate, beerType, schedulingParameters) {
+  export function calculateBrewingSchedule(brewDate, beerType, schedulingParameters, accessToken) {
+    console.log(brewDate, beerType, schedulingParameters, accessToken)
       if(beerType === "Lager") {
+        console.log(accessToken)
         const lagerLength = Object.keys(schedulingParameters).length
         const lagerEventTimes = []
         let startDate = []
@@ -67,23 +67,22 @@
             },
             colorId: 5,
           }
-console.log(lagerEventTimes)
-        //   makeApiRequest(
-        //     () =>
-        //       gapi.client
-        //         .request({
-        //           path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-        //           method: "POST",
-        //           body: lagerEventTimes[i],
-        //           headers: {
-        //             "Content-type": "application/json",
-        //             Authorization: `Bearer ya29.a0AX9GBdW11lMHNKKeYQY62dNII06I0ECOaj3f2QQ1Mlw58YcrizpbxfAnzBSfuKcYyLZD4D_2bzDyB6UkJg-kBPPCYPIij73Grm6ve6a0XAINtrGDScZE68Pq72TMaYUwXWecghgS-rUu3jSvLcjM79JqpNEVyygaCgYKATcSAQASFQHUCsbCFOYkC1js4_5Xycdu5dArjA0166`,
-        //           },
-        //         }),
-        //     (progress) => {
-        //       console.log(`Retrying API request, attempt ${progress.retryCount}`);
-        //     }
-        //   );
+          makeApiRequest(
+            () =>
+              gapi.client
+                .request({
+                  path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
+                  method: "POST",
+                  body: lagerEventTimes[i],
+                  headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                }),
+            (progress) => {
+              console.log(`Retrying API request, attempt ${progress.retryCount}`);
+            }
+          );
         }
       } else if (beerType === "Ale") {
           const aleLength = Object.keys(schedulingParameters).length
@@ -127,7 +126,7 @@ console.log(lagerEventTimes)
               body: aleEventsTime[j],
               headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ya29.a0AX9GBdW11lMHNKKeYQY62dNII06I0ECOaj3f2QQ1Mlw58YcrizpbxfAnzBSfuKcYyLZD4D_2bzDyB6UkJg-kBPPCYPIij73Grm6ve6a0XAINtrGDScZE68Pq72TMaYUwXWecghgS-rUu3jSvLcjM79JqpNEVyygaCgYKATcSAQASFQHUCsbCFOYkC1js4_5Xycdu5dArjA0166`,
+                Authorization: `Bearer ` + accessToken,
               },
             }),
             (progress) => {
@@ -173,7 +172,7 @@ console.log(lagerEventTimes)
                 body: souringWortEvent[k],
                 headers: {
                   "Content-type": "application/json",
-                  Authorization: `Bearer ya29.a0AX9GBdW11lMHNKKeYQY62dNII06I0ECOaj3f2QQ1Mlw58YcrizpbxfAnzBSfuKcYyLZD4D_2bzDyB6UkJg-kBPPCYPIij73Grm6ve6a0XAINtrGDScZE68Pq72TMaYUwXWecghgS-rUu3jSvLcjM79JqpNEVyygaCgYKATcSAQASFQHUCsbCFOYkC1js4_5Xycdu5dArjA0166`,
+                  Authorization: `Bearer ` + accessToken,
                 },
               }),
               (progress) => {
