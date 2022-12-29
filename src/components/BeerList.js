@@ -50,7 +50,6 @@ const BeerList = () => {
       console.log(beerList)
   }
   // <GoogleLogin
-  //   clientId=""
   //   onSuccess={responseGoogle}
   //   onFailure={responseError}
   //   // this is important if you don’t do it you won’t get refresh token on the backend server

@@ -46,10 +46,7 @@ const Tabs = () => {
           <button className={toggleState === 1 ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab(1)}>
             Recipe
           </button>
-          <button className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
-          onClick={() => {
-             toggleTab(2)
-             settingBeerType()}}>
+          <button className={toggleState === 2 ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab(2)}>
             Schedule
           </button>
           <button className={toggleState === 3 ? "tabs active-tabs" : "tabs"} onClick={() => toggleTab(3)}>

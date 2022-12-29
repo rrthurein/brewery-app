@@ -34,16 +34,13 @@
   }
 
 
-  export function calculateBrewingSchedule(brewDate, beerType, schedulingParameters, accessToken) {
-    console.log(brewDate, beerType, schedulingParameters, accessToken)
-      if(beerType === "Lager") {
-        console.log(accessToken)
-        const lagerLength = Object.keys(schedulingParameters).length
-        const lagerEventTimes = []
+  export function calculateBrewingSchedule(brewDate, schedulingParameters, accessToken) {
+        const beerLength = Object.keys(schedulingParameters).length
+        const beerEventTimes = []
         let startDate = []
         let endDate = []
 
-        for(let i = 0; i < lagerLength; i++){
+        for(let i = 0; i < beerLength; i++){
           if(i === 0){
             startDate.push(new Date(brewDate))
             let endDateValue = brewDate.setDate(brewDate.getDate() + Number(Object.values(schedulingParameters)[i]))
@@ -55,7 +52,7 @@
             endDate.push(new Date(endDateValue))
           }
 
-          lagerEventTimes[i] = {
+          beerEventTimes[i] = {
             summary: Object.keys(schedulingParameters)[i],
             start: {
               dateTime: startDate[i],
@@ -73,7 +70,7 @@
                 .request({
                   path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
                   method: "POST",
-                  body: lagerEventTimes[i],
+                  body: beerEventTimes[i],
                   headers: {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
@@ -84,101 +81,4 @@
             }
           );
         }
-      } else if (beerType === "Ale") {
-          const aleLength = Object.keys(schedulingParameters).length
-          console.log("aleLength", aleLength)
-          let aleEventsTime = []
-          let startTime = []
-          let endTime = []
-          console.log(brewDate, startTime, endTime)
-          for(let j = 0; j < aleLength; j++){
-
-            if(j === 0){
-              startTime.push(new Date(brewDate))
-              let endDateValue = brewDate.setDate(brewDate.getDate() + Number(Object.values(schedulingParameters)[j]))
-              endTime.push(new Date(endDateValue))
-            } else if(j > 0){
-              startTime.push(endTime[j - 1])
-              let startDateValue = new Date(startTime[j])
-              let endDateValue = startDateValue.setDate(startDateValue.getDate() + Number(Object.values(schedulingParameters)[j]))
-              endTime.push(new Date(endDateValue))
-            }
-
-            aleEventsTime[j] = {
-              summary: Object.keys(schedulingParameters)[j],
-              start: {
-                dateTime: startTime[j],
-                timeZone: 'America/Los_Angeles',
-              },
-              end: {
-                dateTime: endTime[j],
-                timeZone: 'America/Los_Angeles',
-              },
-              colorId: 4,
-            }
-
-          makeApiRequest(
-            () =>
-            gapi.client
-            .request({
-              path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-              method: "POST",
-              body: aleEventsTime[j],
-              headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ` + accessToken,
-              },
-            }),
-            (progress) => {
-              console.log(`Retrying API request, attempt ${progress.retryCount}`);
-            }
-          )
-         }
-      } else if (beerType === "KettleSour"){
-          const kettleSourLength = Object.keys(schedulingParameters).length
-          let souringWortEvent = []
-          let startDate = []
-          let endDate = []
-
-          for(let k = 0; k < kettleSourLength; k++){
-            if(k = 0){
-              startDate.push(new Date(brewDate))
-              let endDateValue = brewDate.setDate(brewDate.getDate() + Number(Object.values(schedulingParameters)[k]))
-              endDate.push(new Date(endDateValue))
-            } else if(k > 0) {
-              startDate.push(endDate[k - 1])
-              let startDateValue = new Date(startDate[k])
-              let endDateValue = startDateValue.setDate(startDateValue.getDate() + Number(Object.values(schedulingParameters)[k]))
-              endDate.push(new Date(endDateValue))
-            }
-            souringWortEvent[k] = {
-              summary: Object.keys(schedulingParameters)[k],
-              start: {
-                dateTime: startDate[k],
-                timeZone: 'America/Los_Angeles',
-              },
-              end: {
-                dateTime: endDate[k],
-                timeZone: 'America/Los_Angeles',
-              },
-              colorId: 11,
-            }
-            makeApiRequest(
-              () =>
-              gapi.client
-              .request({
-                path: `https://www.googleapis.com/calendar/v3/calendars/primary/events`,
-                method: "POST",
-                body: souringWortEvent[k],
-                headers: {
-                  "Content-type": "application/json",
-                  Authorization: `Bearer ` + accessToken,
-                },
-              }),
-              (progress) => {
-                console.log(`Retrying API request, attempt ${progress.retryCount}`);
-              }
-            )
-          }
       }
-  }
