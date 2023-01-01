@@ -4,7 +4,7 @@ import BeerTypeContext from '../BeerTypeContext'
 import BeerListContext from '../BeerListContext'
 import { useNavigate, useParams } from 'react-router-dom'; //Navigating Programmatically
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 
 const Parameters = () => {
@@ -46,7 +46,7 @@ const Parameters = () => {
 
    //updates beerList with the updated selected beerRecipe's Parameter
    const updatedBeerList = beerList.map((beer) =>{
-     if(beer.beerName == updatedParameter.beerName){
+     if(beer.beerName === updatedParameter.beerName){
        setSelectedRecipe(updatedParameter)
        return updatedParameter
      } else{
@@ -67,7 +67,7 @@ const Parameters = () => {
 
             <div className="buttonDiv-RecipeDetailButton">
               <h1>{selectedRecipe.beerName} Parameters</h1>
-                { editParameter == false ?
+                { editParameter === false ?
                   <div>
                     <button type="button" onClick={editHandleClick}>
                       <FontAwesomeIcon icon={faEdit}/>
@@ -83,17 +83,17 @@ const Parameters = () => {
 
             <div className="keyName">Primary Fermentation</div>
               {
-                editParameter == false ?
+                editParameter === false ?
                 <div className="valueName">{selectedRecipe.schedulingParameters.primaryFermentation}</div>
                 : <input className="valueName" type="text" defaultValue={selectedRecipe.schedulingParameters.primaryFermentation} name="primaryFermentation" placeholder="primaryFermentation" onChange={handleEditChange} required/>
               }
 
               {
-                beerType == "Ale" ?
+                beerType === "Ale" ?
                 <>
                 <label>Secondary Fermentation</label>
                 {
-                  editParameter == false ?
+                  editParameter === false ?
                   <div className="valueName">{selectedRecipe.schedulingParameters.secondaryFermentation}</div>
                   : <input className="valueName" type="text" defaultValue={selectedRecipe.schedulingParameters.secondaryFermentation} name="secondaryFermetation" placeholder="secondaryFermetation" onChange={handleEditChange} required/>
                 }
@@ -102,7 +102,7 @@ const Parameters = () => {
 
             <div className="keyName">Dump Yeast & Hops</div>
               {
-                editParameter == false ?
+                editParameter === false ?
                 <div className="valueName">{selectedRecipe.schedulingParameters.dumpYeastAndHops} </div>
                 : <input className="valueName" type="text" defaultValue={selectedRecipe.schedulingParameters.dumpYeastAndHops} name="dumpYeastAndHops" placeholder="dumpYeastAndHops" onChange={handleEditChange} required/>
               }
@@ -110,17 +110,17 @@ const Parameters = () => {
 
               <div className="keyName">Diacetyl Rest</div>
               {
-                editParameter == false ?
+                editParameter === false ?
                 <div className="valueName">{selectedRecipe.schedulingParameters.dRest} </div>
                 : <input className="valueName" type="text" defaultValue={selectedRecipe.schedulingParameters.dRest} name="dRest" placeholder="dRest" onChange={handleEditChange} required/>
               }
 
               {
-                beerType == "Lager" ?
+                beerType === "Lager" ?
                 <>
                 <label>Lagering</label>
                 {
-                  editParameter == false ?
+                  editParameter === false ?
                   <div className="valueName">{selectedRecipe.schedulingParameters.lagering} </div>
                   : <input className="valueName" type="text" defaultValue={selectedRecipe.schedulingParameters.lagering} name="lagering" placeholder="lagering" onChange={handleEditChange} required/>
                 }
@@ -129,7 +129,7 @@ const Parameters = () => {
 
             <div className="keyName">Cold Crash</div>
               {
-                editParameter == false ?
+                editParameter === false ?
                 <div className="valueName">{selectedRecipe.schedulingParameters.coldCrash} </div>
                 : <input className="valueName" type="text" defaultValue={selectedRecipe.schedulingParameters.coldCrash} name="coldCrash" placeholder="coldCrash" onChange={handleEditChange} required/>
               }

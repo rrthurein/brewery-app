@@ -46,7 +46,7 @@ const OnBoarding = () => {
   }
 
 
-  const handleInputChange = (e) => {
+  const handleFormInputChange = (e) => {
     //create an object
     let newBeer = {
       ...form,
@@ -112,21 +112,21 @@ const OnBoarding = () => {
               <div className="BeerRecipeForm">
               <h1>Beer Recipe Setup</h1>
               <label>Beer Name:</label>
-              <input type="text" name="beerName" placeholder="Beer Name" onChange={handleInputChange} required/>
+              <input type="text" name="beerName" placeholder="Beer Name" onChange={handleFormInputChange} required/>
               <label>Beer Style:</label>
-              <select name="beerStyle" value={beerStyle.beerStyle} onChange={handleInputChange}>
+              <select name="beerStyle" value={beerStyle.beerStyle} onChange={handleFormInputChange}>
               {beerStylesData.map(beerStyle => (
                 <option value={beerStyle.beerStyle}>{beerStyle.beerStyle}</option>
               ))}
               </select>
               <label>ABV:</label>
-              <input type="number" required name="abv" placeholder="ABV" onChange={handleInputChange}/>
+              <input type="number" required name="abv" placeholder="ABV" onChange={handleFormInputChange}/>
               <label>Grain:</label>
-              <input type="text" name="grain" placeholder="Grain" required onChange={handleInputChange}/>
+              <input type="text" name="grain" placeholder="Grain" required onChange={handleFormInputChange}/>
               <label>Yeast:</label>
-              <input type="text" name="yeast" placeholder="Yeast" required onChange={handleInputChange}/>
+              <input type="text" name="yeast" placeholder="Yeast" required onChange={handleFormInputChange}/>
               <label>Hops:</label>
-              <input type="text" name="hops" placeholder="Hops" required onChange={handleInputChange}/>
+              <input type="text" name="hops" placeholder="Hops" required onChange={handleFormInputChange}/>
               <div className="ScheduleParameterButton">
               <button type="button" onClick={handleClick}>Add Your Own Parameters</button>
               <button type="button" onClick={handleScheduleBeer}>Scehdule Beer</button>

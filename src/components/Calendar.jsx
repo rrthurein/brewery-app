@@ -1,19 +1,19 @@
   import React, { useContext, useState } from 'react';
   import SelectedRecipeContext from "../SelectedRecipeContext";
-  import GoogleSignInContext from "../GoogleSignInContext";
+  import GoogleTokenDataContext from "../GoogleTokenDataContext";
   import DateTimePicker from 'react-datetime-picker';
   import { calculateBrewingSchedule  } from "../util.js";
   import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
   const Calendar = () => {
     const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
-    const { googleSignIn, setGoogleSignIn } = useContext(GoogleSignInContext);
+    const { googleTokenData, setGoogleTokenData } = useContext(GoogleTokenDataContext);
     const [startTime, setStartTime] = useState(new Date());
 
     const schedulingParameters = selectedRecipe.schedulingParameters
 
     const navigate = useNavigate();
-    const accessToken = googleSignIn.access_token
+    const accessToken = googleTokenData.access_token
 
     return (
 

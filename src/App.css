@@ -17,6 +17,7 @@
   font-family: "Monaco", monospace;
 }
 
+
 /* tab css */
 .container ::before, ::after {
   box-sizing: border-box;
@@ -114,6 +115,11 @@
 }
 
 /* Recipe Detail CSS */
+
+#firstButtonAddBeer {
+  border-radius: 8px;
+}
+
 .Detail-div {
   text-align: left;
   justify-content: center;
@@ -384,8 +390,6 @@ nav {
 
 .calendarPage-div button {
   border-radius: 8px;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
 .scheduleBeer {
@@ -400,8 +404,12 @@ nav {
   padding: 8px;
 }
 
+.react-datetime-picker__inputGroup__leadingZero {
+  padding-top: 5.5%;
+}
+
 .react-datetime-picker__inputGroup span{
-  padding-top: 4.4%
+  padding-top: 5%
 }
 
 

@@ -3,7 +3,7 @@ import SignIn from "../components/SignIn";
 import BeerListContext from "../BeerListContext";
 import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
 import SelectedRecipeContext from "../SelectedRecipeContext";
-import GoogleSignInContext from "../GoogleSignInContext";
+import GoogleTokenDataContext from "../GoogleTokenDataContext";
 import BeerTypeContext from "../BeerTypeContext";
 import { useNavigate, useParams, redirect } from 'react-router-dom'; //Navigating Programmatically
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -15,6 +15,7 @@ const BeerListRender = () => {
   const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
   const { beerType, setBeerType } = useContext(BeerTypeContext);
 
+  console.log("beerList")
 
   const navigate = useNavigate();
   const params = useParams()
@@ -58,21 +59,23 @@ const BeerListRender = () => {
         </button>
       </div>
   </section>
-)
+ )
 }
 
 const BeerList = () => {
 
-  const { googleSignIn, setGoogleSignIn} = useContext(GoogleSignInContext);
+  const { googleTokenData, setGoogleTokenData} = useContext(GoogleTokenDataContext);
 
-  const navigate = useNavigate();
+  const checkIfJSONisEmpty = Object.keys(googleTokenData).length === 0
+
+  console.log("googleTokenData", googleTokenData, "checkIfJSONisEmpty", checkIfJSONisEmpty)
+
 
   return(
     <>
     {
-      googleSignIn === null ?
-      <SignIn />: BeerListRender()
-
+      checkIfJSONisEmpty ?
+      <SignIn /> : BeerListRender()
     }
     </>
 

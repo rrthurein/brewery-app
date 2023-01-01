@@ -1,17 +1,22 @@
 import React, { useEffect, useContext } from 'react';
-import GoogleSignInContext from "../GoogleSignInContext";
+import GoogleTokenDataContext from "../GoogleTokenDataContext";
 import {  useGoogleLogin } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
 
 const SignIn = () => {
-  const { googleSignIn, setGoogleSignIn} = useContext(GoogleSignInContext);
+  const { googleTokenData, setGoogleTokenData} = useContext(GoogleTokenDataContext);
+
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {setGoogleSignIn(tokenResponse)},
+    onSuccess: (tokenResponse) => {
+      console.log("running")
+      setGoogleTokenData(tokenResponse)},
     onError: (tokenResponse) => console.log("Login Failed")
   });
+
+  console.log(googleTokenData)
 
   const calendarID = process.env.REACT_APP_CALENDAR_ID;
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -20,10 +25,6 @@ const SignIn = () => {
   const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
 
   const navigate = useNavigate();
-
-   const handleError = (error) => {
-     console.log(error)
-   }
 
   return (
     <div className="calendarPage-div">
