@@ -2,7 +2,7 @@
   import BeerListContext from "../BeerListContext";
   import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
   import SelectedRecipeContext from "../SelectedRecipeContext";
-  import GoogleSignInContext from "../GoogleSignInContext"; 
+  import GoogleSignInContext from "../GoogleSignInContext";
   import DateTimePicker from 'react-datetime-picker';
   import { calculateBrewingSchedule  } from "../util.js";
   import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
@@ -22,53 +22,26 @@
     return (
 
        <div className="calendarPage-div">
-              <DateTimePicker
-                onChange={(e) => {
-                  setStartTime(e)
-                }}
-                value={startTime}
-                disableClock={true}
-                format={"y-MM-dd h:mm:ss a"}
-                className="dateTimePicker"
-              />
-              <div className="scheduleBeer">
+          <DateTimePicker
+            onChange={(e) => {
+              setStartTime(e)
+            }}
+            value={startTime}
+            disableClock={true}
+            format={"y-MM-dd h:mm:ss a"}
+            className="dateTimePicker"
+          />
+          <div className="scheduleBeer">
             <button onClick={() => {
                   calculateBrewingSchedule(startTime, schedulingParameters, accessToken)
                   navigate("success-page")
                 }}>
                 Schedule Beer</button>
-              </div>
-     </div>
+          </div>
+      </div>
 
   )
 
   }
 
   export default Calendar
-
-
-
-
-  // const chooseBeer = () => {
-  //   if(addingBeer === true) {
-  //     return (
-  //       <h2>Show Date</h2>
-  //     );}
-  //     else {
-  //       return(
-  //         <section className="BeerList">
-  //         <h1>Choose A Beer</h1>
-  //         <div className="BeerListBorder">
-  //         { beerList.map((beer) => {
-  //           return(
-  //             <div key={beer.id}>
-  //             <button id="selectButton" type="button">{beer.beerName}</button>
-  //             </div>
-  //           )})
-  //         }
-  //         </div>
-  //         </section>
-  //       );
-  //
-  //     }
-  //   }

@@ -11,10 +11,6 @@
   const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
 
 
-  const sleep = async (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
   const makeApiRequest = async (i, beerEventTimes, accessToken) => {
     gapi.client
       .request({
@@ -39,7 +35,6 @@
 
     const makeEventsDate = (beerLength,beerEventTimes, startDate, endDate, brewDate,
       schedulingParameters, accessToken, i) => {
-
         if(i === 0){
           startDate.push(new Date(brewDate))
           let endDateValue = brewDate.setDate(brewDate.getDate() + Number(Object.values(schedulingParameters)[i]))
@@ -67,6 +62,10 @@
       makeApiRequest(i, beerEventTimes, accessToken)
     }
 
+    const sleep = async (ms) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
   export function calculateBrewingSchedule(brewDate, schedulingParameters, accessToken) {
         const beerLength = Object.keys(schedulingParameters).length
         const beerEventTimes = []
@@ -74,7 +73,8 @@
         let endDate = []
 
         for(let i = 0; i < beerLength; i++){
-          makeEventsDate(beerLength,beerEventTimes, startDate, endDate,brewDate, schedulingParameters, accessToken, i)
+          makeEventsDate(beerLength,beerEventTimes, startDate, endDate ,brewDate ,
+             schedulingParameters, accessToken, i)
         }
 
         }
