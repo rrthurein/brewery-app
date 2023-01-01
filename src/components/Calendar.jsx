@@ -1,6 +1,4 @@
   import React, { useContext, useState } from 'react';
-  import BeerListContext from "../BeerListContext";
-  import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
   import SelectedRecipeContext from "../SelectedRecipeContext";
   import GoogleSignInContext from "../GoogleSignInContext";
   import DateTimePicker from 'react-datetime-picker';
@@ -8,8 +6,6 @@
   import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
   const Calendar = () => {
-    const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
-    const { beerList, setBeerList } = useContext(BeerListContext)
     const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
     const { googleSignIn, setGoogleSignIn } = useContext(GoogleSignInContext);
     const [startTime, setStartTime] = useState(new Date());

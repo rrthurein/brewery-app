@@ -96,7 +96,10 @@ const OnBoarding = () => {
 
     //adding newBeer Form to array
     beerList[beerList.length] = newBeer
-    setBeerList(beerList)
+
+    //creating a new array reference so that the useEffect dependency would get called.
+    const newBeerList = [...beerList]
+    setBeerList(newBeerList)
 
     navigate("/calendar")
   }

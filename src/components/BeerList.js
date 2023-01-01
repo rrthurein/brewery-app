@@ -24,34 +24,35 @@ const BeerListRender = () => {
   const deleteBeer = (beer) => {
     const deleteThisIndex = beerList.indexOf(beer)
     beerList.splice(deleteThisIndex, 1)
-    setBeerList(beerList)
+    const newBeerList = [...beerList]
+    setBeerList(newBeerList)
     navigate("/")
-    console.log(beerList)
+    console.log(newBeerList)
   }
-  
+
   return (
     <section className="BeerList">
       <h1>List of Beer</h1>
         <div className="BeerListBorder">
           { beerList.map((beer) => {
-            return(
-              <div key={beer.id} className="beerListButton">
-              <button style={{width: 250, marginRight: 0}} id="selectButton" type="button"
-              onClick={() => {
-                setSelectedRecipe(beer)
-                navigate("tabs/recipe-detail/" + beer.beerName);
-              }} >
-              {
-                beer.beerName
-              }</button>
-              <button type="button" style={{width: "3em", marginLeft: "1em", borderStyle: "none" }}
-              onClick={() => deleteBeer(beer)}>
-              <FontAwesomeIcon icon={faTrash}/>
-              </button>
-              </div>
-            )
-          })
-        }
+              return(
+                <div key={beer.id} className="beerListButton">
+                <button style={{width: 250, marginRight: 0}} id="selectButton" type="button"
+                onClick={() => {
+                  setSelectedRecipe(beer)
+                  navigate("tabs/recipe-detail/" + beer.beerName);
+                }} >
+                {
+                  beer.beerName
+                }</button>
+                <button type="button" style={{width: "3em", marginLeft: "1em", borderStyle: "none" }}
+                onClick={() => deleteBeer(beer)}>
+                <FontAwesomeIcon icon={faTrash}/>
+                </button>
+                </div>
+              )
+            })
+         }
         <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/OnBoarding"); }}>
         Add Beer
         </button>

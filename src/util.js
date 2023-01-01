@@ -1,6 +1,4 @@
-  import { gapi } from 'gapi-script';
-  import jwt_decode from "jwt-decode";
-  import App from "./App"
+  import { gapi } from 'gapi-script';  
 
 
   const calendarID = process.env.REACT_APP_CALENDAR_ID;
