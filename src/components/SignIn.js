@@ -8,15 +8,13 @@ import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 const SignIn = () => {
   const { googleTokenData, setGoogleTokenData} = useContext(GoogleTokenDataContext);
 
-
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      console.log("running")
-      setGoogleTokenData(tokenResponse)},
-    onError: (tokenResponse) => console.log("Login Failed")
+    onSuccess: (tokenResponse) => {setGoogleTokenData(tokenResponse)},
+    onError: (tokenResponse) => console.log("Login Failed"),
+    prompt: 'consent',
+    scope: "openid profile email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
   });
 
-  console.log(googleTokenData)
 
   const calendarID = process.env.REACT_APP_CALENDAR_ID;
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -30,8 +28,6 @@ const SignIn = () => {
     <div className="calendarPage-div">
       <button
           onClick={() => login()}
-          prompt='consent'
-          scope="openid profile email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
           style={{width: '20em'}}
           >
             Sign In Your Gmail
