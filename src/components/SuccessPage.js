@@ -14,8 +14,8 @@ const SuccessPage = () => {
   }
 
   return (
-    <div className="popup">
-      <div>
+    <div>
+      <div className="SuccessPage">
         <h1>You have sucessfully added your Brew Schedule!</h1>
           <button className="close-btn" onClick={closeButton}>Close</button>
           <button className="go-to-calendar-btn" onClick={openCalendar}> Open Calendar</button>

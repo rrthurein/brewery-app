@@ -191,14 +191,11 @@ nav {
   position: absolute;
   right: 22%;
   top: 54%;
+  border-style: none;
 }
 
 .buttonDiv-RecipeDetailButton h1 {
   font-size: 2em;
-}
-
-.buttonDiv-RecipeDetailButton button {
-  border-style: none;
 }
 
 .buttonDiv button {
@@ -287,6 +284,16 @@ nav {
   width: 50%;
 }
 
+/* Success Page */
+
+.SuccessPage {
+  text-align: center;
+  margin-top: 30%;
+}
+.go-to-calendar-btn {
+  margin-left: 3%;
+}
+
 .ScheduleParameterButton {
   display: flex;
   flex-direction: column;
@@ -314,7 +321,7 @@ nav {
 }
 
 .beerInfo-div {
-  width: 60vh;
+  width: auto;
   margin: auto;
   padding: 2vh;
   border-radius: 8px;
@@ -491,15 +498,13 @@ nav {
   }
 
   .buttonDiv-RecipeDetailButton button {
-    position: static;
-
+    position:
   }
   .beerListIconButton {
     margin-top: 10%;
   }
 
   .beerInfo-div {
-    width: 19em;
     margin-bottom: 2em;
     padding-bottom: 4em;
   }
@@ -523,15 +528,22 @@ nav {
   }
 
   .react-datetime-picker__inputGroup span{
-    padding-top: 5px
+    padding-top: 10px
   }
 
   .react-datetime-picker__inputGroup__leadingZero {
     align-self: center;
   }
-
+  .react-datetime-picker__inputGroup__input--hasLeadingZero {
+    padding-top: 0;
+  }
   .react-calendar__navigation__label {
     width: 30%;
+  }
+
+  .go-to-calendar-btn {
+    width: auto;
+    padding: 1px 3%; 
   }
 
   .content {

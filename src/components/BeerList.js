@@ -15,6 +15,7 @@ const BeerListRender = () => {
   const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
   const { beerType, setBeerType } = useContext(BeerTypeContext);
 
+
   console.log("beerList")
 
   const navigate = useNavigate();
@@ -30,6 +31,8 @@ const BeerListRender = () => {
     navigate("/")
     console.log(newBeerList)
   }
+  
+
 
   return (
     <section className="BeerList">
@@ -69,6 +72,7 @@ const BeerList = () => {
   const checkIfJSONisEmpty = Object.keys(googleTokenData).length === 0
 
   console.log("googleTokenData", googleTokenData, "checkIfJSONisEmpty", checkIfJSONisEmpty)
+
 
 
   return(

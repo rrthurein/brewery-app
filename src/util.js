@@ -1,13 +1,14 @@
-  import { gapi } from 'gapi-script';  
+  import { gapi } from 'gapi-script';
 
 
   const calendarID = process.env.REACT_APP_CALENDAR_ID;
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
   const clientID = process.env.REACT_APP_CLIENT_ID;
-  const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
   const DISCOVERY_DOCS = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
   const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
 
+  const errorFromLocalStorage = JSON.parse(localStorage.getItem('error') || '[]')
+  const successFromLocalStorage = JSON.parse(localStorage.getItem('success') || '[]')
 
   const makeApiRequest = async (i, beerEventTimes, accessToken) => {
     gapi.client
@@ -16,22 +17,24 @@
         method: "POST",
         body: beerEventTimes[i],
         headers: {
-          "Content-type": "application/json",
           Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
         },
-      }, await sleep(i * 1000))
-      .then((response) => {
-            console.log("sucess", response)
-            return [true, response]
+      }, await sleep(i * 1000, localStorage.setItem("success", JSON.stringify(200))))
+      .then((success) => {
+            console.log(success)
+
+            return [true, success]
           },
         function (err) {
-          console.log(err);
+          console.log(err.result.error.code)
+            localStorage.setItem("err", JSON.stringify(err.result.error.code))
           return [false, err];
             }
           )
       }
 
-    const makeEventsDate = (beerLength,beerEventTimes, startDate, endDate, brewDate,
+    const makeEventsDate = (beerLength, beerEventTimes, startDate, endDate, brewDate,
       schedulingParameters, accessToken, i) => {
         if(i === 0){
           startDate.push(new Date(brewDate))
@@ -71,7 +74,7 @@
         let endDate = []
 
         for(let i = 0; i < beerLength; i++){
-          makeEventsDate(beerLength,beerEventTimes, startDate, endDate ,brewDate ,
+          makeEventsDate(beerLength, beerEventTimes, startDate, endDate ,brewDate ,
              schedulingParameters, accessToken, i)
         }
 
