@@ -18,6 +18,9 @@ const RecipeDetail = () => {
 
   const navigate = useNavigate();
 
+  const params = useParams()
+  const beerName = params.beerName
+
 
    const editHandleClick = () => {
      setEditParameter(!editParameter)
@@ -45,9 +48,6 @@ const RecipeDetail = () => {
        [e.target.id] : newSelectedRecipe
      }
 
-
-     console.log(updatedSelectedRecipe);
-
      //updates beerList with the updatedSelectedRecipe
      const updatedBeerList = beerList.map((beer) =>{
        console.log(beer, newSelectedRecipe.beerName)
@@ -74,11 +74,11 @@ const RecipeDetail = () => {
  return(
    <section className="Detail-div">
      <div className="beerInfo-div">
-     <div className="buttonDiv-RecipeDetailButton">
-      <h1>Recipe Detail</h1>
-          { editParameter == false ?
-            <div><button type="button" onClick={editHandleClick}><FontAwesomeIcon icon={faEdit}/></button></div>
-            : <div><button type="button" onClick={editDoneClick}><FontAwesomeIcon icon={faCheck}/></button></div>}
+      <div className="buttonDiv-RecipeDetailButton">
+        <h1>Recipe Detail</h1>
+            { editParameter == false ?
+              <div><button type="button" onClick={editHandleClick}><FontAwesomeIcon icon={faEdit}/></button></div>
+              : <div><button type="button" onClick={editDoneClick}>Done</button></div>}
         </div>
 
          <div className="keyName">Beer Name</div>

@@ -15,14 +15,16 @@
     const navigate = useNavigate();
     const accessToken = googleTokenData.access_token
 
+    console.log(localStorage.removeItem("success"))
+
     const tokenExpired = () => {
+      console.log(localStorage)
       //re-sign in when the user access token expires
-      if (localStorage.getItem('success') === "200") {
-        console.log("working")
+      if (localStorage.getItem('success')) {
+        console.log("success")
         navigate("success-page")
-      } else if (localStorage.getItem('err') === "401") {
+      } else if(localStorage.getItem('err')) {
         console.log("not working")
-        localStorage.removeItem('err')
         setGoogleTokenData({})
         navigate("/")
       }
@@ -43,7 +45,7 @@
           <div className="scheduleBeer">
             <button onClick={() => {
                 calculateBrewingSchedule(startTime, schedulingParameters, accessToken)
-                setTimeout(() => tokenExpired(), 1000)
+                setTimeout(() => tokenExpired(), 3000)
               }}>
                 Schedule Beer</button>
           </div>

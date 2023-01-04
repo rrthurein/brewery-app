@@ -5,12 +5,19 @@ import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 const SuccessPage = () => {
   const navigate = useNavigate();
 
+
+
   const closeButton = () => {
+    localStorage.removeItem('success')
     navigate("/")
   }
 
   const openCalendar = () =>{
-    console.log("openCalendar")
+    let successLocalStorageData = localStorage.getItem('success')
+    let successLocalStorageParseData = JSON.parse(successLocalStorageData)
+    localStorage.removeItem('success')
+    navigate("/")
+    return window.open(successLocalStorageParseData.result.htmlLink)
   }
 
   return (

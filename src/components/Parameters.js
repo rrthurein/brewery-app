@@ -17,8 +17,6 @@ const Parameters = () => {
   const [editParameter, setEditParameter] = useState(false)
 
   const navigate = useNavigate()
-  const params = useParams()
-  const beerName = params.beerName
 
   const editHandleClick = () => {
     setEditParameter(!editParameter)
@@ -136,7 +134,7 @@ const Parameters = () => {
 
             <div className="keyName">Carbonation</div>
               {
-                editParameter == false ?
+                editParameter === false ?
                 <div className="valueName">{selectedRecipe.schedulingParameters.carbonation} </div>
                 : <input className="valueName" type="text" defaultValue={selectedRecipe.schedulingParameters.carbonation} name="carbonation" placeholder="carbonation" onChange={handleEditChange} required/>
               }

@@ -20,15 +20,14 @@
           Authorization: `Bearer ${accessToken}`,
           "Content-type": "application/json",
         },
-      }, await sleep(i * 1000, localStorage.setItem("success", JSON.stringify(200))))
+      }, await sleep(i * 1000))
       .then((success) => {
-            console.log(success)
-
+            localStorage.setItem("success", JSON.stringify(success))
             return [true, success]
           },
         function (err) {
           console.log(err.result.error.code)
-            localStorage.setItem("err", JSON.stringify(err.result.error.code))
+          localStorage.setItem("err", JSON.stringify(err.result.error.code))
           return [false, err];
             }
           )

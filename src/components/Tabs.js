@@ -3,7 +3,7 @@ import App from "../App";
 import Calendar from "../components/Calendar";
 import SelectedRecipeContext from "../SelectedRecipeContext";
 import BeerTypeContext from "../BeerTypeContext";
-import RecipeDetail from "../components/Parameters";
+import RecipeDetail from "../components/RecipeDetail";
 import Parameters from "../components/Parameters";
 import beerStylesData from "../beerStylesData";
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
