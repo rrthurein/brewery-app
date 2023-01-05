@@ -34,7 +34,8 @@
       }
 
     const makeEventsDate = (beerLength, beerEventTimes, startDate, endDate, brewDate,
-      schedulingParameters, accessToken, i) => {
+      schedulingParameters, accessToken, i, selectedRecipeName, fermentationTank) => {
+
         if(i === 0){
           startDate.push(new Date(brewDate))
           let endDateValue = brewDate.setDate(brewDate.getDate() + Number(Object.values(schedulingParameters)[i]))
@@ -47,7 +48,7 @@
         }
 
         beerEventTimes[i] = {
-          summary: Object.keys(schedulingParameters)[i],
+          summary: "FV: " + fermentationTank + ", Name: " + selectedRecipeName + ", Stage: " + Object.keys(schedulingParameters)[i],
           start: {
             dateTime: startDate[i],
             timeZone: 'America/Los_Angeles',
@@ -56,7 +57,7 @@
             dateTime: endDate[i],
             timeZone: 'America/Los_Angeles',
           },
-          colorId: 5,
+          colorId: fermentationTank,
         }
 
       makeApiRequest(i, beerEventTimes, accessToken)
@@ -66,7 +67,7 @@
       return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
-  export function calculateBrewingSchedule(brewDate, schedulingParameters, accessToken) {
+  export function calculateBrewingSchedule(brewDate, schedulingParameters, accessToken, selectedRecipeName, fermentationTank) {
         const beerLength = Object.keys(schedulingParameters).length
         const beerEventTimes = []
         let startDate = []
@@ -74,7 +75,7 @@
 
         for(let i = 0; i < beerLength; i++){
           makeEventsDate(beerLength, beerEventTimes, startDate, endDate ,brewDate ,
-             schedulingParameters, accessToken, i)
+             schedulingParameters, accessToken, i, selectedRecipeName, fermentationTank)
         }
 
         }
