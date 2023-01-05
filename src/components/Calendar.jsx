@@ -15,7 +15,7 @@
     const navigate = useNavigate();
     const accessToken = googleTokenData.access_token
 
-    console.log(localStorage.removeItem("success"))
+    console.log(localStorage.removeItem("success"), localStorage.removeItem("err") )
 
     const tokenExpired = () => {
       console.log(localStorage)
