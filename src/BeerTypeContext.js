@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 
-const BeerTypeContext = React.createContext({
-  beerType: [],
-  setBeerType: () => {}
-})
-//creating context so that the context can give the cihld component data
+// set the defaults
+const BeerListContext = React.createContext({
+        beerType: [],
+        setBeerType: () => {}
+      },
+    ); //creating context so that the context can give the child component data
 
-export default BeerTypeContext;
- 
+export default BeerListContext;

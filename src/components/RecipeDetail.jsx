@@ -39,14 +39,20 @@ const RecipeDetail = () => {
        ...selectedRecipe,
        [e.target.name] : e.target.value
      }
-     setSelectedRecipe(newSelectedRecipe)
 
+     console.log(e.target.value, e.target.name)
+
+     setSelectedRecipe(newSelectedRecipe)
+     console.log("newSelectedRecipe", newSelectedRecipe)
 
      //updated the beerList with newSelectedRecipe
      let updatedSelectedRecipe = {
        ...beerList,
        [e.target.id] : newSelectedRecipe
      }
+
+     console.log("updatedSelectedRecipe", updatedSelectedRecipe)
+
 
      //updates beerList with the updatedSelectedRecipe
      const updatedBeerList = beerList.map((beer) =>{
@@ -59,6 +65,8 @@ const RecipeDetail = () => {
        }
      })
 
+
+
      // updates the beerList state with the updatedBeerList
      console.log(updatedBeerList)
      setBeerList(updatedBeerList)
@@ -69,6 +77,15 @@ const RecipeDetail = () => {
     navigate("/calendar")
   }
 
+ beerStylesData.map((beer) => {
+   if(selectedRecipe.beerStyle === beer.beerStyle){
+     setBeerType(beer.beerType)
+   }
+ })
+
+
+  console.log(beerType)
+
 
 
  return(
@@ -78,7 +95,7 @@ const RecipeDetail = () => {
         <h1>Recipe Detail</h1>
             { editParameter == false ?
               <div><button type="button" onClick={editHandleClick}><FontAwesomeIcon icon={faEdit}/></button></div>
-              : <div><button type="button" onClick={editDoneClick}>Done</button></div>}
+              : <div><button type="button" onClick={editDoneClick}><FontAwesomeIcon icon={faCheck}/></button></div>}
         </div>
 
          <div className="keyName">Beer Name</div>
@@ -93,7 +110,11 @@ const RecipeDetail = () => {
          {
            editParameter == false ?
            <div className="valueName">{selectedRecipe.beerStyle} </div>
-           : <input className="valueName" type="text" id={selectedRecipe.id} defaultValue={selectedRecipe.beerStyle} name="beerStyle" placeholder="beerStyle" onChange={handleEditChange} required/>
+           :   <select className="valueName" name="beerStyle" defaultValue={selectedRecipe.beerStyle} id={selectedRecipe.id}  onChange={handleEditChange} style={{width: "92.8%"}}>
+             {beerStylesData.map(beerStyle => (
+               <option defaultValue={selectedRecipe.beerStyle}>{beerStyle.beerStyle}</option>
+             ))}
+             </select>
          }
 
 

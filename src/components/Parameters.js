@@ -56,6 +56,7 @@ const Parameters = () => {
    setBeerList(updatedBeerList)
    console.log("beerList", beerList)
  }
+ console.log(beerType)
 
  //beerList.splice(id, 1, updatedBeerList)
   return (
@@ -89,7 +90,7 @@ const Parameters = () => {
               {
                 beerType === "Ale" ?
                 <>
-                <label>Secondary Fermentation</label>
+                <div className="keyName">Secondary Fermentation</div>
                 {
                   editParameter === false ?
                   <div className="valueName">{selectedRecipe.schedulingParameters.secondaryFermentation}</div>
@@ -116,7 +117,7 @@ const Parameters = () => {
               {
                 beerType === "Lager" ?
                 <>
-                <label>Lagering</label>
+                <div className="keyName">Lagering</div>
                 {
                   editParameter === false ?
                   <div className="valueName">{selectedRecipe.schedulingParameters.lagering} </div>

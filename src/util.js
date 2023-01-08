@@ -33,8 +33,12 @@
           )
       }
 
+      const sleep = async (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
     const makeEventsDate = (beerLength, beerEventTimes, startDate, endDate, brewDate,
-      schedulingParameters, accessToken, i, selectedRecipeName, fermentationTank) => {
+      schedulingParameters, accessToken, i, selectedRecipeName, fermentationTank, StageName) => {
 
         if(i === 0){
           startDate.push(new Date(brewDate))
@@ -48,7 +52,7 @@
         }
 
         beerEventTimes[i] = {
-          summary: "FV: " + fermentationTank + ", Name: " + selectedRecipeName + ", Stage: " + Object.keys(schedulingParameters)[i],
+          summary: "FV: " + fermentationTank + ", Beer Name: " + selectedRecipeName + ", Stage: " + StageName,
           start: {
             dateTime: startDate[i],
             timeZone: 'America/Los_Angeles',
@@ -63,9 +67,7 @@
       makeApiRequest(i, beerEventTimes, accessToken)
     }
 
-    const sleep = async (ms) => {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
+
 
   export function calculateBrewingSchedule(brewDate, schedulingParameters, accessToken, selectedRecipeName, fermentationTank) {
         const beerLength = Object.keys(schedulingParameters).length
@@ -74,8 +76,27 @@
         let endDate = []
 
         for(let i = 0; i < beerLength; i++){
-          makeEventsDate(beerLength, beerEventTimes, startDate, endDate ,brewDate ,
-             schedulingParameters, accessToken, i, selectedRecipeName, fermentationTank)
-        }
 
+          let listOfSchedulingParameterNames = ["Primary Fermentation", "Secondary Fermentation", "Dump Yeast and Hops", "D-Rest", "Lagering", "Cold Crash", "Carbonation"]
+          let StageName;
+
+          if(Object.keys(schedulingParameters)[i] === "primaryFermentation"){
+           StageName = listOfSchedulingParameterNames[0]
+          } else if(Object.keys(schedulingParameters)[i] === "secondaryFermentation"){
+           StageName = listOfSchedulingParameterNames[1]
+          } else if(Object.keys(schedulingParameters)[i] === "dumpYeastAndHops"){
+           StageName = listOfSchedulingParameterNames[2]
+          } else if(Object.keys(schedulingParameters)[i] === "dRest"){
+           StageName = listOfSchedulingParameterNames[3]
+          } else if(Object.keys(schedulingParameters)[i] === "lagering"){
+           StageName = listOfSchedulingParameterNames[4]
+          } else if(Object.keys(schedulingParameters)[i] === "coldCrash"){
+           StageName = listOfSchedulingParameterNames[5]
+          } else if(Object.keys(schedulingParameters)[i] === "carbonation"){
+           StageName = listOfSchedulingParameterNames[6]
+          }
+
+          makeEventsDate(beerLength, beerEventTimes, startDate, endDate ,brewDate ,
+             schedulingParameters, accessToken, i, selectedRecipeName, fermentationTank, StageName)
         }
+      }

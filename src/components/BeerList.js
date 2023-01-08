@@ -31,7 +31,8 @@ const BeerListRender = () => {
     navigate("/")
     console.log(newBeerList)
   }
-  
+
+  console.log(selectedRecipe)
 
 
   return (

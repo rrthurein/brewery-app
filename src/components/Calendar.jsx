@@ -51,7 +51,8 @@
               }}
               value={startTime}
               disableClock={true}
-              format={"y-MM-dd h:mm:ss a"}
+              showLeadingZeros={false}
+              format={"y-MM-dd"}
               className="dateTimePicker"
             />
           </div>
