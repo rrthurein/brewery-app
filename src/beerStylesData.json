@@ -1,0 +1,227 @@
+[
+  {
+    "id": 1,
+    "beerStyle": "Witbier",
+    "beerType": "Ale"
+  },
+  {
+    "id": 2,
+    "beerStyle": "Weizenbock",
+    "beerType": "Ale"
+  },
+  {
+    "id": 3,
+    "beerStyle": "Weissbier",
+    "beerType": "Ale"
+  },
+  {
+    "id": 4,
+    "beerStyle": "Vienna lager",
+    "beerType": "Lager"
+  },
+  {
+    "id": 5,
+    "beerStyle": "Scotch ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 6,
+    "beerStyle": "Stout",
+    "beerType": "Ale"
+  },
+  {
+    "id": 7,
+    "beerStyle": "California Common/Steam Beer",
+    "beerType": "Ale"
+  },
+  {
+    "id": 8,
+    "beerStyle": "Schwarzbier",
+    "beerType": "Lager"
+  },
+  {
+    "id": 9,
+    "beerStyle": "Saison",
+    "beerType": "Ale"
+  },
+  {
+    "id": 10,
+    "beerStyle": "Flanders Red Ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 11,
+    "beerStyle": "Porter",
+    "beerType": "Ale"
+  },
+  {
+    "id": 12,
+    "beerStyle": "Pilsener/Pilsner/Pils",
+    "beerType": "Lager"
+  },
+  {
+    "id": 13,
+    "beerStyle": "Pale ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 14,
+    "beerStyle": "Old Ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 15,
+    "beerStyle": "Mild",
+    "beerType": "Ale"
+  },
+  {
+    "id": 16,
+    "beerStyle": "Oktoberfestbier/Märzenbier",
+    "beerType": "Lager"
+  },
+  {
+    "id": 17,
+    "beerStyle": "Maibock/Helles Bock",
+    "beerType": "Lager"
+  },
+  {
+    "id": 18,
+    "beerStyle": "Weizenbock",
+    "beerType": "Ale"
+  },
+  {
+    "id": 19,
+    "beerStyle": "Light Ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 20,
+    "beerStyle": "Lambic",
+    "beerType": "Sour Ale"
+  },
+  {
+    "id": 21,
+    "beerStyle": "Kölsch",
+    "beerType": "Ale"
+  },
+  {
+    "id": 22,
+    "beerStyle": "India Pale Ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 23,
+    "beerStyle": "Helles",
+    "beerType": "Lager"
+  },
+  {
+    "id": 24,
+    "beerStyle": "Gueuze",
+    "beerType": "Sour Ale"
+  },
+  {
+    "id": 25,
+    "beerStyle": "Dortmunder Export",
+    "beerType": "Lager"
+  },
+  {
+    "id": 26,
+    "beerStyle": "Eisbock",
+    "beerType": "Lager"
+  },
+  {
+    "id": 27,
+    "beerStyle": "Dunkel",
+    "beerType": "Lager"
+  },
+  {
+    "id": 28,
+    "beerStyle": "Dunkelweizen",
+    "beerType": "Ale"
+  },
+  {
+    "id": 29,
+    "beerStyle": "Doppelbock",
+    "beerType": "Lager"
+  },
+  {
+    "id": 30,
+    "beerStyle": "Cream Ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 31,
+    "beerStyle": "Oud Bruin",
+    "beerType": "Sour Ale"
+  },
+  {
+    "id": 32,
+    "beerStyle": "Brown Ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 33,
+    "beerStyle": "Bock",
+    "beerType": "Lager"
+  },
+  {
+    "id": 34,
+    "beerStyle": "Bitter",
+    "beerType": "Ale"
+  },
+  {
+    "id": 35,
+    "beerStyle": "Bière de Garde",
+    "beerType": "Ale"
+  },
+  {
+    "id": 36,
+    "beerStyle": "Berliner Weisse",
+    "beerType": "Kettle Sour"
+  },
+  {
+    "id": 37,
+    "beerStyle": "Barley wine",
+    "beerType": "Ale"
+  },
+  {
+    "id": 38,
+    "beerStyle": "Amber ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 39,
+    "beerStyle": "Altbier",
+    "beerType": "Ale"
+  },
+  {
+    "id": 40,
+    "beerStyle": "Blonde Ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 41,
+    "beerStyle": "Golden/Summer Ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 42,
+    "beerStyle": "Gose",
+    "beerType": "Sour Ale"
+  },
+  {
+    "id": 43,
+    "beerStyle": "Hefeweizen",
+    "beerType": "Ale"
+  },
+  {
+    "id": 44,
+    "beerStyle": "Red Ale",
+    "beerType": "Ale"
+  },
+  {
+    "id": 13,
+    "beerStyle": "Roggenbier",
+    "beerType": "Lager/Ale"
+  }
+]

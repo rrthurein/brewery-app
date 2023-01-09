@@ -1,13 +1,215 @@
 * button {
-  color: white;
+  color: black;
+  background-color: white;
   margin: auto;
   height: 5vh;
   width: 20vh;
   text-align: center;
-  padding: 8px;
-  border-radius: 8px;
-  border: 0;
   cursor: pointer;
+  font-family: "Lucida Console", monospace;
+}
+
+* section {
+  padding-top: 5vh;
+}
+
+* h1, h2, label, nav{
+  font-family: "Monaco", monospace;
+}
+
+
+/* tab css */
+.container ::before, ::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 50%;
+  height: 300px;
+  background: #f1f1f1;
+  margin: 100px 25% 0;
+  word-break: break-all;
+  border: 1px solid rgba(0, 0, 0, 0.274);
+}
+
+.bloc-tabs {
+  display: flex;
+  width: 100%;
+}
+
+.tabs {
+  padding: 15px;
+  text-align: center;
+  width: 50%;
+  background: rgba(128, 128, 128, 0.075);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+  box-sizing: content-box;
+  position: relative;
+  outline: none;
+}
+
+.tabs:not(:last-child){
+  border-right: 1px solid rgba(0, 0, 0, 0.274);
+}
+
+.active-tabs {
+  background: white;
+  border-bottom: 1px solid transparent;
+}
+
+.active-tabs::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 3px);
+  height: 10px;
+  background: rgb(88, 147, 241);
+}
+
+/* .content button {
+  border: none;
+} */
+
+.content-tabs {
+  flex-grow : 1;
+}
+
+.content {
+  background: white;
+  padding: 20px;
+  width: 100%;
+  height: 95%;
+  display: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.content h2 {
+  padding: 0px 0 5px 0px;
+}
+
+.content hr {
+  width: 100px;
+  height: 2px;
+  background: #222;
+  margin-bottom: 5px;
+}
+
+.content p {
+  width: 100%;
+  height: 100%;
+}
+
+.active-content {
+  display: block;
+  border-top: none;
+}
+
+/* Recipe Detail CSS */
+
+#firstButtonAddBeer {
+  border-radius: 8px;
+}
+
+.Detail-div {
+  text-align: left;
+  justify-content: center;
+  display: inline-grid;
+  align-items: center;
+  max-width: 50vh;
+  padding: 5px;
+}
+
+.Detail-div button {
+  border-radius: 8px;
+  width: 9em;
+  padding: auto;
+  margin: auto;
+  border: auto;
+}
+
+. Detail-div button:hover {
+ background-color: silver;
+}
+
+
+.scheduleAndParameter-button {
+  padding: 5%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.backButtonRecipeDetail {
+  margin-left: 180;
+  font-size: 20;
+  letter-spacing: 0.2em;
+}
+
+.backButtonToBeerList button {
+  border-radius: 8px;
+  display: block;
+  position: absolute;
+  top: 20%;
+  left: 10%;
+}
+
+nav {
+  background-color: #272727;
+  color: #d8d8d8;
+}
+
+.beerListButton {
+  display: flex;
+  justify-content: space-evenly;
+
+}
+
+.buttonDiv {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 4vh;
+}
+
+.buttonDiv-RecipeDetailButton{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonDiv-RecipeDetailButton button {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 22%;
+  top: 54%;
+  border-style: none;
+}
+
+.buttonDiv-RecipeDetailButton h1 {
+  font-size: 2em;
+}
+
+.buttonDiv button {
+  width: 10vh;
+}
+
+.scheduleBeer {
+  margin-top: 1vh;
+  align-items: center;
+}
+
+.react-datetime-picker__wrapper {
+  border-radius: 8px;
+  width: 40vh;
   background-color: #D1512D;
 }
 
@@ -22,7 +224,7 @@
 
 .BeerFormPhoto {
   max-width: 50vw;
-  height: 100vh;
+  height: 51.2em;
 }
 
 .BeerForm-row {
@@ -52,11 +254,12 @@
 .BeerRecipeForm button {
   margin-top: 5%;
   height: 5%;
+  padding: 8px;
+  border-radius: 8px;
   width: 50%;
 }
 
 .Beer-Inventory-Setup {
-  background-color: #F5E8E4;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -64,54 +267,84 @@
 
 .BeerList {
   max-width: 50vh;
-  margin:  auto;
-  text-align: center;
-  padding: 5px;
+  margin-left: 5%;
+  padding-left: 30%;
+  padding-top: 100px;
 }
 
 .BeerList h1 {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.BeerList button {
-  margin-top: 5%;
-  height: 5%;
-  width: 25%;
+  font-family: "Monaco", monospace;
+  text-align: center;
 }
 
 
 #selectButton {
-  margin-top: 5%;
   height: 5%;
+  padding: 8px;
   width: 50%;
 }
 
-.BeerListBorder {
-  border: 2px solid #9A1663;
+/* Success Page */
+
+.SuccessPage {
+  text-align: center;
+  margin-top: 30%;
+}
+.go-to-calendar-btn {
+  margin-left: 3%;
+}
+
+.ScheduleParameterButton {
+  display: flex;
+  flex-direction: column;
+}
+
+.ScheduleParameterButton button {
   border-radius: 8px;
-  padding-top: 5vh;
-  padding-bottom: 10vh;
+  padding: 8px;
+}
+
+.BeerListBorder {
+  border: 2px solid #0a0a0a;
+  border-radius: 8px;
+  padding-top: 7vh;
+  padding-bottom: 8vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: space-around;
+  gap: 1em;
+}
+
+.BeerListBorder button {
+  border-radius: 8px;
 }
 
 .beerInfo-div {
-  border: 2px solid #9A1663;
-  width: 60vh;
-  height: 80vh;
+  width: auto;
   margin: auto;
   padding: 2vh;
   border-radius: 8px;
+  margin-top: 2vh;
+  margin-bottom: 5vh;
 }
 
 .keyName {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Monaco", monospace;
   font-size: 1rem;
   padding-top: 0.5rem;
 }
 
 .valueName {
-  padding: 1rem;
+  padding: 1rem 0.5rem;
+  margin: 0.5rem 0;
   border-radius: 8px;
+  border-style: solid;
+  border-width: 0.5px;
+  font-family: "Courier New", monospace;
+  width: 90%;
 }
+
 
 .hr {
   border-radius: 5px;
@@ -128,19 +361,77 @@
   width: 15%;
 }
 
-@media screen and (max-width: 480px) {
+/*calendar picker */
+
+.react-datetime-picker__inputGroup{
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: auto;
+}
+
+.react-datetime-picker__wrapper {
+  background-color: white;
+}
+
+.react-datetime-picker__clear-button react-datetime-picker__button {
+  background-color: white;
+}
+
+.react-datetime-picker__button {
+  width: 30px;
+  height: 50;
+  border-radius: 10px;
+  color: #0a0a0a;
+}
+
+.react-calendar__navigation__label {
+  width: 70%;
+}
+
+.calendarPage-div {
+  display: grid;
+  justify-content: center;
+  padding: 15%;
+}
+
+.calendarPage-div button {
+  border-radius: 8px;
+}
+
+.scheduleBeer {
+  margin-top: 3vh;
+  align-items: center;
+  display: grid;
+}
+
+.scheduleBeer button{
+  height: auto;
+  width: auto;
+  padding: 8px;
+}
+
+.react-datetime-picker__inputGroup__leadingZero {
+  padding-top: 5.5%;
+}
+
+.react-datetime-picker__inputGroup span{
+  padding-top: 5%
+}
+
+
+@media screen and (max-width: 780px) {
   * button {
-    color: white;
-    margin: auto;
     height: 4vh;
     width: 12vh;
-    text-align: center;
-    padding: 8px;
-    border-radius: 8px;
-    border: 0;
-    cursor: pointer;
-    background-color: #D1512D;
+    color: black;
+    font-family: "Lucida Console", monospace;
   }
+
+  * section {
+      padding-top: 2.5vh;
+  }
+
   .add-beer {
     text-align: center;
     margin: auto;
@@ -178,49 +469,84 @@
     display: block;
     border-radius: 8px;
   }
+
   .BeerRecipeForm button {
-    margin-top: 5%;
-    height: 5%;
     width: 8em;
   }
+
   .Beer-Inventory-Setup {
     min-height: 47em;
     margin-top: auto;
-    margin-bottom: auto;
   }
+
   .BeerList {
-    max-width: 50vh;
     margin:  auto;
-    margin-top: 6em;
     text-align: center;
-    padding: 5px;
     font-size: 20px;
+    padding: 0px;
+    padding-top: 8%;
   }
+
   .BeerList h1 {
     font-size: 25px;
   }
+
   .BeerList button {
-    margin-top: 5%;
-    height: 3%;
-    width: 20%;
+    height: 5%;
     font-size: 10px;
+    margin-top: 5%;
   }
-  .beerInfo-div {
-    border: 2px solid #9A1663;
-    width: 19em;
-    height: 33em;
-    margin: auto;
-    padding: 2vh;
-    border-radius: 8px;
-    margin-bottom: 1em;
+
+  .buttonDiv-RecipeDetailButton button {
+    position:
   }
-  .RecipeDetail {
+  .beerListIconButton {
     margin-top: 10%;
   }
-  .beerInfo-div-button button {
-    margin-left: 70%;
-    margin-top: 1vh;
-    height: 5%;
-    width: 15%;
+
+  .beerInfo-div {
+    margin-bottom: 2em;
+    padding-bottom: 4em;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .Detail-div h1 {
+    font-size: 1.6em;
+  }
+
+  .backButtonToBeerList button {
+    top: 25%;
+  }
+
+  .beerInfo-div button {
+    display: block;
+    height: 4em;
+    width: 6em;
+  }
+
+  .react-datetime-picker__inputGroup span{
+    padding-top: 10px
+  }
+
+  .react-datetime-picker__inputGroup__leadingZero {
+    align-self: center;
+  }
+  .react-datetime-picker__inputGroup__input--hasLeadingZero {
+    padding-top: 0;
+  }
+  .react-calendar__navigation__label {
+    width: 30%;
+  }
+
+  .go-to-calendar-btn {
+    width: auto;
+    padding: 1px 3%; 
+  }
+
+  .content {
+   height: 100%;
   }
 }

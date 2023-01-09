@@ -1,33 +1,90 @@
-import React from 'react'
+import React, { useState, useContext } from 'react';
+import SignIn from "../components/SignIn";
+import BeerListContext from "../BeerListContext";
+import AddingBeerBooleanContext from "../AddingBeerBooleanContext";
+import SelectedRecipeContext from "../SelectedRecipeContext";
+import GoogleTokenDataContext from "../GoogleTokenDataContext";
+import BeerTypeContext from "../BeerTypeContext";
+import { useNavigate, useParams, redirect } from 'react-router-dom'; //Navigating Programmatically
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
+const BeerListRender = () => {
+  const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
+  const { beerList, setBeerList } = useContext(BeerListContext);
+  const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
+  const { beerType, setBeerType } = useContext(BeerTypeContext);
 
 
-const BeerList = (props) => {
- const recipe = props.recipe
- const selectRecipe = props.selectRecipe
- const addBeer = props.addBeer
+  console.log("beerList")
+
+  const navigate = useNavigate();
+  const params = useParams()
+  const beerName = params.beerName;
+
+
+  const deleteBeer = (beer) => {
+    const deleteThisIndex = beerList.indexOf(beer)
+    beerList.splice(deleteThisIndex, 1)
+    const newBeerList = [...beerList]
+    setBeerList(newBeerList)
+    navigate("/")
+    console.log(newBeerList)
+  }
+
+  console.log(selectedRecipe)
+
 
   return (
-    <div className="BeerList">
-    <h1>List of Beer</h1>
-
-    <div className="BeerListBorder">
-    { recipe.map((beer) => {
-      return(
-        <div  key={beer.hops}>
-              <button id="selectButton" type="button" onClick={() => {selectRecipe(beer)}} >
-               {
-                beer.beerName
-             }</button>
-             </div>
-            )
-                          })
-    }
-        <button type="button" onClick={addBeer}>Add Beer</button>
-    </div>
-
+    <section className="BeerList">
+      <h1>List of Beer</h1>
+        <div className="BeerListBorder">
+          { beerList.map((beer) => {
+              return(
+                <div key={beer.id} className="beerListButton">
+                <button style={{width: 250, marginRight: 0}} id="selectButton" type="button"
+                onClick={() => {
+                  setSelectedRecipe(beer)
+                  navigate("tabs/recipe-detail/" + beer.beerName);
+                }} >
+                {
+                  beer.beerName
+                }</button>
+                <button type="button" style={{width: "3em", marginLeft: "1em", borderStyle: "none" }}
+                onClick={() => deleteBeer(beer)}>
+                <FontAwesomeIcon icon={faTrash}/>
+                </button>
+                </div>
+              )
+            })
+         }
+        <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/OnBoarding"); }}>
+        Add Beer
+        </button>
       </div>
-  )
+  </section>
+ )
+}
 
+const BeerList = () => {
+
+  const { googleTokenData, setGoogleTokenData} = useContext(GoogleTokenDataContext);
+
+  const checkIfJSONisEmpty = Object.keys(googleTokenData).length === 0
+
+  console.log("googleTokenData", googleTokenData, "checkIfJSONisEmpty", checkIfJSONisEmpty)
+
+
+
+  return(
+    <>
+    {
+      checkIfJSONisEmpty ?
+      <SignIn /> : BeerListRender()
+    }
+    </>
+
+  )
 }
 
 export default BeerList
