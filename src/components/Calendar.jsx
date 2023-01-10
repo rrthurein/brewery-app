@@ -1,7 +1,9 @@
   import React, { useContext, useState } from 'react';
   import SelectedRecipeContext from "../SelectedRecipeContext";
   import GoogleTokenDataContext from "../GoogleTokenDataContext";
+  import SignIn from "../components/SignIn";
   import DateTimePicker from 'react-datetime-picker';
+  import PopUp from "../components/PopUp"
   import { calculateBrewingSchedule  } from "../util.js";
   import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
@@ -10,6 +12,7 @@
     const { googleTokenData, setGoogleTokenData } = useContext(GoogleTokenDataContext);
     const [startTime, setStartTime] = useState(new Date());
     const [fermentationTank, setFermentationTank] = useState(1)
+    const [buttonPopUp, setButtonPopUp] = useState(false)
 
     const schedulingParameters = selectedRecipe.schedulingParameters
 
@@ -32,13 +35,14 @@
       //re-sign in when the user access token expires
       if (localStorage.getItem('success')) {
         console.log("success")
-        navigate("success-page")
+        setButtonPopUp(!buttonPopUp)
       } else if(localStorage.getItem('err')) {
         console.log("not working")
         setGoogleTokenData({})
-        navigate("/")
       }
     }
+
+    const checkIfJSONisEmpty = Object.keys(googleTokenData).length === 0
 
     return (
 
@@ -67,13 +71,19 @@
           </div>
 
 
+
           <div className="scheduleBeer">
-            <button onClick={() => {
+            {   checkIfJSONisEmpty ?
+              <SignIn />  : <button onClick={() => {
                 calculateBrewingSchedule(startTime, schedulingParameters, accessToken, selectedRecipeName, fermentationTank)
                 setTimeout(() => tokenExpired(), 3000)
               }}>
-                Schedule Beer</button>
+                Schedule Beer</button>}
           </div>
+
+          <PopUp trigger={buttonPopUp} setTrigger={setButtonPopUp}>
+            <h3>PopUp</h3>
+          </PopUp>
       </section>
 
   )

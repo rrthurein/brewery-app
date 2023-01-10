@@ -54,9 +54,7 @@ const Parameters = () => {
 
    //updates the beerList state with the updatedBeerList
    setBeerList(updatedBeerList)
-   console.log("beerList", beerList)
- }
- console.log(beerType)
+ } 
 
  //beerList.splice(id, 1, updatedBeerList)
   return (

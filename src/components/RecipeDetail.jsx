@@ -40,18 +40,13 @@ const RecipeDetail = () => {
        [e.target.name] : e.target.value
      }
 
-     console.log(e.target.value, e.target.name)
-
      setSelectedRecipe(newSelectedRecipe)
-     console.log("newSelectedRecipe", newSelectedRecipe)
 
      //updated the beerList with newSelectedRecipe
      let updatedSelectedRecipe = {
        ...beerList,
        [e.target.id] : newSelectedRecipe
      }
-
-     console.log("updatedSelectedRecipe", updatedSelectedRecipe)
 
 
      //updates beerList with the updatedSelectedRecipe
@@ -65,26 +60,20 @@ const RecipeDetail = () => {
        }
      })
 
-
-
      // updates the beerList state with the updatedBeerList
-     console.log(updatedBeerList)
      setBeerList(updatedBeerList)
    }
 
 
   const handleClickBrewDay = () => {
-    navigate("/calendar")
-  }
+      navigate("/calendar")
+    }
 
- beerStylesData.map((beer) => {
-   if(selectedRecipe.beerStyle === beer.beerStyle){
-     setBeerType(beer.beerType)
-   }
- })
-
-
-  console.log(beerType)
+   beerStylesData.map((beer) => {
+     if(selectedRecipe.beerStyle === beer.beerStyle){
+       setBeerType(beer.beerType)
+     }
+   })
 
 
 
