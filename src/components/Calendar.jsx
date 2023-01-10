@@ -12,7 +12,7 @@
     const { googleTokenData, setGoogleTokenData } = useContext(GoogleTokenDataContext);
     const [startTime, setStartTime] = useState(new Date());
     const [fermentationTank, setFermentationTank] = useState(1)
-    const [buttonPopUp, setButtonPopUp] = useState(true)
+    const [buttonPopUp, setButtonPopUp] = useState(false)
 
     const schedulingParameters = selectedRecipe.schedulingParameters
 
