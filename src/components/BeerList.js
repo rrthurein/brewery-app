@@ -67,21 +67,11 @@ const BeerListRender = () => {
 }
 
 const BeerList = () => {
-
-  const { googleTokenData, setGoogleTokenData} = useContext(GoogleTokenDataContext);
-
-  const checkIfJSONisEmpty = Object.keys(googleTokenData).length === 0
-
-  console.log("googleTokenData", googleTokenData, "checkIfJSONisEmpty", checkIfJSONisEmpty)
-
-
+  
 
   return(
     <>
-    {
-      checkIfJSONisEmpty ?
-      <SignIn /> : BeerListRender()
-    }
+    {BeerListRender()}
     </>
 
   )

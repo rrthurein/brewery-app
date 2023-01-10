@@ -1,15 +1,14 @@
 import React from 'react'
+import './PopUp.css'
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 
 
-const SuccessPage = () => {
+const PopUp = (props) => {
   const navigate = useNavigate();
-
-
 
   const closeButton = () => {
     localStorage.removeItem('success')
-    navigate("/")
+    props.setTrigger(false)
   }
 
   const openCalendar = () =>{
@@ -20,15 +19,16 @@ const SuccessPage = () => {
     return window.open(successLocalStorageParseData.result.htmlLink)
   }
 
-  return (
-    <div>
-      <div className="SuccessPage">
+  return (props.trigger) ? (
+    <div className="popUp">
+      <div className="popUp-inner">
         <h1>You have sucessfully added your Brew Schedule!</h1>
-          <button className="close-btn" onClick={closeButton}>Close</button>
+        <br />
+          <button className="close-btn" onClick={closeButton}>x</button>
           <button className="go-to-calendar-btn" onClick={openCalendar}> Open Calendar</button>
       </div>
     </div>
-  )
+  ) : "";
 }
 
-export default SuccessPage
+export default PopUp
