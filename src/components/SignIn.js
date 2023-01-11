@@ -25,7 +25,7 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="calendarPage-div">
+    <div className="SignIn-div">
       <button
           onClick={() => login()}
           style={{width: '20em'}}
