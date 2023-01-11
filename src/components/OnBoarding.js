@@ -7,6 +7,8 @@ import App from "../App";
 import beerStylesData from "../beerStylesData.json";
 import GlobalSchedulingParametersContext from "../GlobalSchedulingParametersContext";
 import { useNavigate, useParams} from 'react-router-dom'; //Navigating Programmatically
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 
 const OnBoarding = () => {
@@ -154,8 +156,10 @@ const OnBoarding = () => {
       console.log("condition 2")
       return (
         <div className="add-beer">
-        <h2>Add Beer Recipe!</h2>
-        <button id="firstButtonAddBeer" type="button" onClick={addBeer}>Add</button>
+          <h2>Add Beer Recipe!</h2>
+          <button id="firstButtonAddBeer" type="button" onClick={addBeer}>
+            <FontAwesomeIcon icon={faPlus}/>
+          </button>
         </div>
       );
     }

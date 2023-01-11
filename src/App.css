@@ -22,6 +22,8 @@ button {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  align-content: center;
+  display:flex;
 }
 
 .container {
@@ -218,6 +220,12 @@ nav {
   padding: 10px;
 }
 
+.add-beer button {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 0.3%;
+}
+
 .BeerFormPhoto {
   max-width: 50vw;
   height: 51.2em;
@@ -382,20 +390,22 @@ nav {
   width: 70%;
 }
 
-
 .react-datetime-picker__inputGroup span{
   padding-top: 7%
 }
-
 
 .calendarPage-div {
   display: grid;
   justify-content: center;
   grid-template-columns: 1fr;
   grid-template-rows: auto 0 50px;
-  grid-gap: 20%;
+  grid-gap: 10%;
   padding-top: 10%;
   padding-bottom: 20%;
+}
+
+.fermentationTank-div {
+  margin-top: 2%;
 }
 
 .fermentationTank-div label{
@@ -424,6 +434,25 @@ nav {
   padding: 8px;
 }
 
+/* Sign In Pop Up */
+.sign-in-Calendar-Page {
+  display: block;
+  margin: auto;
+}
+
+.sign-in-Calendar-Page text {
+  font-size: small;
+}
+
+.SignIn-div {
+  padding-top: 4%;
+  padding-left: 15%;
+  padding-bottom: 4%;
+}
+
+.SignIn-div button{
+  border-radius: 8px;
+}
 
 @media screen and (max-width: 840) {
   button {
@@ -445,6 +474,7 @@ nav {
     width: 60%;
     padding: 0vh;
   }
+
   .BeerFormPhoto {
     max-width: 100vh;
     height: 50vh;
@@ -548,6 +578,7 @@ nav {
     width: auto;
     padding: 1px 3%;
   }
+
 
   .content {
    height: 100%;

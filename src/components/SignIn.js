@@ -16,12 +16,6 @@ const SignIn = () => {
   });
 
 
-  const calendarID = process.env.REACT_APP_CALENDAR_ID;
-  const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-
-  const DISCOVERY_DOCS = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
-  const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
-
   const navigate = useNavigate();
 
   return (

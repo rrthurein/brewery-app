@@ -1,12 +1,6 @@
   import { gapi } from 'gapi-script';
 
 
-  const calendarID = process.env.REACT_APP_CALENDAR_ID;
-  const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-  const clientID = process.env.REACT_APP_CLIENT_ID;
-  const DISCOVERY_DOCS = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
-  const SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"
-
   const errorFromLocalStorage = JSON.parse(localStorage.getItem('error') || '[]')
   const successFromLocalStorage = JSON.parse(localStorage.getItem('success') || '[]')
 
@@ -33,9 +27,9 @@
           )
       }
 
-      const sleep = async (ms) => {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-      }
+    const sleep = async (ms) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
 
     const makeEventsDate = (beerLength, beerEventTimes, startDate, endDate, brewDate,
       schedulingParameters, accessToken, i, selectedRecipeName, fermentationTank, StageName) => {
@@ -66,8 +60,6 @@
 
       makeApiRequest(i, beerEventTimes, accessToken)
     }
-
-
 
   export function calculateBrewingSchedule(brewDate, schedulingParameters, accessToken, selectedRecipeName, fermentationTank) {
         const beerLength = Object.keys(schedulingParameters).length
