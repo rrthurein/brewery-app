@@ -58,7 +58,7 @@ const BeerListRender = () => {
               )
             })
          }
-        <button type="button" onClick={() => { setAddingBeer(!addingBeer); navigate("/OnBoarding"); }}>
+        <button type="button" style={{paddingLeft: "15px", paddingRight: "15px", marginTop: "4%"}} onClick={() => { setAddingBeer(!addingBeer); navigate("/OnBoarding"); }}>
         Add Beer
         </button>
       </div>
@@ -67,7 +67,7 @@ const BeerListRender = () => {
 }
 
 const BeerList = () => {
-  
+
 
   return(
     <>

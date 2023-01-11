@@ -1,7 +1,6 @@
   import React, { useContext, useState } from 'react';
   import SelectedRecipeContext from "../SelectedRecipeContext";
   import GoogleTokenDataContext from "../GoogleTokenDataContext";
-  import SignIn from "../components/SignIn";
   import DateTimePicker from 'react-datetime-picker';
   import PopUp from "../components/PopUp"
   import { calculateBrewingSchedule  } from "../util.js";
@@ -46,7 +45,7 @@
 
     return (
 
-       <section className="calendarPage-div">
+       <main className="calendarPage-div">
 
           <div className="date-div">
             <DateTimePicker
@@ -70,22 +69,16 @@
               </select>
           </div>
 
-
-
-          <div className="scheduleBeer">
-            {   checkIfJSONisEmpty ?
-              <SignIn />  : <button onClick={() => {
-                calculateBrewingSchedule(startTime, schedulingParameters, accessToken, selectedRecipeName, fermentationTank)
-                setTimeout(() => tokenExpired(), 3000)
-              }}>
-                Schedule Beer</button>}
-          </div>
+            <button disabled={checkIfJSONisEmpty} className="scheduleBeer" onClick={() => {
+            calculateBrewingSchedule(startTime, schedulingParameters, accessToken, selectedRecipeName, fermentationTank)
+            setTimeout(() => tokenExpired(), 3000)
+          }}>
+            Schedule Beer</button> 
 
           <PopUp trigger={buttonPopUp} setTrigger={setButtonPopUp}>
             <h3>PopUp</h3>
           </PopUp>
-      </section>
-
+      </main>
   )
 
   }
