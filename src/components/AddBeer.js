@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 
-const OnBoarding = () => {
+const AddBeer = () => {
   const { addingBeer, setAddingBeer } = useContext(AddingBeerBooleanContext)
   const { beerList, setBeerList } = useContext(BeerListContext)
   const { beerType, setBeerType } = useContext(BeerTypeContext)
@@ -172,4 +172,4 @@ const OnBoarding = () => {
   )
 }
 
-export default OnBoarding;
+export default AddBeer;

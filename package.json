@@ -1,6 +1,7 @@
 {
   "name": "brewery-app",
   "version": "0.1.0",
+  "homepage": "https://rrthurein.github.io/brewery-app",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
@@ -23,6 +24,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
++   "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -58,5 +61,8 @@
   "bugs": {
     "url": "https://github.com/rrthurein/soptodolist-app/issues"
   },
-  "homepage": "https://github.com/rrthurein/soptodolist-app#readme"
+  "homepage": "https://github.com/rrthurein/soptodolist-app#readme",
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
+  }
 }

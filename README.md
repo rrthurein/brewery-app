@@ -1,3 +1,6 @@
+# brewery-app
+A Brewery Management App using React JS library. This App is to help breweries schedule their beer lifecycle through google calendar. The purpose of this is to simplified adding the events of the process of making beer to google calendar. The goal for this is to be able to share it with people for educational and management purposes. 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

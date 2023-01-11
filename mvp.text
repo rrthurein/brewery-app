@@ -1,0 +1,50 @@
+Brewery Management App
+
+Schedule Feature
+The app should be able to send schedules to employees and customers so when the user decides the brew date for selected beer it
+should send all the scheduling parameters from the selected date to when the beer is ready on their google calendar. The idea is
+that the scheduling should be able to show the brewery schedule on the google calendar and show the selected beers that will be
+brewed throughout the months or the year.
+
+Sometimes the beer schedule can change because there can be some issues with fermentation or there is not tank space to tap the
+beer because of this there should be an updated function where the beer schedule that was sent could be updated.
+
+The recipe data that allows user to send the schedule of the beer that user plans to brew on google calendar.
+
+  There should be a recipe data consisting of
+     - Recipe name
+     - Beer style
+     - ABV
+     - Hops
+     - Yeast
+     - Scheduling Parameters
+
+MVP
+  (Log In) -> Prompted to Add Beer -> Add Beer MetaData -> Use the pre-set of Scheduling Parameters/Modify Beer Scheduling
+  Parameters -> Finish Button to Beer List or Schedule Button
+
+    -> Finish Button to Beer List -> Beer List -> Select Beer Button/Delete Button as trash icon ->
+    Select Beer -> Show Beer Recipe Detail and (Edit button as pencil icon and pre-populate with existing values)
+    -> Scheduling Parameter Tab on the Beer Recipe Page -> Scheduling Page
+
+    -> Schedule Button -> Scheduling Page that has Parameter Inputs(Editable Values), Date Input, and Schedule
+    Button -> Schedule Button -> Pop Up Success Modal -> Tell the user to subscribe to the brewery calendar so that it shows
+    on their calendar -> Two Button on the Modal -> Go to Calendar Button/Done Button
+
+        -> Pop Up Success Page -> Go to Calendar Button -> Takes to Calendar to show Events
+        -> Pop Up Success Page -> Done Button -> Take to Home page
+
+  -> first check the token -> if the token is expired then refreshing the token
+  (running the refresh api call is async)
+  -> after you refresh the token -> then make the google API call
+  disable the schedule button if you don't have a token or the token is expired 
+
+Ideas for later updates
+-> Show Beer Recipe Page and has Scheduling Parameter and Inventory tab -> Beer Recipe Page
+renders Beer Recipe Detail, Editable Value ->
+
+Home Page(Beer List) -> Beer Recipe/Scheduling Parameter/Inventory
+  Beer Recipe -> Recipe Detail/Edit
+  Scheduling Parameter -> Edit Parameter/Set Date and schedule -> Pop Up on Success/Go to Calendar Button
+
+(Inventory -> Input the volume of the brew, where the tank will be stored, when it will be keg off and have the tank be ready)

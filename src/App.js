@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useContext, useEffect } from 'react';
-import OnBoarding from "./components/OnBoarding";
+import AddBeer from "./components/AddBeer";
 import SchedulingParameters from "./components/SchedulingParameters";
 import Parameters from "./components/Parameters";
 import BeerList from "./components/BeerList";
@@ -82,6 +82,7 @@ function App() {
   })
 
 
+
   return (
 
     <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
@@ -93,7 +94,7 @@ function App() {
                 <BeerTypeContext.Provider value={selectedBeerType}>
                       <Routes>
                           <Route element={<WithoutNav />}>
-                              <Route path="/OnBoarding" element={<OnBoarding />} />
+                              <Route path="/AddBeer" element={<AddBeer />} />
                               <Route path="scheduling-parameters/:id" element={<SchedulingParameters />} />
                           </Route>
                           <Route element={localStorage.getItem(googleTokenData) === null ? <WithoutNav /> : <WithNav />}>

@@ -58,7 +58,7 @@ const BeerListRender = () => {
               )
             })
          }
-        <button type="button" style={{paddingLeft: "15px", paddingRight: "15px", marginTop: "4%"}} onClick={() => { setAddingBeer(!addingBeer); navigate("/OnBoarding"); }}>
+        <button type="button" style={{paddingLeft: "15px", paddingRight: "15px", marginTop: "4%"}} onClick={() => { setAddingBeer(!addingBeer); navigate("/AddBeer"); }}>
         Add Beer
         </button>
       </div>
