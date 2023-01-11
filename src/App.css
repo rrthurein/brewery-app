@@ -1,9 +1,8 @@
-* button {
+button {
   color: black;
   background-color: white;
   margin: auto;
   height: 5vh;
-  width: 20vh;
   text-align: center;
   cursor: pointer;
   font-family: "Lucida Console", monospace;
@@ -23,6 +22,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  align-content: center;
+  display:flex;
 }
 
 .container {
@@ -123,9 +124,8 @@
 .Detail-div {
   text-align: left;
   justify-content: center;
-  display: inline-grid;
   align-items: center;
-  max-width: 50vh;
+  width: 100%;
   padding: 5px;
 }
 
@@ -158,8 +158,9 @@
   border-radius: 8px;
   display: block;
   position: absolute;
-  top: 20%;
-  left: 10%;
+  top: 15%;
+  left: 15%;
+  width: 7em;
 }
 
 nav {
@@ -185,12 +186,13 @@ nav {
   align-items: center;
 }
 
+
 .buttonDiv-RecipeDetailButton button {
   height: 20px;
   width: 20px;
   position: absolute;
-  right: 22%;
-  top: 54%;
+  right: 12%;
+  top: 55%;
   border-style: none;
 }
 
@@ -202,14 +204,10 @@ nav {
   width: 10vh;
 }
 
-.scheduleBeer {
-  margin-top: 1vh;
-  align-items: center;
-}
 
 .react-datetime-picker__wrapper {
   border-radius: 8px;
-  width: 40vh;
+  width: 30vh;
   background-color: #D1512D;
 }
 
@@ -220,6 +218,12 @@ nav {
   height: 60%;
   width: 60%;
   padding: 10px;
+}
+
+.add-beer button {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 0.3%;
 }
 
 .BeerFormPhoto {
@@ -284,12 +288,8 @@ nav {
   width: 50%;
 }
 
-/* Success Page */
+/* PopUp page */
 
-.SuccessPage {
-  text-align: center;
-  margin-top: 30%;
-}
 .go-to-calendar-btn {
   margin-left: 3%;
 }
@@ -368,6 +368,7 @@ nav {
   justify-content: center;
   align-items: stretch;
   height: auto;
+  width: 20%;
 }
 
 .react-datetime-picker__wrapper {
@@ -389,10 +390,31 @@ nav {
   width: 70%;
 }
 
+.react-datetime-picker__inputGroup span{
+  padding-top: 7%
+}
+
 .calendarPage-div {
   display: grid;
   justify-content: center;
-  padding: 15%;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 0 50px;
+  grid-gap: 10%;
+  padding-top: 10%;
+  padding-bottom: 20%;
+}
+
+.fermentationTank-div {
+  margin-top: 2%;
+}
+
+.fermentationTank-div label{
+  margin-right: 10px;
+}
+
+.fermentationTank-div select{
+  border-radius: 8px;
+  padding-left: 15px;
 }
 
 .calendarPage-div button {
@@ -400,9 +422,10 @@ nav {
 }
 
 .scheduleBeer {
-  margin-top: 3vh;
+  margin-top: 5vh;
   align-items: center;
   display: grid;
+  align-items: center;
 }
 
 .scheduleBeer button{
@@ -411,17 +434,28 @@ nav {
   padding: 8px;
 }
 
-.react-datetime-picker__inputGroup__leadingZero {
-  padding-top: 5.5%;
+/* Sign In Pop Up */
+.sign-in-Calendar-Page {
+  display: block;
+  margin: auto;
 }
 
-.react-datetime-picker__inputGroup span{
-  padding-top: 5%
+.sign-in-Calendar-Page text {
+  font-size: small;
 }
 
+.SignIn-div {
+  padding-top: 4%;
+  padding-left: 15%;
+  padding-bottom: 4%;
+}
 
-@media screen and (max-width: 780px) {
-  * button {
+.SignIn-div button{
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 840) {
+  button {
     height: 4vh;
     width: 12vh;
     color: black;
@@ -440,6 +474,7 @@ nav {
     width: 60%;
     padding: 0vh;
   }
+
   .BeerFormPhoto {
     max-width: 100vh;
     height: 50vh;
@@ -453,12 +488,14 @@ nav {
     margin-right: auto;
     width: 15em;
   }
+
   .BeerRecipeForm {
     max-width: 150%;
     text-align: left;
     width: 32vh;
     margin-bottom: 3vh;
   }
+
   .BeerRecipeForm input, .BeerRecipeForm select {
     width: 100%;
     padding: 10px 10px;
@@ -498,8 +535,10 @@ nav {
   }
 
   .buttonDiv-RecipeDetailButton button {
-    position:
+    right: 12%;
+    top: 45%;
   }
+
   .beerListIconButton {
     margin-top: 10%;
   }
@@ -517,14 +556,8 @@ nav {
     font-size: 1.6em;
   }
 
-  .backButtonToBeerList button {
-    top: 25%;
-  }
-
   .beerInfo-div button {
     display: block;
-    height: 4em;
-    width: 6em;
   }
 
   .react-datetime-picker__inputGroup span{
@@ -543,8 +576,9 @@ nav {
 
   .go-to-calendar-btn {
     width: auto;
-    padding: 1px 3%; 
+    padding: 1px 3%;
   }
+
 
   .content {
    height: 100%;

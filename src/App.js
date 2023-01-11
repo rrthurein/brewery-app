@@ -1,21 +1,22 @@
 import './App.css';
 import React, { useState, useContext, useEffect } from 'react';
-import OnBoarding from "./components/OnBoarding";
+import AddBeer from "./components/AddBeer";
 import SchedulingParameters from "./components/SchedulingParameters";
 import Parameters from "./components/Parameters";
 import BeerList from "./components/BeerList";
+import SignIn from "./components/SignIn";
 import { Routes, Route } from "react-router-dom";
 import WithNav from "./components/WithNav";
 import WithoutNav from "./components/WithoutNav";
 import BeerListContext from "./BeerListContext";
 import AddingBeerBooleanContext from "./AddingBeerBooleanContext";
-import GoogleSignInContext from "./GoogleSignInContext";
+import GoogleTokenDataContext from "./GoogleTokenDataContext";
 import BeerTypeContext from "./BeerTypeContext";
 import SelectedRecipeContext from "./SelectedRecipeContext";
 import GlobalSchedulingParametersContext from "./GlobalSchedulingParametersContext";
 import RecipeDetail from "./components/RecipeDetail";
 import Calendar from "./components/Calendar";
-import SuccessPage from "./components/SuccessPage";
+import PopUp from "./components/PopUp";
 import Tabs from "./components/Tabs";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
@@ -44,8 +45,8 @@ const schedulingParameters = {
 
 
 const beerListFromLocalStorage = JSON.parse(localStorage.getItem('beerList') || '[]')
-const googleSignInFromLocalStorage = JSON.parse(localStorage.getItem('googleSignIn') || '{}')
-const addingBeerFromLocalStorage = JSON.parse(localStorage.getItem('addingBeerList') || 'false')
+const googleTokenDataFromLocalStorage = JSON.parse(localStorage.getItem('googleTokenData') || '{}')
+const addingBeerFromLocalStorage = JSON.parse(localStorage.getItem('addingBeer') || 'false')
 
 function App() {
 
@@ -64,28 +65,28 @@ function App() {
   const [beerType, setBeerType] = useState("");
   const selectedBeerType = { beerType, setBeerType }
 
-  const [googleSignIn, setGoogleSignIn] = useState({});
-  const signedIn = { googleSignIn, setGoogleSignIn }
+  const [googleTokenData, setGoogleTokenData] = useState(googleTokenDataFromLocalStorage);
+  const signedIn = { googleTokenData, setGoogleTokenData }
 
  const handleError = (error) => {
    console.log(error)
  }
 
   useEffect(() => {
-    try{
       localStorage.setItem("beerList", JSON.stringify(beerList))
       localStorage.setItem("addingBeer", JSON.stringify(addingBeer))
-      localStorage.setItem("googleSignIn", JSON.stringify(googleSignIn))
-    } catch (error){
-      handleError(error)
-    } console.log(beerList, "useEffect beerlist")
   }, [beerList])
+
+  useEffect(() => {
+      localStorage.setItem("googleTokenData", JSON.stringify(googleTokenData))
+  })
+
 
 
   return (
 
-    <GoogleOAuthProvider clientId="">
-      <GoogleSignInContext.Provider value={signedIn}>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
+      <GoogleTokenDataContext.Provider value={signedIn}>
         <GlobalSchedulingParametersContext.Provider value={schedulingParametersValues}>
           <AddingBeerBooleanContext.Provider value={toggleSetting}>
             <SelectedRecipeContext.Provider value={selected}>
@@ -93,14 +94,14 @@ function App() {
                 <BeerTypeContext.Provider value={selectedBeerType}>
                       <Routes>
                           <Route element={<WithoutNav />}>
-                              <Route path="/OnBoarding" element={<OnBoarding />} />
+                              <Route path="/AddBeer" element={<AddBeer />} />
                               <Route path="scheduling-parameters/:id" element={<SchedulingParameters />} />
                           </Route>
-                          <Route  element={<WithNav />}>
+                          <Route element={localStorage.getItem(googleTokenData) === null ? <WithoutNav /> : <WithNav />}>
                             <Route path="/" element={<BeerList />} />
                             <Route path="calendar" element={<Calendar />} />
                             <Route path="tabs/recipe-detail/:beerName" element={<Tabs />} />
-                            <Route path="tabs/recipe-detail/:beerName/success-page" element={<SuccessPage />} />
+                            <Route path="tabs/recipe-detail/:beerName/success-page" element={<PopUp />} />
                           </Route>
                        </Routes>
                     </BeerTypeContext.Provider>
@@ -108,7 +109,7 @@ function App() {
                 </SelectedRecipeContext.Provider>
           </AddingBeerBooleanContext.Provider>
         </GlobalSchedulingParametersContext.Provider>
-      </GoogleSignInContext.Provider>
+      </GoogleTokenDataContext.Provider>
     </GoogleOAuthProvider>
    )
 }

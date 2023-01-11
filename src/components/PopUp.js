@@ -22,10 +22,10 @@ const PopUp = (props) => {
   return (props.trigger) ? (
     <div className="popUp">
       <div className="popUp-inner">
-        <h1>You have sucessfully added your Brew Schedule!</h1>
+        <h2>You have sucessfully added your Brew Schedule!</h2>
         <br />
           <button className="close-btn" onClick={closeButton}>x</button>
-          <button className="go-to-calendar-btn" onClick={openCalendar}> Open Calendar</button>
+          <button className="go-to-calendar-btn" onClick={openCalendar}>Open Calendar</button>
       </div>
     </div>
   ) : "";

@@ -1,10 +1,12 @@
 import React, { useState, useContext } from 'react';
 import App from "../App";
 import Calendar from "../components/Calendar";
+import GoogleTokenDataContext from "../GoogleTokenDataContext";
 import SelectedRecipeContext from "../SelectedRecipeContext";
 import BeerTypeContext from "../BeerTypeContext";
 import RecipeDetail from "../components/RecipeDetail";
 import Parameters from "../components/Parameters";
+import SignIn from "../components/SignIn";
 import beerStylesData from "../beerStylesData";
 import { useNavigate } from 'react-router-dom'; //Navigating Programmatically
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -14,6 +16,7 @@ import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 const Tabs = () => {
   const [toggleState, setToggleState] = useState(1);
   const { selectedRecipe, setSelectedRecipe } = useContext(SelectedRecipeContext);
+  const { googleTokenData, setGoogleTokenData } = useContext(GoogleTokenDataContext);
   const { beerType, setBeerType } = useContext(BeerTypeContext);
 
   const navigate = useNavigate();
@@ -29,6 +32,8 @@ const Tabs = () => {
       }
      }
    }
+
+     const checkIfJSONisEmpty = Object.keys(googleTokenData).length === 0
 
   return (
     <>
@@ -68,7 +73,18 @@ const Tabs = () => {
 
         </div>
 
+        {
+          toggleState === 2 &&  checkIfJSONisEmpty ?
+          <div className="sign-in-Calendar-Page">
+          <SignIn />
+          <text>User have to Sign In if the Schedule Beer Button is disabled.</text>
+          </div> : null
+        }
+
     </div>
+
+
+
 
    </>
 
