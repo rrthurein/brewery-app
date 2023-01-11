@@ -1,4 +1,42 @@
 
+To Do
+  fix the check icon button to done button for the edit button.
+  add text in the right places title pages correctly title button correctly, put little prompts of text describing what to do
+  on the page maybe like under the title.
+  Fix env (https://stackoverflow.com/questions/71151616/process-env-environment-variable-undefined)
+  fix the API request with setInterval
+  Add a Log In profile
+  Need to add Fermentation Tank input and use this input to define the color of the events
+  Key should not exist in a object if there is not value - for example if the FT key value is empty the key in
+  the object for FT shouldn't exist or at least when you send it to the event it should not set a event for
+  that key.
+
+
+  Schedule Page -> In this page should have two input, Date and Fermentation Tank Input -> Set Schedule
+
+  When I add the Fermentation Tank number, it should be on a new reference and this reference will set the
+  schedule.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 a beer inventory state that is an array and when it has something in it that's when you render the third page.
 
 - current beer info(state) or an add beer form data; info for the second page where it's added
@@ -21,6 +59,10 @@ this is the unexpected thing that's happening
  in the arguments from the array of  the results from the calculate functions.
 
 
+ after they  add beer to the list prompt them if they want to edit scheudling parameter
+ make it as a separate route where they handle data independly and have all the code on the separate page
+ pass the id created from the previous step into the route /id
+
 
 
 Beer List -> Beer Recipe -> Schedule -> Set Date -> Show Pop Up that it's completed and/or open google calendar.
@@ -28,7 +70,22 @@ Beer List -> Beer Recipe -> Schedule -> Set Date -> Show Pop Up that it's comple
 To Do
  - Add Auth (Google Sign In)
  - To be able to Edit the event in the setting or before adding the event.
- - Fix input for the Beer Recipes 
+ - Fix input for the Beer Recipes
+
+ How to Edit schedulingParameter from backend
+
+Adding Google Sign in
+
+Fixing Input for the Beer Recipes
+ - Recipe Name
+ - Beer style
+ - Add Additional Fermentables, Flavoring,
+
+Grain Bill
+ - Show the total input of grains lb/something else
+ - Water Volume
+ - When the grain bill is added, it should calculate Original Gravity or Starting Gravity
+ - also the EBC (European Brewing Convention - Malt Color)
 
 
 command option J to open console
@@ -70,8 +127,6 @@ make a utility file
 i want to add the utility file data to the
 
 
-
-
 To-Do
 
 Use Dynmaic Route and URL Param for Beer List and Recipe Detail.
@@ -106,7 +161,6 @@ Pick Your Brew Day Page
     - Shows Inventory (Having warning signs for possible low inventory beer and recommendation of what to brew)
     - Show Fermentation Tank availability
     - Show Beer Recipe List
-    -
 Inventory Page
     - If Inventory is empty, prompt add information.
     - Have a Add Button to start the data input
@@ -114,5 +168,3 @@ Inventory Page
       of inventory timeline.
     - If Inventory has data, Show a list of Beer Inventory and their data.
     - Shows the amount of Beer left in the cold box
-    -
-    -
